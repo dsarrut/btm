@@ -1,22 +1,27 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2016-04-30T16:48:50
+# Project created by QtCreator 2016-04-30T17:41:02
 #
 #-------------------------------------------------
 
-QT       -= gui
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = btm
-TEMPLATE = lib
+TEMPLATE = app
 
-DEFINES += BTM_LIBRARY
 
-SOURCES += btmRound.cpp
+SOURCES += main.cpp\
+        mainwindow.cpp \
+    btmRound.cpp \
+    btmPlayer.cpp \
+    btmutils.cpp
 
-HEADERS += btmRound.h\
-        btm_global.h
+HEADERS  += mainwindow.h \
+    btmRound.h \
+    btmPlayer.h \
+    btmDD.h \
+    btmUtils.h
 
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
+FORMS    += mainwindow.ui

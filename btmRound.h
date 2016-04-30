@@ -1,13 +1,17 @@
 #ifndef BTMROUND_H
 #define BTMROUND_H
 
-#include "btm_global.h"
+#include <iostream>
 
-class BTMSHARED_EXPORT btmRound
+namespace btm {
+
+class Round
 {
-
 public:
-    btmRound();
+    Round();
+
+    void Bidon();
 };
 
+} // end namespace
 #endif // BTMROUND_H

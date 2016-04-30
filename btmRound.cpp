@@ -1,6 +1,11 @@
 #include "btmRound.h"
 
-
-btmRound::btmRound()
+btm::Round::Round()
 {
+
+}
+
+void btm::Round::Bidon()
+{
+    std::cout << "hello" << std::endl;
 }
