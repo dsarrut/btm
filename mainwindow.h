@@ -2,7 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTableWidget>
 #include <btmTournament.h>
+#include <btmQPlayersTable.h>
+#include <btmQTableWidgetItemWithPlayer.h>
 
 namespace Ui {
 class MainWindow;
@@ -23,12 +26,15 @@ public:
     void UpdateDisplayPlayersStatus();
 
     btm::Tournament tournament;
+    btm::QPlayersTable players_table;
 
 
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_rnd_players_clicked();
     void on_pushButton_rnd_scores_clicked();
+
+    void on_tablePlayers_itemChanged(QTableWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;

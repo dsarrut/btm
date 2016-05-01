@@ -16,10 +16,13 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="tabPlayers">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Tab 1</string>
+        <string>Test</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
@@ -79,8 +82,81 @@
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
-        <string>Tab 2</string>
+        <string>Joueurs</string>
        </attribute>
+       <widget class="QTableWidget" name="tablePlayers">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>90</y>
+          <width>681</width>
+          <height>291</height>
+         </rect>
+        </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="rowCount">
+         <number>10</number>
+        </property>
+        <property name="columnCount">
+         <number>5</number>
+        </property>
+        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+         <bool>false</bool>
+        </attribute>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column>
+         <property name="text">
+          <string>Nom</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Matchs</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Victoires</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Défaites</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Attentes</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>30</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>
