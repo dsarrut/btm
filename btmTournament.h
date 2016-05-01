@@ -3,6 +3,7 @@
 
 #include <btmRound.h>
 #include <btmPlayer.h>
+#include <memory>
 
 namespace btm {
 
@@ -11,10 +12,12 @@ class Tournament
 public:
     Tournament();
 
-    void StartNewRound() {}
+    typedef std::shared_ptr<Tournament> pointer;
 
-    std::vector<btm::Player> players;
-    std::vector<btm::Round> rounds;
+    btm::Round::pointer StartNewRound();
+
+    std::vector<btm::Player::pointer> players;
+    std::vector<btm::Round::pointer> rounds;
     //std::vector<btm::PlayerStatus> players_stats;
 
 };

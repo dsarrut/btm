@@ -22,8 +22,8 @@ MainWindow::~MainWindow()
 //----------------------------------------------------------------------------
 void MainWindow::on_pushButton_clicked()
 {
-    tournament.StartNewRound();
-    ui->textStatus->setPlainText("bidon");
+    auto round = tournament.StartNewRound();
+    ui->textStatus->setPlainText(QString::fromStdString(round->ToString()));
 }
 //----------------------------------------------------------------------------
 
@@ -31,9 +31,11 @@ void MainWindow::on_pushButton_clicked()
 //----------------------------------------------------------------------------
 void MainWindow::on_pushButton_rnd_players_clicked()
 {
-    std::vector<btm::Player> players;
+    btm::Player::vector players;
     btm::GenerateRandomPlayers(players, 30);
     for(auto p:players) DD(p);
     std::cout << std::endl;
+    tournament.players = players;
 }
 //----------------------------------------------------------------------------
+

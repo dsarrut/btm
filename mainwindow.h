@@ -23,6 +23,8 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButton_rnd_players_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

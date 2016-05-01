@@ -19,13 +19,15 @@ SOURCES += main.cpp\
     btmRound.cpp \
     btmPlayer.cpp \
     btmutils.cpp \
-    btmTournament.cpp
+    btmTournament.cpp \
+    btmMatch.cpp
 
 HEADERS  += mainwindow.h \
     btmRound.h \
     btmPlayer.h \
     btmDD.h \
     btmUtils.h \
-    btmTournament.h
+    btmTournament.h \
+    btmMatch.h
 
 FORMS    += mainwindow.ui
