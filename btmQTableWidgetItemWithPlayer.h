@@ -3,20 +3,18 @@
 
 #include <QObject>
 #include <QTableWidgetItem>
-#include <btmPlayer.h>
+#include "btmPlayer.h"
 
 namespace btm {
 
 class QTableWidgetItemWithPlayer : public QTableWidgetItem
 {
-    //Q_OBJECT
 
 public:
     QTableWidgetItemWithPlayer(btm::Player::pointer p);
-    void itemChanged();
+    void Update();
 
     btm::Player::pointer player;
-
 };
 
 } // end namespace

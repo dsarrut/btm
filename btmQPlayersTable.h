@@ -3,25 +3,24 @@
 
 #include <QTableWidget>
 #include <btmPlayer.h>
-#include <btmQTableWidgetItemWithPlayer.h>
+#include <btmQPlayerTableRow.h>
 
 namespace btm {
 
 class QPlayersTable
 {
 public:
-    QPlayersTable();
+    QPlayersTable(QTableWidget * t);
 
-    void UpdatePlayers(btm::Player::vector * p);
-    void UpdatePlayers();
+    void SetPlayers(btm::Player::vector pv);
+    void AddPlayer(btm::Player::pointer p);
+    void Update();
 
-    void SetRow(btm::Player::pointer p, int row);
-    void SetItemText(int row, int col, QString s);
-    QTableWidgetItem * NewItemColumn(int col, Player::pointer p);
-    void itemChanged(QTableWidgetItem * item);
+    void cellChanged(int row, int column);
 
     QTableWidget * table;
-    btm::Player::vector * players;
+    btm::Player::vector players;
+    btm::QPlayerTableRow::vector row_items;
 
 };
 

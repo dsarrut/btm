@@ -26,15 +26,14 @@ public:
     void UpdateDisplayPlayersStatus();
 
     btm::Tournament tournament;
-    btm::QPlayersTable players_table;
+    btm::QPlayersTable * players_table;
 
 
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_rnd_players_clicked();
     void on_pushButton_rnd_scores_clicked();
-
-    void on_tablePlayers_itemChanged(QTableWidgetItem *item);
+    void on_tablePlayers_cellChanged(int row, int column);
 
 private:
     Ui::MainWindow *ui;

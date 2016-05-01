@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     btmMatch.cpp \
     btmUtils.cpp \
     btmQPlayersTable.cpp \
-    btmQTableWidgetItemWithPlayer.cpp
+    btmQTableWidgetItemWithPlayer.cpp \
+    btmQPlayerTableRow.cpp
 
 HEADERS  += mainwindow.h \
     btmRound.h \
@@ -32,6 +33,7 @@ HEADERS  += mainwindow.h \
     btmTournament.h \
     btmMatch.h \
     btmQPlayersTable.h \
-    btmQTableWidgetItemWithPlayer.h
+    btmQTableWidgetItemWithPlayer.h \
+    btmQPlayerTableRow.h
 
 FORMS    += mainwindow.ui

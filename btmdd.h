@@ -18,7 +18,6 @@
     std::string s__ = ossDD__.str(); \
     std::wstring widestr__ = std::wstring(s__.begin(), s__.end()); \
     OutputDebugString(widestr__.c_str()); \
-    std::cout << ossDD__.str() << std::endl; \
   }
 #else
 # define DD(a) std::cout << DD_COLOR << #a " = [ " << a << " ]" << DD_RESET << std::endl;std::cout.flush();

@@ -1,11 +1,14 @@
 #include "btmQTableWidgetItemWithPlayer.h"
+#include <QString>
 
-btm::QTableWidgetItemWithPlayer::QTableWidgetItemWithPlayer(Player::pointer p):QTableWidgetItem()
+btm::QTableWidgetItemWithPlayer::QTableWidgetItemWithPlayer(btm::Player::pointer p):QTableWidgetItem()
 {
     player = p;
 }
 
-void btm::QTableWidgetItemWithPlayer::itemChanged()
+void btm::QTableWidgetItemWithPlayer::Update()
 {
-    DD(p);
+   std::string t = text().toStdString();
+    if (t != player->name)
+        player->name = t;
 }

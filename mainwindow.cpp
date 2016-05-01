@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    players_table.table = ui->tablePlayers;
+    players_table = new btm::QPlayersTable(ui->tablePlayers);
 }
 //----------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ void MainWindow::on_pushButton_rnd_players_clicked()
     for(auto p:players) DD(p);
     std::cout << std::endl;
     tournament.players = players;
-    players_table.UpdatePlayers(&tournament.players);
+    players_table->SetPlayers(tournament.players);
 }
 //----------------------------------------------------------------------------
 
@@ -89,17 +89,14 @@ void MainWindow::UpdateDisplayPlayersStatus()
     auto x = tournament.GetPlayersStatus();
     QString s = QString::fromStdString(x);
     ui->textPlayersStatus->setPlainText(s);
-    players_table.UpdatePlayers();
+    players_table->Update();
 }
 //----------------------------------------------------------------------------
 
 
-
-
-void MainWindow::on_tablePlayers_itemChanged(QTableWidgetItem *item)
+void MainWindow::on_tablePlayers_cellChanged(int row, int column)
 {
-    btm::QTableWidgetItemWithPlayer * a =
-            static_cast<btm::QTableWidgetItemWithPlayer*>(item);
-    a->itemChanged();
+    DD(row);
+    DD(column);
+    players_table->cellChanged(row, column);
 }
-

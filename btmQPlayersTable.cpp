@@ -1,52 +1,44 @@
 #include "btmQPlayersTable.h"
 
-btm::QPlayersTable::QPlayersTable()
+btm::QPlayersTable::QPlayersTable(QTableWidget * t)
 {
-
+    table = t;
 }
 
-void btm::QPlayersTable::UpdatePlayers(btm::Player::vector *p)
+void btm::QPlayersTable::SetPlayers(btm::Player::vector pv)
 {
-    players = p;
-    UpdatePlayers();
+    players.clear();
+    table->setRowCount(pv.size());
+    table->blockSignals(true);
+    for(auto p:pv) AddPlayer(p);
+    Update();
+    table->blockSignals(false);
 }
 
-void btm::QPlayersTable::UpdatePlayers()
+void btm::QPlayersTable::AddPlayer(btm::Player::pointer p)
 {
-    table->setRowCount(players->size());
-    int n=0;
-    for(auto p:*players) {
-        SetRow(p, n);
-        ++n;
+    players.push_back(p);
+    table->setRowCount(players.size());
+    int r = players.size()-1;
+    btm::QPlayerTableRow::pointer row = btm::QPlayerTableRow::New(p, table, r);
+    row_items.push_back(row);
+}
+
+void btm::QPlayersTable::Update()
+{
+    table->blockSignals(true);
+    for(auto r:row_items) r->Update();
+    table->blockSignals(false);
+}
+
+void btm::QPlayersTable::cellChanged(int row, int column)
+{
+    if (column == 0) {
+        auto item = table->item(row, column);
+        auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
+        a->Update();
     }
 }
 
-void btm::QPlayersTable::SetRow(btm::Player::pointer p,
-                                int row)
-{
-    SetItemText(row, 0, QString::fromStdString(p->name));
-    SetItemText(row, 1, QString("%1").arg(p->nb_of_matches));
-    SetItemText(row, 2, QString("%1").arg(p->nb_of_win_matches));
-    SetItemText(row, 3, QString("%1").arg(p->nb_of_lost_matches));
-    SetItemText(row, 4, QString("%1").arg(p->nb_of_wait_rounds));
-}
 
-void btm::QPlayersTable::SetItemText(int row,
-                                     int col,
-                                     QString s)
-{
-    auto item = table->item(row,col);
-    if (item == 0) {
-        item = NewItemColumn(col, player);
-        table->setItem(row,col, item);
-    }
-    item->setText(s);
-}
 
-QTableWidgetItem * btm::QPlayersTable::NewItemColumn(int col, btm::Player::pointer p)
-{
-    auto item = new QTableWidgetItemWithPlayer();
-    if (col !=0 )
-        item->setFlags(item->flags() & ~Qt::ItemIsEditable);
-    return item;
-}
