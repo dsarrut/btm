@@ -54,7 +54,6 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 {
     btm::Player::vector players;
     btm::GenerateRandomPlayers(players, 31);
-    for(auto p:players) DD(p);
     std::cout << std::endl;
     tournament.players = players;
     players_table->SetPlayers(tournament.players);
