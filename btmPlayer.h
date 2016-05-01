@@ -20,7 +20,14 @@ public:
     static pointer New() { return std::make_shared<Player>(); }
 
     std::string name;
+    int nb_of_wait_rounds;
+    int nb_of_matches;
+    int nb_of_win_matches;
+    int nb_of_lost_matches;
+
     std::string ToString() const;
+    std::string StatusToString() const;
+    void ResetStatus();
 
     /// Default function to print an element (must be inline here).
     friend std::ostream& operator<<(std::ostream& os, const Player & p) {

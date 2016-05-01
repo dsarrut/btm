@@ -18,9 +18,9 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     btmRound.cpp \
     btmPlayer.cpp \
-    btmutils.cpp \
     btmTournament.cpp \
-    btmMatch.cpp
+    btmMatch.cpp \
+    btmUtils.cpp
 
 HEADERS  += mainwindow.h \
     btmRound.h \

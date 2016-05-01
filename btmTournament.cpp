@@ -17,12 +17,14 @@ btm::Round::pointer btm::Tournament::StartNewRound()
  int n = temp.size() % 4;
  for(unsigned int i=0; i<temp.size()-n; i+=4) {
      auto m = btm::Match::New();
-     m->players.push_back(temp[i]);
-     m->players.push_back(temp[i+1]);
-     m->players.push_back(temp[i+2]);
-     m->players.push_back(temp[i+3]);
+     m->players[0] = temp[i];
+     m->players[1] = temp[i+1];
+     m->players[2] = temp[i+2];
+     m->players[3] = temp[i+3];
      r->matches.push_back(m);
  }
+ for(auto i=temp.size()-n ; i<temp.size(); i++)
+     r->waiting_players.push_back(temp[i]);
  rounds.push_back(r);
  return r;
 }
@@ -33,6 +35,22 @@ void btm::Tournament::GenerateRandomScores(btm::Round::pointer r)
     std::uniform_int_distribution<int> gen(1, 2); // uniform, unbiased
     for(auto & m:r->matches) {
         m->score = gen(rng);
-        DD(m->score);
     }
+}
+
+void btm::Tournament::ComputePlayersStatus()
+{
+    for(auto p:players) p->ResetStatus();
+    for(auto r:rounds) {
+        r->UpdatePlayersStatus();
+    }
+}
+
+std::string btm::Tournament::GetPlayersStatus()
+{
+    std::stringstream ss;
+    for(auto p:players) {
+        ss << p->ToString() << " " << p->StatusToString() << std::endl;
+    }
+    return ss.str();
 }

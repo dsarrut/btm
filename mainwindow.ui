@@ -21,55 +21,61 @@
        <attribute name="title">
         <string>Tab 1</string>
        </attribute>
-       <widget class="QPushButton" name="pushButton">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>150</y>
-          <width>75</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>New round</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_rnd_players">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>30</y>
-          <width>129</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>generate random players</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_rnd_scores">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>240</y>
-          <width>125</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>generate random scores</string>
-        </property>
-       </widget>
-       <widget class="QPlainTextEdit" name="textStatus">
-        <property name="geometry">
-         <rect>
-          <x>250</x>
-          <y>60</y>
-          <width>531</width>
-          <height>301</height>
-         </rect>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QPushButton" name="pushButton_rnd_players">
+            <property name="text">
+             <string>generate random players</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>New round</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_rnd_scores">
+            <property name="text">
+             <string>generate random scores</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Current round</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPlainTextEdit" name="textCurrentyRoundStatus"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>players status</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPlainTextEdit" name="textPlayersStatus"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">

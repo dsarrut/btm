@@ -15,8 +15,9 @@ public:
     static pointer New() { return std::make_shared<Match>(); }
 
     std::string ToString();
+    void UpdatePlayersStatus();
 
-    std::vector<btm::Player::pointer> players;
+    std::array<btm::Player::pointer, 4> players;
 
     int score; // 0=in progress 1=team1 or 2=team2
 

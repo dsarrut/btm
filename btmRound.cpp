@@ -18,5 +18,17 @@ std::string btm::Round::ToString()
         ss << "Match " << n << " " << m->ToString() << std::endl;
         ++n;
     }
+    for(auto p:waiting_players)
+        ss << "Waiting players : " << p << std::endl;
     return ss.str();
+}
+
+void btm::Round::UpdatePlayersStatus()
+{
+    for(auto m:matches) {
+        m->UpdatePlayersStatus();
+    }
+    for(auto p:waiting_players) {
+        p->nb_of_wait_rounds++;
+    }
 }

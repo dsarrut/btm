@@ -17,9 +17,10 @@ public:
 
     void Bidon();
     std::string ToString();
+    void UpdatePlayersStatus();
 
-    std::vector<btm::Match::pointer> matches;
-
+    btm::Match::vector matches;
+    btm::Player::vector waiting_players;
 };
 
 } // end namespace

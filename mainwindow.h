@@ -19,6 +19,8 @@ public:
     void SetStatus(std::string & s);
     void AddToStatus(std::string & s);
 
+    void UpdateDisplayCurrentRound();
+    void UpdateDisplayPlayersStatus();
 
     btm::Tournament tournament;
 

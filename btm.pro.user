@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.6.1, 2016-05-01T12:31:23. -->
+<!-- Written by QtCreator 3.6.1, 2016-05-01T14:07:39. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -8,7 +8,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">-1</value>
+  <value type="int">1</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -388,16 +388,7 @@
       <value type="QString" key="Qt4ProjectManager.MakeStep.MakeArguments"></value>
       <value type="QString" key="Qt4ProjectManager.MakeStep.MakeCommand"></value>
      </valuemap>
-     <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.2">
-      <value type="bool" key="ProjectExplorer.BuildStep.Enabled">false</value>
-      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">-Wl,-s -Wl,-subsystem,windows -mthreads -o release\btm.exe release/main.o release/mainwindow.o release/btmRound.o release/btmPlayer.o release/btmutils.o release/btm_plugin_import.o release/moc_mainwindow.o  -lmingw32 -Lc:\Qt\static\lib c:\Qt\static\lib\libqtmain.a c:\Qt\static\lib\libQt5Widgets.a -Lc:\Qt\static\plugins\platforms c:\Qt\static\plugins\platforms\libqwindows.a -lwinspool -lshlwapi c:\Qt\static\lib\libQt5PlatformSupport.a c:\Qt\static\lib\libQt5DBus.a -lnetapi32 c:\Qt\static\lib\libqtfreetype.a -Lc:\Qt\static\plugins\imageformats c:\Qt\static\plugins\imageformats\libqdds.a c:\Qt\static\plugins\imageformats\libqicns.a c:\Qt\static\plugins\imageformats\libqico.a c:\Qt\static\plugins\imageformats\libqtga.a c:\Qt\static\plugins\imageformats\libqtiff.a c:\Qt\static\plugins\imageformats\libqwbmp.a c:\Qt\static\plugins\imageformats\libqwebp.a c:\Qt\static\lib\libQt5Gui.a -lcomdlg32 -loleaut32 -limm32 -lwinmm -lglu32 -lopengl32 -lgdi32 c:\Qt\static\lib\libqtharfbuzzng.a c:\Qt\static\lib\libQt5Core.a -lole32 -luuid -lws2_32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmpr c:\Qt\static\lib\libqtpcre.a -l:libwinpthread.a</value>
-      <value type="QString" key="ProjectExplorer.ProcessStep.Command">g++</value>
-      <value type="QString" key="ProjectExplorer.ProcessStep.WorkingDirectory">%{buildDir}</value>
-      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Étape personnalisée</value>
-      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.ProcessStep</value>
-     </valuemap>
-     <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">3</value>
+     <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">2</value>
      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Compiler</value>
      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.BuildSteps.Build</value>

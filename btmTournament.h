@@ -16,10 +16,11 @@ public:
 
     btm::Round::pointer StartNewRound();
     void GenerateRandomScores(btm::Round::pointer r);
+    void ComputePlayersStatus();
+    std::string GetPlayersStatus();
 
-    std::vector<btm::Player::pointer> players;
-    std::vector<btm::Round::pointer> rounds;
-    //std::vector<btm::PlayerStatus> players_stats;
+    btm::Player::vector players;
+    btm::Round::vector rounds;
 
 };
 } // end namespace

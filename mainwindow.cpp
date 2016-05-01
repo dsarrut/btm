@@ -22,7 +22,7 @@ MainWindow::~MainWindow()
 //----------------------------------------------------------------------------
 void MainWindow::SetStatus(std::string & s)
 {
-    ui->textStatus->setPlainText(QString::fromStdString(s));
+    ui->textCurrentyRoundStatus->setPlainText(QString::fromStdString(s));
 }
 //----------------------------------------------------------------------------
 
@@ -30,8 +30,9 @@ void MainWindow::SetStatus(std::string & s)
 //----------------------------------------------------------------------------
 void MainWindow::AddToStatus(std::string & s)
 {
-    QString ss = ui->textStatus->toPlainText()+QString::fromStdString(s);
-    ui->textStatus->setPlainText(ss);
+    QString ss = ui->textCurrentyRoundStatus->toPlainText()
+            +QString::fromStdString(s);
+    ui->textCurrentyRoundStatus->setPlainText(ss);
 }
 //----------------------------------------------------------------------------
 
@@ -41,7 +42,8 @@ void MainWindow::AddToStatus(std::string & s)
 void MainWindow::on_pushButton_clicked()
 {
     auto round = tournament.StartNewRound();
-    ui->textStatus->setPlainText(QString::fromStdString(round->ToString()));
+    UpdateDisplayCurrentRound();
+    UpdateDisplayPlayersStatus();
 }
 //----------------------------------------------------------------------------
 
@@ -62,6 +64,31 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 void MainWindow::on_pushButton_rnd_scores_clicked()
 {
     tournament.GenerateRandomScores(tournament.rounds.back());
-
+    UpdateDisplayCurrentRound();
+    UpdateDisplayPlayersStatus();
 }
 //----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------
+void MainWindow::UpdateDisplayCurrentRound()
+{
+    auto round = tournament.rounds.back();
+    QString s = QString::fromStdString(round->ToString());
+    ui->textCurrentyRoundStatus->setPlainText(s);
+}
+//----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------
+void MainWindow::UpdateDisplayPlayersStatus()
+{
+    tournament.ComputePlayersStatus();
+    auto x = tournament.GetPlayersStatus();
+    QString s = QString::fromStdString(x);
+    ui->textPlayersStatus->setPlainText(s);
+}
+//----------------------------------------------------------------------------
+
+
+
