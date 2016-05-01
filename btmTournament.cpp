@@ -1,6 +1,6 @@
 #include "btmTournament.h"
 
-Tournament::Tournament()
+btm::Tournament::Tournament()
 {
 
 }

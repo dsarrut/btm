@@ -2,8 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <btmRound.h>
-#include <btmPlayer.h>
+#include <btmTournament.h>
 
 namespace Ui {
 class MainWindow;
@@ -17,9 +16,11 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    btm::Tournament tournament;
+
+
 private slots:
     void on_pushButton_clicked();
-
     void on_pushButton_rnd_players_clicked();
 
 private:
