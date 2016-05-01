@@ -20,6 +20,24 @@ MainWindow::~MainWindow()
 
 
 //----------------------------------------------------------------------------
+void MainWindow::SetStatus(std::string & s)
+{
+    ui->textStatus->setPlainText(QString::fromStdString(s));
+}
+//----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------
+void MainWindow::AddToStatus(std::string & s)
+{
+    QString ss = ui->textStatus->toPlainText()+QString::fromStdString(s);
+    ui->textStatus->setPlainText(ss);
+}
+//----------------------------------------------------------------------------
+
+
+
+//----------------------------------------------------------------------------
 void MainWindow::on_pushButton_clicked()
 {
     auto round = tournament.StartNewRound();
@@ -39,3 +57,11 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 }
 //----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
+void MainWindow::on_pushButton_rnd_scores_clicked()
+{
+    tournament.GenerateRandomScores(tournament.rounds.back());
+
+}
+//----------------------------------------------------------------------------

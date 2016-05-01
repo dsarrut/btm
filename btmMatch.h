@@ -18,6 +18,7 @@ public:
 
     std::vector<btm::Player::pointer> players;
 
+    int score; // 0=in progress 1=team1 or 2=team2
 
 };
 } // end namespace

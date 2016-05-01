@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>850</width>
-    <height>549</height>
+    <width>912</width>
+    <height>534</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,11 +47,11 @@
          <string>generate random players</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_rnd_players_2">
+       <widget class="QPushButton" name="pushButton_rnd_scores">
         <property name="geometry">
          <rect>
           <x>50</x>
-          <y>210</y>
+          <y>240</y>
           <width>125</width>
           <height>23</height>
          </rect>
@@ -85,7 +85,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>850</width>
+     <width>912</width>
      <height>21</height>
     </rect>
    </property>

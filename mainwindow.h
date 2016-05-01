@@ -16,14 +16,17 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void SetStatus(std::string & s);
+    void AddToStatus(std::string & s);
+
+
     btm::Tournament tournament;
 
 
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_rnd_players_clicked();
-
-    void on_pushButton_2_clicked();
+    void on_pushButton_rnd_scores_clicked();
 
 private:
     Ui::MainWindow *ui;

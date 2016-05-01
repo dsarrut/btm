@@ -15,6 +15,7 @@ public:
     typedef std::shared_ptr<Tournament> pointer;
 
     btm::Round::pointer StartNewRound();
+    void GenerateRandomScores(btm::Round::pointer r);
 
     std::vector<btm::Player::pointer> players;
     std::vector<btm::Round::pointer> rounds;
