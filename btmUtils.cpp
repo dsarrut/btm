@@ -1,5 +1,7 @@
 
 #include "btmUtils.h"
+#include <cstdlib>
+
 
 std::string btm::RandomString(const int len) {
     static const char alphanum[] =

@@ -12,7 +12,7 @@ TARGET = btm
 TEMPLATE = app
 
 CONFIG += static
-QMAKE_LFLAGS += -static-libgcc -static-libstdc++ -Wl,--enable-auto-image-base -Wl,--add-stdcall-alias -Wl,--enable-auto-import
+#QMAKE_LFLAGS += -static-libgcc -static-libstdc++ -Wl,--enable-auto-image-base -Wl,--add-stdcall-alias -Wl,--enable-auto-import
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     btmUtils.cpp \
     btmQPlayersTable.cpp \
     btmQTableWidgetItemWithPlayer.cpp \
-    btmQPlayerTableRow.cpp
+    btmQPlayerTableRow.cpp \
+    bidon.cpp \
+    formtoto.cpp
 
 HEADERS  += mainwindow.h \
     btmRound.h \
@@ -34,6 +36,9 @@ HEADERS  += mainwindow.h \
     btmMatch.h \
     btmQPlayersTable.h \
     btmQTableWidgetItemWithPlayer.h \
-    btmQPlayerTableRow.h
+    btmQPlayerTableRow.h \
+    bidon.h \
+    formtoto.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    formtoto.ui

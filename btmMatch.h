@@ -2,6 +2,7 @@
 #define BTMMATCH_H
 
 #include "btmPlayer.h"
+#include <array>
 
 namespace btm {
 
