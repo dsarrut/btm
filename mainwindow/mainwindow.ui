@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>912</width>
-    <height>534</height>
+    <width>904</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -226,26 +226,35 @@
        <attribute name="title">
         <string>Page</string>
        </attribute>
-       <widget class="Form2" name="widget" native="true">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>60</y>
-          <width>331</width>
-          <height>181</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="Form2" name="widget_2" native="true">
-        <property name="geometry">
-         <rect>
-          <x>440</x>
-          <y>230</y>
-          <width>201</width>
-          <height>141</height>
-         </rect>
-        </property>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="Form2" name="widget" native="true"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="Form2" name="widget_4" native="true"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="Form2" name="widget_7" native="true"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="Form2" name="widget_2" native="true"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="Form2" name="widget_5" native="true"/>
+        </item>
+        <item row="1" column="2" rowspan="2">
+         <widget class="Form2" name="widget_8" native="true"/>
+        </item>
+        <item row="2" column="0" rowspan="2">
+         <widget class="Form2" name="widget_3" native="true"/>
+        </item>
+        <item row="3" column="1">
+         <widget class="Form2" name="widget_6" native="true"/>
+        </item>
+        <item row="3" column="2">
+         <widget class="Form2" name="widget_9" native="true"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -256,7 +265,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>912</width>
+     <width>904</width>
      <height>21</height>
     </rect>
    </property>
