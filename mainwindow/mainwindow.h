@@ -6,6 +6,7 @@
 #include "btmTournament.h"
 #include <btmQPlayersTable.h>
 #include <btmQTableWidgetItemWithPlayer.h>
+#include "form2.h"
 
 namespace Ui {
 class MainWindow;

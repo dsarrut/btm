@@ -15,7 +15,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QTabWidget" name="tabPlayers">
       <property name="currentIndex">
        <number>2</number>
@@ -226,6 +226,26 @@
        <attribute name="title">
         <string>Page</string>
        </attribute>
+       <widget class="Form2" name="widget" native="true">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>60</y>
+          <width>331</width>
+          <height>181</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="Form2" name="widget_2" native="true">
+        <property name="geometry">
+         <rect>
+          <x>440</x>
+          <y>230</y>
+          <width>201</width>
+          <height>141</height>
+         </rect>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -237,7 +257,7 @@
      <x>0</x>
      <y>0</y>
      <width>912</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -252,6 +272,14 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Form2</class>
+   <extends>QWidget</extends>
+   <header>form2.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
