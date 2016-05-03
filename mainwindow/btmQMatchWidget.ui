@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form2</class>
- <widget class="QWidget" name="Form2">
+ <class>QMatchWidget</class>
+ <widget class="QWidget" name="QMatchWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>103</height>
+    <width>598</width>
+    <height>223</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,9 +35,9 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
@@ -88,7 +88,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QLineEdit" name="lineEdit">
          <property name="sizePolicy">
@@ -188,9 +188,9 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <widget class="QLabel" name="label_4">
          <property name="text">
@@ -241,7 +241,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QLineEdit" name="lineEdit_4">
          <property name="sizePolicy">
@@ -354,19 +354,7 @@
     </spacer>
    </item>
   </layout>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
-  <zorder>layoutWidget</zorder>
   <zorder>label_5</zorder>
-  <zorder>layoutWidget_2</zorder>
-  <zorder>label_2</zorder>
-  <zorder></zorder>
-  <zorder>lineEdit</zorder>
-  <zorder>horizontalSpacer</zorder>
-  <zorder>label_3</zorder>
-  <zorder>lineEdit_2</zorder>
-  <zorder>lineEdit_3</zorder>
-  <zorder>layoutWidget</zorder>
   <zorder>verticalSpacer</zorder>
   <zorder>verticalSpacer_2</zorder>
  </widget>

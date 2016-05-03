@@ -22,14 +22,14 @@ SOURCES += main.cpp\
     btmQPlayersTable.cpp \
     btmQTableWidgetItemWithPlayer.cpp \
     btmQPlayerTableRow.cpp \
-    form2.cpp
+    btmQMatchWidget.cpp
 
 HEADERS  += mainwindow.h \
     btmQPlayersTable.h \
     btmQTableWidgetItemWithPlayer.h \
     btmQPlayerTableRow.h \
-    form2.h
+    btmQMatchWidget.h
     btm_global.h
 
 FORMS    += mainwindow.ui \
-    form2.ui
+    btmQMatchWidget.ui

@@ -228,31 +228,31 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
-         <widget class="Form2" name="widget" native="true"/>
+         <widget class="QMatchWidget" name="widget" native="true"/>
         </item>
         <item row="0" column="1">
-         <widget class="Form2" name="widget_4" native="true"/>
+         <widget class="QMatchWidget" name="widget_4" native="true"/>
         </item>
-        <item row="0" column="2">
-         <widget class="Form2" name="widget_7" native="true"/>
+        <item row="0" column="2" rowspan="2">
+         <widget class="QMatchWidget" name="widget_7" native="true"/>
         </item>
-        <item row="1" column="0">
-         <widget class="Form2" name="widget_2" native="true"/>
+        <item row="1" column="0" rowspan="2">
+         <widget class="QMatchWidget" name="widget_2" native="true"/>
         </item>
-        <item row="1" column="1">
-         <widget class="Form2" name="widget_5" native="true"/>
+        <item row="2" column="1">
+         <widget class="QMatchWidget" name="widget_5" native="true"/>
         </item>
-        <item row="1" column="2" rowspan="2">
-         <widget class="Form2" name="widget_8" native="true"/>
+        <item row="2" column="2">
+         <widget class="QMatchWidget" name="widget_8" native="true"/>
         </item>
-        <item row="2" column="0" rowspan="2">
-         <widget class="Form2" name="widget_3" native="true"/>
+        <item row="3" column="0">
+         <widget class="QMatchWidget" name="widget_3" native="true"/>
         </item>
         <item row="3" column="1">
-         <widget class="Form2" name="widget_6" native="true"/>
+         <widget class="QMatchWidget" name="widget_6" native="true"/>
         </item>
         <item row="3" column="2">
-         <widget class="Form2" name="widget_9" native="true"/>
+         <widget class="QMatchWidget" name="widget_9" native="true"/>
         </item>
        </layout>
       </widget>
@@ -283,9 +283,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>Form2</class>
+   <class>QMatchWidget</class>
    <extends>QWidget</extends>
-   <header>form2.h</header>
+   <header>btmQMatchWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
