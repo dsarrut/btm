@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QTableWidget>
-#include <btmTournament.h>
+#include "btmTournament.h"
 #include <btmQPlayersTable.h>
 #include <btmQTableWidgetItemWithPlayer.h>
 

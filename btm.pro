@@ -4,41 +4,6 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET = btm
-TEMPLATE = app
-
-CONFIG += static
-#QMAKE_LFLAGS += -static-libgcc -static-libstdc++ -Wl,--enable-auto-image-base -Wl,--add-stdcall-alias -Wl,--enable-auto-import
-
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    btmRound.cpp \
-    btmPlayer.cpp \
-    btmTournament.cpp \
-    btmMatch.cpp \
-    btmUtils.cpp \
-    btmQPlayersTable.cpp \
-    btmQTableWidgetItemWithPlayer.cpp \
-    btmQPlayerTableRow.cpp \
-    bidon.cpp \
-    formtoto.cpp
-
-HEADERS  += mainwindow.h \
-    btmRound.h \
-    btmPlayer.h \
-    btmDD.h \
-    btmUtils.h \
-    btmTournament.h \
-    btmMatch.h \
-    btmQPlayersTable.h \
-    btmQTableWidgetItemWithPlayer.h \
-    btmQPlayerTableRow.h \
-    bidon.h \
-    formtoto.h
-
-FORMS    += mainwindow.ui \
-    formtoto.ui
+TEMPLATE  = subdirs
+CONFIG   += ordered
+SUBDIRS = libbtm mainwindow
