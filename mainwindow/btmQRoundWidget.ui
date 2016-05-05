@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
-    <height>240</height>
+    <width>707</width>
+    <height>427</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,82 +19,68 @@
   <property name="frameShadow">
    <enum>QFrame::Raised</enum>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0" rowspan="2" colspan="2">
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Tour n°12</string>
-     </property>
-    </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Tour n°12</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonRandomScores">
+       <property name="text">
+        <string>random scores</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonNewRound">
+       <property name="text">
+        <string>Nouveau tour</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="buttonRandomScores">
-     <property name="text">
-      <string>random scores</string>
+   <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QPushButton" name="buttonNewRound">
-     <property name="text">
-      <string>Nouveau tour</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="3">
-    <widget class="QFrame" name="frame">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QMatchWidget" name="widgetMatch1" native="true"/>
-      </item>
-      <item row="0" column="1" colspan="2">
-       <widget class="QMatchWidget" name="widgetMatch2" native="true"/>
-      </item>
-      <item row="0" column="3" colspan="2">
-       <widget class="QMatchWidget" name="widgetMatch3" native="true"/>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QMatchWidget" name="widgetMatch5" native="true"/>
-      </item>
-      <item row="1" column="2">
-       <widget class="QMatchWidget" name="widgetMatch4" native="true"/>
-      </item>
-      <item row="1" column="4">
-       <widget class="QMatchWidget" name="widgetMatch6" native="true"/>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QMatchWidget" name="widgetMatch8" native="true"/>
-      </item>
-      <item row="2" column="2" colspan="2">
-       <widget class="QMatchWidget" name="widgetMatch7" native="true"/>
-      </item>
-      <item row="2" column="4">
-       <widget class="QMatchWidget" name="widgetMatch9" native="true"/>
-      </item>
-     </layout>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>685</width>
+        <height>374</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QFrame" name="frameMatches">
+         <property name="frameShape">
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QMatchWidget</class>
-   <extends>QWidget</extends>
-   <header>btmQMatchWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

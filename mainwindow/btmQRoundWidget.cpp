@@ -1,11 +1,13 @@
 #include "btmQRoundWidget.h"
 #include "ui_btmQRoundWidget.h"
+#include <QGridLayout>
 
 QRoundWidget::QRoundWidget(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::QRoundWidget)
 {
     ui->setupUi(this);
+    /*
     widgetMatches.push_back(ui->widgetMatch1);
     widgetMatches.push_back(ui->widgetMatch2);
     widgetMatches.push_back(ui->widgetMatch3);
@@ -15,6 +17,9 @@ QRoundWidget::QRoundWidget(QWidget *parent) :
     widgetMatches.push_back(ui->widgetMatch7);
     widgetMatches.push_back(ui->widgetMatch8);
     widgetMatches.push_back(ui->widgetMatch9);
+    */
+    QGridLayout *layout = new QGridLayout();
+    ui->frameMatches->setLayout(layout);
 }
 
 QRoundWidget::~QRoundWidget()
@@ -27,13 +32,30 @@ void QRoundWidget::SetTournament(btm::Tournament::pointer t)
     tournament = t;
 }
 
+void QRoundWidget::AddWidget()
+{
+    static int row = 0;
+    static int col = 0;
+    QMatchWidget * w = new QMatchWidget();
+    QGridLayout * layout =
+            static_cast<QGridLayout*>(ui->frameMatches->layout());
+    layout->addWidget(w, row, col);
+    ++col;
+    if (col ==2) {
+        col = 0;
+        ++row;
+    }
+    widgetMatches.push_back(w);
+}
+
 void QRoundWidget::Update()
 {
-   if (round->matches.size() > widgetMatches.size()) {
-        DD("too much matches");
-        return;
-    }
-    for(unsigned int i=0; i<round->matches.size(); i++) {
+   for(unsigned int i=widgetMatches.size(); i<round->matches.size(); i++) {
+       DD("create widget");
+       DD(i);
+       AddWidget();
+   }
+   for(unsigned int i=0; i<round->matches.size(); i++) {
         widgetMatches[i]->SetMatch(round->matches[i]);
     }
 }

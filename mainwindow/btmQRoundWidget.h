@@ -19,6 +19,7 @@ public:
 
     void SetTournament(btm::Tournament::pointer tournament);
     void Update();
+    void AddWidget();
 
 protected:
     btm::Tournament::pointer tournament;
