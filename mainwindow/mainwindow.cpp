@@ -102,7 +102,3 @@ void MainWindow::on_tablePlayers_cellChanged(int row, int column)
     players_table->cellChanged(row, column);
 }
 
-void MainWindow::on_pushButton_5_clicked()
-{
-
-}

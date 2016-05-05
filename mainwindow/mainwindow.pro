@@ -36,3 +36,6 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     btmQMatchWidget.ui \
     btmQRoundWidget.ui
+
+RESOURCES += \
+    resource.qrc

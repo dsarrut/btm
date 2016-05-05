@@ -12,6 +12,7 @@ btm::Tournament::Tournament()
 btm::Round::pointer btm::Tournament::StartNewRound()
 {
  auto r = btm::Round::New();
+ r->round_nb = rounds.size()+1;// to start at one
  btm::Player::vector temp = players; //copy
  std::random_shuffle(temp.begin(), temp.end());
  ComputeWaitingPlayers(r, temp);

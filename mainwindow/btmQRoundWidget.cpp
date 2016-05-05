@@ -50,14 +50,27 @@ void QRoundWidget::AddWidget()
 
 void QRoundWidget::Update()
 {
-   for(unsigned int i=widgetMatches.size(); i<round->matches.size(); i++) {
-       DD("create widget");
-       DD(i);
-       AddWidget();
-   }
+   //  add widget if too much matches
+   for(unsigned int i=widgetMatches.size(); i<round->matches.size(); i++)
+      AddWidget();
+   // Update match widgets
    for(unsigned int i=0; i<round->matches.size(); i++) {
         widgetMatches[i]->SetMatch(round->matches[i]);
     }
+   // Update round nb
+   ui->labelRound->setText(QString("Tour n°%1").arg(round->round_nb));
+   if (tournament->rounds.back()->status == btm::Round::Terminated)
+       ui->buttonNewRound->setEnabled(true);
+   else ui->buttonNewRound->setEnabled(false);
+   // Set button status
+   if (round->status == btm::Round::Terminated)
+       ui->buttonRandomScores->setEnabled(false);
+   else ui->buttonRandomScores->setEnabled(true);
+   if (round->round_nb == 1) ui->buttonBack->setEnabled(false);
+   else ui->buttonBack->setEnabled(true);
+   if (round->round_nb == tournament->rounds.size())
+       ui->buttonForward->setEnabled(false);
+   else ui->buttonForward->setEnabled(true);
 }
 
 void QRoundWidget::on_buttonRandomScores_clicked()
@@ -79,3 +92,18 @@ void QRoundWidget::on_buttonNewRound_clicked()
    }
 }
 
+void QRoundWidget::on_buttonBack_clicked()
+{
+    auto i = round->round_nb;
+    if (i==1) return;
+    round = tournament->rounds[i-2];
+    Update();
+}
+
+void QRoundWidget::on_buttonForward_clicked()
+{
+    auto i = round->round_nb;
+    if (i==tournament->rounds.size()) return;
+    round = tournament->rounds[i];
+    Update();
+}

@@ -32,6 +32,8 @@ signals:
 private slots:
     void on_buttonRandomScores_clicked();
     void on_buttonNewRound_clicked();
+    void on_buttonBack_clicked();
+    void on_buttonForward_clicked();
 
 private:
     Ui::QRoundWidget *ui;

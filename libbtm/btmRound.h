@@ -21,6 +21,7 @@ public:
     Status GetStatus() { return status; }
 
     Status status;
+    unsigned int round_nb;
     btm::Match::vector matches;
     btm::Player::vector waiting_players;
 };
