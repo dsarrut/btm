@@ -19,6 +19,7 @@ public:
 
     int GetWinner(); // 0=in progress, 1=team1 2=team2
     void GenerateRandomScore(std::mt19937 &rng);
+    void SetScore(int team, int points);
 
     int team1_points;
     int team2_points;

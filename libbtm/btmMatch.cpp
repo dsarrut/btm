@@ -42,18 +42,29 @@ void btm::Match::GenerateRandomScore(std::mt19937 & rng)
     sets[1]->GenerateRandomScore(rng);
     if (sets[0]->GetWinner() != sets[1]->GetWinner())
         sets[2]->GenerateRandomScore(rng);
+    else {
+        sets[2]->SetScore(1,0);
+        sets[2]->SetScore(2,0);
+    }
     score = GetWinner();
-    /*int w0 = sets[0]->GetWinner();
-    int w1 = sets[1]->GetWinner();
-    if (w0 == w1) score = w0;
-    else score = sets[2]->GetWinner();*/
+}
+
+void btm::Match::SetScore(int team, int set, int points)
+{
+    sets[set-1]->SetScore(team,points);
+    if (GetWinner() != 0) {
+        if (sets[0]->GetWinner() == sets[1]->GetWinner()) {
+                sets[2]->SetScore(1,0);
+                sets[2]->SetScore(2,0);
+        }
+    }
 }
 
 int btm::Match::GetWinner()
 {
     if (sets[0]->GetWinner() == 0) return 0;
-    if (sets[1]->GetWinner() == sets[0]->GetWinner())
-        return sets[1]->GetWinner();
+    if (sets[0]->GetWinner() == sets[1]->GetWinner())
+        return sets[0]->GetWinner();
     if (sets[1]->GetWinner() == 0) return 0;
     return sets[2]->GetWinner();
 }

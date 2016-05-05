@@ -21,6 +21,7 @@ public:
     void UpdatePlayersStatus();
     void GenerateRandomScore(std::mt19937 &rng);
 
+    void SetScore(int team, int set, int points);
     int GetWinner();
 
     std::array<btm::Player::pointer, 4> players;

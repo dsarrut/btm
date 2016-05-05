@@ -18,7 +18,7 @@ public:
 
     void SetMatch(btm::Match::pointer m);
     void Update();
-    void SetScore(int set, int team, const QString & v);
+    void SetScore(int team, int set, const QString & v);
 
 protected:
     btm::Match::pointer match;
@@ -26,13 +26,9 @@ protected:
 private slots:
     void on_lineTeam1Set1_textEdited(const QString &arg1);
     void on_lineTeam1Set2_textEdited(const QString &arg1);
-
     void on_lineTeam1Set3_textEdited(const QString &arg1);
-
     void on_lineTeam2Set1_textEdited(const QString &arg1);
-
     void on_lineTeam2Set2_textEdited(const QString &arg1);
-
     void on_lineTeam2Set3_textEdited(const QString &arg1);
 
 private:
