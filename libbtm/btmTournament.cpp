@@ -77,10 +77,11 @@ void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
 void btm::Tournament::GenerateRandomScores(btm::Round::pointer r)
 {
     std::mt19937 rng(std::time(0));
-    std::uniform_int_distribution<int> gen(1, 2); // uniform, unbiased
+    std::uniform_int_distribution<int> gen(1, 2);
     for(auto & m:r->matches) {
         m->score = gen(rng);
     }
+    for(auto & m:r->matches) m->GenerateRandomScore(rng);
 }
 
 void btm::Tournament::ComputePlayersStatus()

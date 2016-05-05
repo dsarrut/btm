@@ -3,6 +3,7 @@
 btm::Match::Match()
 {
     score = 0;
+    for(auto i=0; i<3; i++) sets.push_back(btm::Set::New());
 }
 
 std::string btm::Match::ToString()
@@ -31,4 +32,14 @@ void btm::Match::UpdatePlayersStatus()
         players[0]->nb_of_lost_matches++;
         players[1]->nb_of_lost_matches++;
     }
+}
+
+void btm::Match::GenerateRandomScore(std::mt19937 & rng)
+{
+//    std::mt19937 rng(std::time(0));
+    sets[0]->GenerateRandomScore(rng);
+    sets[1]->GenerateRandomScore(rng);
+    if (sets[0]->GetWinner() != sets[1]->GetWinner())
+        sets[2]->GenerateRandomScore(rng);
+    DD(sets[0]->team1_points)
 }

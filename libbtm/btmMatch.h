@@ -2,6 +2,7 @@
 #define BTMMATCH_H
 
 #include "btmPlayer.h"
+#include "btmSet.h"
 #include <array>
 
 namespace btm {
@@ -17,9 +18,11 @@ public:
 
     std::string ToString();
     void UpdatePlayersStatus();
+    void GenerateRandomScore(std::mt19937 &rng);
 
     std::array<btm::Player::pointer, 4> players;
 
+    std::vector<btm::Set::pointer> sets;
     int score; // 0=in progress 1=team1 or 2=team2
 
 };

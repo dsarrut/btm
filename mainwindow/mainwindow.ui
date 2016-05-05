@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>904</width>
-    <height>582</height>
+    <width>897</width>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,12 +15,12 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QTabWidget" name="tabPlayers">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabs">
       <property name="currentIndex">
        <number>2</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tabTest">
        <attribute name="title">
         <string>Test</string>
        </attribute>
@@ -73,7 +73,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="tabPlayer">
        <attribute name="title">
         <string>Joueurs</string>
        </attribute>
@@ -222,37 +222,20 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="tabRound">
        <attribute name="title">
-        <string>Page</string>
+        <string>Tour actuel</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QMatchWidget" name="widget" native="true"/>
-        </item>
         <item row="0" column="1">
-         <widget class="QMatchWidget" name="widget_4" native="true"/>
-        </item>
-        <item row="0" column="2" rowspan="2">
-         <widget class="QMatchWidget" name="widget_7" native="true"/>
-        </item>
-        <item row="1" column="0" rowspan="2">
-         <widget class="QMatchWidget" name="widget_2" native="true"/>
-        </item>
-        <item row="2" column="1">
-         <widget class="QMatchWidget" name="widget_5" native="true"/>
-        </item>
-        <item row="2" column="2">
-         <widget class="QMatchWidget" name="widget_8" native="true"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QMatchWidget" name="widget_3" native="true"/>
-        </item>
-        <item row="3" column="1">
-         <widget class="QMatchWidget" name="widget_6" native="true"/>
-        </item>
-        <item row="3" column="2">
-         <widget class="QMatchWidget" name="widget_9" native="true"/>
+         <widget class="QRoundWidget" name="widgetRound">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -265,7 +248,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>904</width>
+     <width>897</width>
      <height>21</height>
     </rect>
    </property>
@@ -283,9 +266,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QMatchWidget</class>
-   <extends>QWidget</extends>
-   <header>btmQMatchWidget.h</header>
+   <class>QRoundWidget</class>
+   <extends>QFrame</extends>
+   <header>btmQRoundWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

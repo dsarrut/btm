@@ -26,7 +26,7 @@ public:
     void UpdateDisplayCurrentRound();
     void UpdateDisplayPlayersStatus();
 
-    btm::Tournament tournament;
+    btm::Tournament::pointer tournament;
     btm::QPlayersTable * players_table;
 
 
@@ -35,6 +35,8 @@ private slots:
     void on_pushButton_rnd_players_clicked();
     void on_pushButton_rnd_scores_clicked();
     void on_tablePlayers_cellChanged(int row, int column);
+
+    void on_pushButton_5_clicked();
 
 private:
     Ui::MainWindow *ui;

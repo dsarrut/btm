@@ -2,6 +2,7 @@
 #define btmDD_H
 
 #include <iostream>
+#include <sstream>
 #ifdef _WIN32
 # include <windows.h>
 #endif

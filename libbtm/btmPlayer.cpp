@@ -34,7 +34,7 @@ void btm::GenerateRandomPlayers(btm::Player::vector & players, int n)
 {
     for(auto i=0; i<n; i++) {
      auto p = btm::Player::New();
-     p->name = btm::RandomString(4);
+     p->name = btm::RandomString(20);
      players.push_back(p);
     }
 }

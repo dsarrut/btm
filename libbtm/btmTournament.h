@@ -13,6 +13,8 @@ public:
     Tournament();
 
     typedef std::shared_ptr<Tournament> pointer;
+    typedef std::vector<pointer> vector;
+    static pointer New() { return std::make_shared<Tournament>(); }
 
     btm::Round::pointer StartNewRound();
     void ComputeWaitingPlayers(btm::Round::pointer r,

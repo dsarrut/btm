@@ -16,7 +16,8 @@ SOURCES += libbtm.cpp \
     btmPlayer.cpp \
     btmRound.cpp \
     btmTournament.cpp \
-    btmUtils.cpp
+    btmUtils.cpp \
+    btmSet.cpp
 
 HEADERS += libbtm.h \
     btmDD.h \
@@ -24,7 +25,8 @@ HEADERS += libbtm.h \
     btmPlayer.h \
     btmRound.h \
     btmTournament.h \
-    btmUtils.h
+    btmUtils.h \
+    btmSet.h
 
 unix {
     target.path = /usr/lib

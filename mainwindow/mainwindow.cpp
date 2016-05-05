@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     players_table = new btm::QPlayersTable(ui->tablePlayers);
+    tournament = btm::Tournament::New();
+    ui->widgetRound->SetTournament(tournament);
 }
 //----------------------------------------------------------------------------
 
@@ -42,7 +44,7 @@ void MainWindow::AddToStatus(std::string & s)
 //----------------------------------------------------------------------------
 void MainWindow::on_pushButton_clicked()
 {
-    auto round = tournament.StartNewRound();
+    auto round = tournament->StartNewRound();
     UpdateDisplayCurrentRound();
     UpdateDisplayPlayersStatus();
 }
@@ -55,8 +57,8 @@ void MainWindow::on_pushButton_rnd_players_clicked()
     btm::Player::vector players;
     btm::GenerateRandomPlayers(players, 31);
     std::cout << std::endl;
-    tournament.players = players;
-    players_table->SetPlayers(tournament.players);
+    tournament->players = players;
+    players_table->SetPlayers(tournament->players);
 }
 //----------------------------------------------------------------------------
 
@@ -64,7 +66,7 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 //----------------------------------------------------------------------------
 void MainWindow::on_pushButton_rnd_scores_clicked()
 {
-    tournament.GenerateRandomScores(tournament.rounds.back());
+    tournament->GenerateRandomScores(tournament->rounds.back());
     UpdateDisplayCurrentRound();
     UpdateDisplayPlayersStatus();
 }
@@ -74,9 +76,10 @@ void MainWindow::on_pushButton_rnd_scores_clicked()
 //----------------------------------------------------------------------------
 void MainWindow::UpdateDisplayCurrentRound()
 {
-    auto round = tournament.rounds.back();
+    auto round = tournament->rounds.back();
     QString s = QString::fromStdString(round->ToString());
     ui->textCurrentyRoundStatus->setPlainText(s);
+    //ui->tabRound->
 }
 //----------------------------------------------------------------------------
 
@@ -84,8 +87,8 @@ void MainWindow::UpdateDisplayCurrentRound()
 //----------------------------------------------------------------------------
 void MainWindow::UpdateDisplayPlayersStatus()
 {
-    tournament.ComputePlayersStatus();
-    auto x = tournament.GetPlayersStatus();
+    tournament->ComputePlayersStatus();
+    auto x = tournament->GetPlayersStatus();
     QString s = QString::fromStdString(x);
     ui->textPlayersStatus->setPlainText(s);
     players_table->Update();
@@ -98,4 +101,9 @@ void MainWindow::on_tablePlayers_cellChanged(int row, int column)
     DD(row);
     DD(column);
     players_table->cellChanged(row, column);
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+
 }

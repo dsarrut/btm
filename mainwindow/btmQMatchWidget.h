@@ -16,8 +16,11 @@ public:
     explicit QMatchWidget(QWidget *parent = 0);
     ~QMatchWidget();
 
-private slots:
-    void on_pushButton_clicked();
+    void SetMatch(btm::Match::pointer m);
+    void Update();
+
+protected:
+    btm::Match::pointer match;
 
 private:
     Ui::QMatchWidget *ui;
