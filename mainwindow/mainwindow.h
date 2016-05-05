@@ -24,7 +24,6 @@ public:
     void AddToStatus(std::string & s);
 
     void UpdateDisplayCurrentRound();
-    void UpdateDisplayPlayersStatus();
 
     btm::Tournament::pointer tournament;
     btm::QPlayersTable * players_table;
@@ -35,7 +34,7 @@ private slots:
     void on_pushButton_rnd_players_clicked();
     void on_pushButton_rnd_scores_clicked();
     void on_tablePlayers_cellChanged(int row, int column);
-
+    void UpdateDisplayPlayersStatus();
     void on_pushButton_5_clicked();
 
 private:

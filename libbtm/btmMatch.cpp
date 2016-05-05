@@ -36,10 +36,12 @@ void btm::Match::UpdatePlayersStatus()
 
 void btm::Match::GenerateRandomScore(std::mt19937 & rng)
 {
-//    std::mt19937 rng(std::time(0));
     sets[0]->GenerateRandomScore(rng);
     sets[1]->GenerateRandomScore(rng);
     if (sets[0]->GetWinner() != sets[1]->GetWinner())
         sets[2]->GenerateRandomScore(rng);
-    DD(sets[0]->team1_points)
+    int w0 = sets[0]->GetWinner();
+    int w1 = sets[1]->GetWinner();
+    if (w0 == w1) score = w0;
+    else score = sets[2]->GetWinner();
 }

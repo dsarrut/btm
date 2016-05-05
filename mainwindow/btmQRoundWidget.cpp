@@ -43,14 +43,17 @@ void QRoundWidget::on_buttonRandomScores_clicked()
     std::mt19937 rng(std::time(0));
     for(auto & m:round->matches)
         m->GenerateRandomScore(rng);
+    round->status = btm::Round::Terminated;
     Update();
 }
 
 void QRoundWidget::on_buttonNewRound_clicked()
 {
-   DD("TODO Check current round");
-   round = tournament->StartNewRound();
-   DD("before udpate");
-   Update();
+   if (!tournament) return;
+   if (!round or round->GetStatus() == btm::Round::Terminated) {
+       round = tournament->StartNewRound();
+       emit newRound();
+       Update();
+   }
 }
 

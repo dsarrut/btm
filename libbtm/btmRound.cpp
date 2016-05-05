@@ -2,12 +2,7 @@
 
 btm::Round::Round()
 {
-
-}
-
-void btm::Round::Bidon()
-{
-    std::cout << "hello" << std::endl;
+    status = Init;
 }
 
 std::string btm::Round::ToString()

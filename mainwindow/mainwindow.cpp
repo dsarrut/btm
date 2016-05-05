@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     players_table = new btm::QPlayersTable(ui->tablePlayers);
     tournament = btm::Tournament::New();
     ui->widgetRound->SetTournament(tournament);
+    QObject::connect(ui->widgetRound, SIGNAL(newRound()),
+                     this, SLOT(UpdateDisplayPlayersStatus()));
 }
 //----------------------------------------------------------------------------
 
@@ -79,7 +81,6 @@ void MainWindow::UpdateDisplayCurrentRound()
     auto round = tournament->rounds.back();
     QString s = QString::fromStdString(round->ToString());
     ui->textCurrentyRoundStatus->setPlainText(s);
-    //ui->tabRound->
 }
 //----------------------------------------------------------------------------
 
@@ -98,8 +99,6 @@ void MainWindow::UpdateDisplayPlayersStatus()
 
 void MainWindow::on_tablePlayers_cellChanged(int row, int column)
 {
-    DD(row);
-    DD(column);
     players_table->cellChanged(row, column);
 }
 

@@ -25,9 +25,11 @@ protected:
     btm::Round::pointer round;
     std::vector<QMatchWidget*> widgetMatches;
 
+signals:
+    void newRound();
+
 private slots:
     void on_buttonRandomScores_clicked();
-
     void on_buttonNewRound_clicked();
 
 private:
