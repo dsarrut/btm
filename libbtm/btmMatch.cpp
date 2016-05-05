@@ -1,9 +1,11 @@
 #include "btmMatch.h"
 
-btm::Match::Match()
+btm::Match::Match(int n)
 {
     score = 0;
     for(auto i=0; i<3; i++) sets.push_back(btm::Set::New());
+    status = Init;
+    match_nb = n;
 }
 
 std::string btm::Match::ToString()
@@ -40,8 +42,18 @@ void btm::Match::GenerateRandomScore(std::mt19937 & rng)
     sets[1]->GenerateRandomScore(rng);
     if (sets[0]->GetWinner() != sets[1]->GetWinner())
         sets[2]->GenerateRandomScore(rng);
-    int w0 = sets[0]->GetWinner();
+    score = GetWinner();
+    /*int w0 = sets[0]->GetWinner();
     int w1 = sets[1]->GetWinner();
     if (w0 == w1) score = w0;
-    else score = sets[2]->GetWinner();
+    else score = sets[2]->GetWinner();*/
+}
+
+int btm::Match::GetWinner()
+{
+    if (sets[0]->GetWinner() == 0) return 0;
+    if (sets[1]->GetWinner() == sets[0]->GetWinner())
+        return sets[1]->GetWinner();
+    if (sets[1]->GetWinner() == 0) return 0;
+    return sets[2]->GetWinner();
 }

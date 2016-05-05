@@ -46,7 +46,7 @@ void btm::Tournament::PairRandom(btm::Round::pointer r,
 {
  auto temp = players;
  for(unsigned int i=0; i<temp.size(); i+=4) {
-     auto m = btm::Match::New();
+     auto m = btm::Match::New(i);
      m->players[0] = temp[i];
      m->players[1] = temp[i+1];
      m->players[2] = temp[i+2];
@@ -65,13 +65,15 @@ void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
  {
      return a->nb_of_win_matches > b->nb_of_win_matches;
  });
+ int nb=1;
   for(unsigned int i=0; i<temp.size(); i+=4) {
-     auto m = btm::Match::New();
+     auto m = btm::Match::New(nb);
      m->players[0] = temp[i];
      m->players[1] = temp[i+2]; // first with third
      m->players[2] = temp[i+1];
      m->players[3] = temp[i+3];
      r->matches.push_back(m);
+     ++nb;
  }
 }
 
