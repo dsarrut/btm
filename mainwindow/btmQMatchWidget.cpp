@@ -9,6 +9,8 @@ QMatchWidget::QMatchWidget(QWidget *parent) :
     style_winner = "QLabel { color : green; }";
     style_looser = "QLabel { color : red; }";
     style_in_progress = "QLabel { color : black; }";
+    QObject::connect(this, SIGNAL(matchScoreChanged(btm::Match::pointer)),
+                     this, SLOT(Update()));
 }
 
 QMatchWidget::~QMatchWidget()
@@ -107,12 +109,8 @@ void QMatchWidget::SetScore(int team, int set, const QString & v)
 {
     bool ok;
     int value = v.toInt(&ok);
-    if (ok) {
-        match->SetScore(team,set, value);
-        //if (team == 1) match->GetSet(set)->team1_points = value;
-        //else match->GetSet(set)->team2_points = value;
-    }
-    Update();
+    if (ok) match->SetScore(team,set, value);
+    emit matchScoreChanged(match);
 }
 
 void QMatchWidget::on_lineTeam1Set1_textEdited(const QString &arg1)

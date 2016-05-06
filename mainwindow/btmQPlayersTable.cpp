@@ -1,4 +1,5 @@
 #include "btmQPlayersTable.h"
+#include <QHeaderView>
 
 btm::QPlayersTable::QPlayersTable(QTableWidget * t)
 {
@@ -28,6 +29,7 @@ void btm::QPlayersTable::Update()
 {
     table->blockSignals(true);
     for(auto r:row_items) r->Update();
+    table->resizeColumnsToContents();
     table->blockSignals(false);
 }
 
@@ -37,6 +39,7 @@ void btm::QPlayersTable::cellChanged(int row, int column)
         auto item = table->item(row, column);
         auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
         a->Update();
+        table->resizeColumnsToContents();
     }
 }
 

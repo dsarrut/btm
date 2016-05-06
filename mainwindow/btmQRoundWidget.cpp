@@ -35,6 +35,8 @@ void QRoundWidget::AddWidget()
         ++row;
     }
     widgetMatches.push_back(w);
+    QObject::connect(w, SIGNAL(matchScoreChanged(btm::Match::pointer)),
+                     this, SLOT(Update()));
 }
 
 void QRoundWidget::Update()
@@ -42,7 +44,7 @@ void QRoundWidget::Update()
    //  add widget if too much matches
    for(unsigned int i=widgetMatches.size(); i<round->matches.size(); i++)
       AddWidget();
-   DD(round->GetStatus());
+
    // Update match widgets
    for(unsigned int i=0; i<round->matches.size(); i++) {
         widgetMatches[i]->SetMatch(round->matches[i]);
@@ -52,6 +54,7 @@ void QRoundWidget::Update()
    if (tournament->rounds.back()->GetStatus() == btm::Terminated)
        ui->buttonNewRound->setEnabled(true);
    else ui->buttonNewRound->setEnabled(false);
+
    // Set button status
    if (round->GetStatus() == btm::Terminated)
        ui->buttonRandomScores->setEnabled(false);

@@ -18,8 +18,10 @@ public:
     ~QMatchWidget();
 
     void SetMatch(btm::Match::pointer m);
-    void Update();
     void SetScore(int team, int set, const QString & v);
+
+public slots:
+    void Update();
 
 protected:
     btm::Match::pointer match;
@@ -27,6 +29,9 @@ protected:
     QString style_looser;
     QString style_in_progress;
     std::vector<QLabel*> labels;
+
+signals:
+    void matchScoreChanged(btm::Match::pointer m);
 
 private slots:
     void on_lineTeam1Set1_textEdited(const QString &arg1);

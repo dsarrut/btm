@@ -39,6 +39,5 @@ btm::Status btm::Round::GetStatus()
     }
     if (playing == matches.size()) status = Playing;
     if (term == matches.size()) status = Terminated;
-    DD(status);
     return status;
 }

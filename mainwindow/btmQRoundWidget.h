@@ -18,8 +18,10 @@ public:
     ~QRoundWidget();
 
     void SetTournament(btm::Tournament::pointer tournament);
-    void Update();
     void AddWidget();
+
+public slots:
+    void Update();
 
 protected:
     btm::Tournament::pointer tournament;
