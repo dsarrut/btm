@@ -21,6 +21,10 @@ QRoundWidget::~QRoundWidget()
 void QRoundWidget::SetTournament(btm::Tournament::pointer t)
 {
     tournament = t;
+    DD("ici");
+    round = NULL;
+    DD("ici");
+    Update();
 }
 
 void QRoundWidget::AddWidget()
@@ -43,6 +47,14 @@ void QRoundWidget::AddWidget()
 
 void QRoundWidget::Update()
 {
+    if (round == NULL) {
+        for(auto w:widgetMatches) w->setVisible(false);
+        ui->labelRound->setText("Tour n°0");
+        btm::Player::vector a; // empty
+        waitingPlayersWidget->SetPlayers(a);
+        return;
+    }
+
     //waitingPlayersWidget
     waitingPlayersWidget->SetPlayers(round->waiting_players);
 

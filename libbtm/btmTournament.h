@@ -26,6 +26,8 @@ public:
     void GenerateRandomScores(btm::Round::pointer r);
     void ComputePlayersStatus();
     std::string GetPlayersStatus();
+    void SavePlayersToFile(std::string filename);
+    void LoadPlayersFromFile(std::string filename);
 
     btm::Player::vector players;
     btm::Round::vector rounds;

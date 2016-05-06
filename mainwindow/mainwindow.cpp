@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QFileDialog>
+#include <QMessageBox>
 
 #include "btmQTableWidgetItemWithPlayer.h"
 
@@ -11,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     players_table = new btm::QPlayersTable(ui->tablePlayers);
     tournament = btm::Tournament::New();
-    ui->widgetRound->SetTournament(tournament);
     QObject::connect(ui->widgetRound, SIGNAL(newRound()),
                      this, SLOT(UpdateDisplayPlayersStatus()));
 }
@@ -27,52 +28,19 @@ MainWindow::~MainWindow()
 
 
 //----------------------------------------------------------------------------
-void MainWindow::SetStatus(std::string & s)
-{
-    ui->textCurrentyRoundStatus->setPlainText(QString::fromStdString(s));
-}
-//----------------------------------------------------------------------------
-
-
-//----------------------------------------------------------------------------
-void MainWindow::AddToStatus(std::string & s)
-{
-    QString ss = ui->textCurrentyRoundStatus->toPlainText()
-            +QString::fromStdString(s);
-    ui->textCurrentyRoundStatus->setPlainText(ss);
-}
-//----------------------------------------------------------------------------
-
-
-
-//----------------------------------------------------------------------------
-void MainWindow::on_pushButton_clicked()
-{
-    auto round = tournament->StartNewRound();
-    UpdateDisplayCurrentRound();
-    UpdateDisplayPlayersStatus();
-}
-//----------------------------------------------------------------------------
-
-
-//----------------------------------------------------------------------------
 void MainWindow::on_pushButton_rnd_players_clicked()
 {
+    if (tournament->players.size() != 0) {
+        auto reply = QMessageBox::question(this, "Question",
+                                           "Cela va effacer tout le tournoi actuel. Souhaitez vous continuer ?",
+                                           QMessageBox::Yes|QMessageBox::No);
+        if (reply != QMessageBox::Yes) return;
+    }
     btm::Player::vector players;
     btm::GenerateRandomPlayers(players, 31);
-    std::cout << std::endl;
+    tournament = btm::Tournament::New();
     tournament->players = players;
-    players_table->SetPlayers(tournament->players);
-}
-//----------------------------------------------------------------------------
-
-
-//----------------------------------------------------------------------------
-void MainWindow::on_pushButton_rnd_scores_clicked()
-{
-    tournament->GenerateRandomScores(tournament->rounds.back());
-    UpdateDisplayCurrentRound();
-    UpdateDisplayPlayersStatus();
+    StartNewTournament();
 }
 //----------------------------------------------------------------------------
 
@@ -82,7 +50,6 @@ void MainWindow::UpdateDisplayCurrentRound()
 {
     auto round = tournament->rounds.back();
     QString s = QString::fromStdString(round->ToString());
-    ui->textCurrentyRoundStatus->setPlainText(s);
 }
 //----------------------------------------------------------------------------
 
@@ -93,7 +60,6 @@ void MainWindow::UpdateDisplayPlayersStatus()
     tournament->ComputePlayersStatus();
     auto x = tournament->GetPlayersStatus();
     QString s = QString::fromStdString(x);
-    ui->textPlayersStatus->setPlainText(s);
     players_table->Update();
 }
 //----------------------------------------------------------------------------
@@ -109,4 +75,35 @@ void MainWindow::on_tablePlayers_itemClicked(QTableWidgetItem *item)
 {
     auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
     a->itemClicked();
+}
+
+void MainWindow::on_buttonSave_clicked()
+{
+    auto fileName = QFileDialog::getSaveFileName(this,
+                                                 tr("Sauvegarde joueurs"));
+    tournament->SavePlayersToFile(fileName.toStdString());
+}
+
+void MainWindow::on_buttonLoad_clicked()
+{
+    if (tournament->players.size() != 0) {
+        auto reply = QMessageBox::question(this, "Question",
+                                           "Cela va effacer tout le tournoi actuel. Souhaitez vous continuer ?",
+                                           QMessageBox::Yes|QMessageBox::No);
+        if (reply != QMessageBox::Yes) return;
+    }
+    auto fileName = QFileDialog::getOpenFileName(this,
+                                                 tr("Charger des joueurs"));
+    if(!fileName.isEmpty()&& !fileName.isNull()){
+        tournament = btm::Tournament::New();
+        tournament->LoadPlayersFromFile(fileName.toStdString());
+        StartNewTournament();
+    }
+}
+
+void MainWindow::StartNewTournament()
+{
+    players_table->SetPlayers(tournament->players);
+    ui->widgetRound->SetTournament(tournament);
+    UpdateDisplayPlayersStatus();
 }
