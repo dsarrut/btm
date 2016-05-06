@@ -10,6 +10,7 @@ btm::QPlayerTableRow::QPlayerTableRow(btm::Player::pointer p,
     table = t;
     items.resize(7);
     InsertItem(row, 0, true);  // name
+    items[0]->checkable = true;
     InsertItem(row, 1, false); // matches
     InsertItem(row, 2, false); // victory
     InsertItem(row, 3, false); // sets
@@ -30,7 +31,10 @@ void btm::QPlayerTableRow::InsertItem(int row, int col, bool editable)
 void btm::QPlayerTableRow::Update()
 {
     items[0]->setText(QString::fromStdString(player->name));
-
+    if (player->participate)
+        items[0]->setCheckState(Qt::CheckState::Checked);
+    else
+        items[0]->setCheckState(Qt::CheckState::Unchecked);
     items[1]->setData(Qt::DisplayRole, player->nb_of_matches);
     items[2]->setData(Qt::DisplayRole, player->nb_of_win_matches);
     items[3]->setData(Qt::DisplayRole, player->nb_of_win_sets);
@@ -38,7 +42,6 @@ void btm::QPlayerTableRow::Update()
     items[5]->setData(Qt::DisplayRole, player->nb_of_lost_matches);
     items[6]->setData(Qt::DisplayRole, player->nb_of_wait_rounds);
 }
-
 
 btm::QPlayerTableRow::pointer btm::QPlayerTableRow::New(btm::Player::pointer p,
                                               QTableWidget *t,

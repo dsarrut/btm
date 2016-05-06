@@ -36,6 +36,8 @@ private slots:
     void on_tablePlayers_cellChanged(int row, int column);
     void UpdateDisplayPlayersStatus();
 
+    void on_tablePlayers_itemClicked(QTableWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
 };

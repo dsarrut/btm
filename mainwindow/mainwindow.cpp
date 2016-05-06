@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "btmQTableWidgetItemWithPlayer.h"
+
 //----------------------------------------------------------------------------
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -102,3 +104,9 @@ void MainWindow::on_tablePlayers_cellChanged(int row, int column)
     players_table->cellChanged(row, column);
 }
 
+
+void MainWindow::on_tablePlayers_itemClicked(QTableWidgetItem *item)
+{
+    auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
+    a->itemClicked();
+}

@@ -13,8 +13,11 @@ class QTableWidgetItemWithPlayer : public QTableWidgetItem
 public:
     QTableWidgetItemWithPlayer(btm::Player::pointer p);
     void Update();
+    void itemClicked();
 
+    bool checkable;
     btm::Player::pointer player;
+
 };
 
 } // end namespace

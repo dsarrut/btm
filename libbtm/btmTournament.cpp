@@ -13,7 +13,9 @@ btm::Round::pointer btm::Tournament::StartNewRound()
 {
  auto r = btm::Round::New();
  r->round_nb = rounds.size()+1;// to start at one
- btm::Player::vector temp = players; //copy
+ btm::Player::vector temp;//= players; //copy
+ for(auto p:players)
+     if (p->participate) temp.push_back(p);
  std::random_shuffle(temp.begin(), temp.end());
  ComputeWaitingPlayers(r, temp);
  PairSwissSystem(r, temp);

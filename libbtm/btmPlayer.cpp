@@ -3,6 +3,7 @@
 btm::Player::Player()
 {
     ResetStatus();
+    participate = true;
 }
 
 std::string btm::Player::ToString() const

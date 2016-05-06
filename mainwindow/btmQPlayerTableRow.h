@@ -3,6 +3,7 @@
 
 #include <btmPlayer.h>
 #include <QTableWidget>
+#include <QTableWidgetItem>
 #include "btmQTableWidgetItemWithPlayer.h"
 
 namespace btm {

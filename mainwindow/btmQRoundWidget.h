@@ -4,6 +4,7 @@
 #include <QFrame>
 #include "btmTournament.h"
 #include "btmQMatchWidget.h"
+#include "btmQWaitingPlayersWidget.h"
 
 namespace Ui {
 class QRoundWidget;
@@ -27,6 +28,7 @@ protected:
     btm::Tournament::pointer tournament;
     btm::Round::pointer round;
     std::vector<QMatchWidget*> widgetMatches;
+    QWaitingPlayersWidget * waitingPlayersWidget;
 
 signals:
     void newRound();
