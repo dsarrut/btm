@@ -58,6 +58,14 @@ unsigned int btm::Set::GetTeamPoints(unsigned int team) const
     exit(1);
 }
 
+void btm::Set::UpdatePlayerStats(int team, btm::Player::pointer m)
+{
+    if (GetWinner() == 0) return;
+    if (team == GetWinner()) ++m->nb_of_win_sets;
+    if (team == 1) m->nb_of_points += team1_points;
+    if (team == 2) m->nb_of_points += team2_points;
+}
+
 btm::Status btm::Set::GetStatus()
 {
     if (team1_points == team2_points and team1_points == 0) return Init;

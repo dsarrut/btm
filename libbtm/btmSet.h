@@ -4,7 +4,7 @@
 #include <random>
 #include <memory>
 #include <ctime>
-#include "btmDD.h"
+#include "btmPlayer.h"
 
 namespace btm {
 
@@ -28,6 +28,7 @@ public:
     unsigned int GetTeam1Points() const { return team1_points; }
     unsigned int GetTeam2Points() const { return team2_points; }
     unsigned int GetTeamPoints(unsigned int team) const;
+    void UpdatePlayerStats(int team, btm::Player::pointer m);
 
 protected:
     unsigned int team1_points;

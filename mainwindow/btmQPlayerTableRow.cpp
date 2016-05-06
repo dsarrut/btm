@@ -8,12 +8,14 @@ btm::QPlayerTableRow::QPlayerTableRow(btm::Player::pointer p,
 {
     player = p;
     table = t;
-    items.resize(5);
-    InsertItem(row, 0, true);
-    InsertItem(row, 1, false);
-    InsertItem(row, 2, false);
-    InsertItem(row, 3, false);
-    InsertItem(row, 4, false);
+    items.resize(7);
+    InsertItem(row, 0, true);  // name
+    InsertItem(row, 1, false); // matches
+    InsertItem(row, 2, false); // victory
+    InsertItem(row, 3, false); // sets
+    InsertItem(row, 4, false); // points
+    InsertItem(row, 5, false); // loose
+    InsertItem(row, 6, false); // wait
 }
 
 void btm::QPlayerTableRow::InsertItem(int row, int col, bool editable)
@@ -28,10 +30,13 @@ void btm::QPlayerTableRow::InsertItem(int row, int col, bool editable)
 void btm::QPlayerTableRow::Update()
 {
     items[0]->setText(QString::fromStdString(player->name));
-    items[1]->setText(QString("%1").arg(player->nb_of_matches));
-    items[2]->setText(QString("%1").arg(player->nb_of_win_matches));
-    items[3]->setText(QString("%1").arg(player->nb_of_lost_matches));
-    items[4]->setText(QString("%1").arg(player->nb_of_wait_rounds));
+
+    items[1]->setData(Qt::DisplayRole, player->nb_of_matches);
+    items[2]->setData(Qt::DisplayRole, player->nb_of_win_matches);
+    items[3]->setData(Qt::DisplayRole, player->nb_of_win_sets);
+    items[4]->setData(Qt::DisplayRole, player->nb_of_points);
+    items[5]->setData(Qt::DisplayRole, player->nb_of_lost_matches);
+    items[6]->setData(Qt::DisplayRole, player->nb_of_wait_rounds);
 }
 
 

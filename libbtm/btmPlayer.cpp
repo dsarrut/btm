@@ -28,6 +28,8 @@ void btm::Player::ResetStatus()
     nb_of_lost_matches = 0;
     nb_of_matches = 0;
     nb_of_win_matches = 0;
+    nb_of_points = 0;
+    nb_of_win_sets = 0;
 }
 
 void btm::GenerateRandomPlayers(btm::Player::vector & players, int n)

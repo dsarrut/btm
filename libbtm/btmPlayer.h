@@ -24,6 +24,8 @@ public:
     int nb_of_matches;
     int nb_of_win_matches;
     int nb_of_lost_matches;
+    int nb_of_win_sets;
+    int nb_of_points;
 
     std::string ToString() const;
     std::string StatusToString() const;

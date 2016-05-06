@@ -33,6 +33,12 @@ void btm::Match::UpdatePlayersStatus()
         players[0]->nb_of_lost_matches++;
         players[1]->nb_of_lost_matches++;
     }
+    for(auto i=0; i<3; i++) {
+        sets[i]->UpdatePlayerStats(1,players[0]);
+        sets[i]->UpdatePlayerStats(1,players[1]);
+        sets[i]->UpdatePlayerStats(2,players[2]);
+        sets[i]->UpdatePlayerStats(2,players[3]);
+    }
 }
 
 void btm::Match::GenerateRandomScore(std::mt19937 & rng)
