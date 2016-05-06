@@ -47,10 +47,10 @@ void btm::Tournament::PairRandom(btm::Round::pointer r,
  auto temp = players;
  for(unsigned int i=0; i<temp.size(); i+=4) {
      auto m = btm::Match::New(i);
-     m->players[0] = temp[i];
-     m->players[1] = temp[i+1];
-     m->players[2] = temp[i+2];
-     m->players[3] = temp[i+3];
+     m->SetPlayer(0, temp[i]);
+     m->SetPlayer(1, temp[i+1]);
+     m->SetPlayer(2, temp[i+2]);
+     m->SetPlayer(3, temp[i+3]);
      r->matches.push_back(m);
  }
 }
@@ -68,10 +68,10 @@ void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
  int nb=1;
   for(unsigned int i=0; i<temp.size(); i+=4) {
      auto m = btm::Match::New(nb);
-     m->players[0] = temp[i];
-     m->players[1] = temp[i+2]; // first with third
-     m->players[2] = temp[i+1];
-     m->players[3] = temp[i+3];
+     m->SetPlayer(0, temp[i]);
+     m->SetPlayer(1, temp[i+2]); // first with third
+     m->SetPlayer(2, temp[i+1]);
+     m->SetPlayer(3, temp[i+3]);
      r->matches.push_back(m);
      ++nb;
  }
@@ -81,9 +81,6 @@ void btm::Tournament::GenerateRandomScores(btm::Round::pointer r)
 {
     std::mt19937 rng(std::time(0));
     std::uniform_int_distribution<int> gen(1, 2);
-    for(auto & m:r->matches) {
-        m->score = gen(rng);
-    }
     for(auto & m:r->matches) m->GenerateRandomScore(rng);
 }
 

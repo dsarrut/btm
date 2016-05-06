@@ -10,26 +10,30 @@ namespace btm {
 class Match
 {
 public:
+    // Const
     Match(int n);
 
+    // Types
     typedef std::shared_ptr<Match> pointer;
     typedef std::vector<pointer> vector;
     static pointer New(int n) { return std::make_shared<Match>(n); }
-    enum Status { Init, Playing, Terminated };
 
     std::string ToString();
     void UpdatePlayersStatus();
     void GenerateRandomScore(std::mt19937 &rng);
-
     void SetScore(int team, int set, int points);
     int GetWinner();
+    btm::Status GetStatus();
+    unsigned int GetMatchNb() const { return match_nb; }
+    void SetPlayer(unsigned int i, btm::Player::pointer p);
+    btm::Player::pointer GetPlayer(int i) { return players[i]; }
+    btm::Set::pointer GetSet(int i) { return sets[i]; }
 
+protected:
     std::array<btm::Player::pointer, 4> players;
-
     std::vector<btm::Set::pointer> sets;
-    Status status;
-    int match_nb;
-    int score; // 0=in progress 1=team1 or 2=team2
+    unsigned int match_nb;
+    unsigned int score; // 0=in progress 1=team1 or 2=team2
 
 };
 } // end namespace

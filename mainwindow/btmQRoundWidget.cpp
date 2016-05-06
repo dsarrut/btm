@@ -7,17 +7,6 @@ QRoundWidget::QRoundWidget(QWidget *parent) :
     ui(new Ui::QRoundWidget)
 {
     ui->setupUi(this);
-    /*
-    widgetMatches.push_back(ui->widgetMatch1);
-    widgetMatches.push_back(ui->widgetMatch2);
-    widgetMatches.push_back(ui->widgetMatch3);
-    widgetMatches.push_back(ui->widgetMatch4);
-    widgetMatches.push_back(ui->widgetMatch5);
-    widgetMatches.push_back(ui->widgetMatch6);
-    widgetMatches.push_back(ui->widgetMatch7);
-    widgetMatches.push_back(ui->widgetMatch8);
-    widgetMatches.push_back(ui->widgetMatch9);
-    */
     QGridLayout *layout = new QGridLayout();
     ui->frameMatches->setLayout(layout);
 }
@@ -53,17 +42,18 @@ void QRoundWidget::Update()
    //  add widget if too much matches
    for(unsigned int i=widgetMatches.size(); i<round->matches.size(); i++)
       AddWidget();
+   DD(round->GetStatus());
    // Update match widgets
    for(unsigned int i=0; i<round->matches.size(); i++) {
         widgetMatches[i]->SetMatch(round->matches[i]);
     }
    // Update round nb
    ui->labelRound->setText(QString("Tour n°%1").arg(round->round_nb));
-   if (tournament->rounds.back()->status == btm::Round::Terminated)
+   if (tournament->rounds.back()->GetStatus() == btm::Terminated)
        ui->buttonNewRound->setEnabled(true);
    else ui->buttonNewRound->setEnabled(false);
    // Set button status
-   if (round->status == btm::Round::Terminated)
+   if (round->GetStatus() == btm::Terminated)
        ui->buttonRandomScores->setEnabled(false);
    else ui->buttonRandomScores->setEnabled(true);
    if (round->round_nb == 1) ui->buttonBack->setEnabled(false);
@@ -78,14 +68,13 @@ void QRoundWidget::on_buttonRandomScores_clicked()
     std::mt19937 rng(std::time(0));
     for(auto & m:round->matches)
         m->GenerateRandomScore(rng);
-    round->status = btm::Round::Terminated;
     Update();
 }
 
 void QRoundWidget::on_buttonNewRound_clicked()
 {
    if (!tournament) return;
-   if (!round or round->GetStatus() == btm::Round::Terminated) {
+   if (!round or round->GetStatus() == btm::Terminated) {
        round = tournament->StartNewRound();
        emit newRound();
        Update();

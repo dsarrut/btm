@@ -6,6 +6,9 @@ QMatchWidget::QMatchWidget(QWidget *parent) :
     ui(new Ui::QMatchWidget)
 {
     ui->setupUi(this);
+    style_winner = "QLabel { color : green; }";
+    style_looser = "QLabel { color : red; }";
+    style_in_progress = "QLabel { color : black; }";
 }
 
 QMatchWidget::~QMatchWidget()
@@ -21,26 +24,42 @@ void QMatchWidget::SetMatch(btm::Match::pointer m)
 
 void QMatchWidget::Update()
 {
+
+    // Color
+    if (match->GetWinner() == 1) {
+        ui->labelTeam1Status->setStyleSheet(style_winner);
+        ui->labelTeam2Status->setStyleSheet(style_looser);
+    }
+    if (match->GetWinner() == 2) {
+        ui->labelTeam1Status->setStyleSheet(style_looser);
+        ui->labelTeam2Status->setStyleSheet(style_winner);
+    }
+    if (match->GetWinner() == 0) {
+        ui->labelTeam1Status->setStyleSheet(style_in_progress);
+        ui->labelTeam2Status->setStyleSheet(style_in_progress);
+    }
+
+
     // Player names
-    ui->labelPlayer1->setText(QString::fromStdString(match->players[0]->name));
-    ui->labelPlayer2->setText(QString::fromStdString(match->players[1]->name));
-    ui->labelPlayer3->setText(QString::fromStdString(match->players[2]->name));
-    ui->labelPlayer4->setText(QString::fromStdString(match->players[3]->name));
+    ui->labelPlayer1->setText(QString::fromStdString(match->GetPlayer(0)->name));
+    ui->labelPlayer2->setText(QString::fromStdString(match->GetPlayer(1)->name));
+    ui->labelPlayer3->setText(QString::fromStdString(match->GetPlayer(2)->name));
+    ui->labelPlayer4->setText(QString::fromStdString(match->GetPlayer(3)->name));
 
     // Scores
-    ui->lineTeam1Set1->setText(QString("%1").arg(match->sets[0]->team1_points));
-    ui->lineTeam2Set1->setText(QString("%1").arg(match->sets[0]->team2_points));
-    ui->lineTeam1Set2->setText(QString("%1").arg(match->sets[1]->team1_points));
-    ui->lineTeam2Set2->setText(QString("%1").arg(match->sets[1]->team2_points));
-    ui->lineTeam1Set3->setText(QString("%1").arg(match->sets[2]->team1_points));
-    ui->lineTeam2Set3->setText(QString("%1").arg(match->sets[2]->team2_points));
+    ui->lineTeam1Set1->setText(QString("%1").arg(match->GetSet(0)->GetTeam1Points()));
+    ui->lineTeam2Set1->setText(QString("%1").arg(match->GetSet(0)->GetTeam2Points()));
+    ui->lineTeam1Set2->setText(QString("%1").arg(match->GetSet(1)->GetTeam1Points()));
+    ui->lineTeam2Set2->setText(QString("%1").arg(match->GetSet(1)->GetTeam2Points()));
+    ui->lineTeam1Set3->setText(QString("%1").arg(match->GetSet(2)->GetTeam1Points()));
+    ui->lineTeam2Set3->setText(QString("%1").arg(match->GetSet(2)->GetTeam2Points()));
 
     // First set
     ui->lineTeam1Set1->setEnabled(true);
     ui->lineTeam1Set1->setEnabled(true);
 
     // Second set
-    if (match->sets[0]->GetWinner() == 0) {
+    if (match->GetSet(0)->GetWinner() == 0) {
         ui->lineTeam1Set2->setEnabled(false);
         ui->lineTeam2Set2->setEnabled(false);
     }
@@ -50,9 +69,9 @@ void QMatchWidget::Update()
     }
 
     // Third set
-    if (match->sets[0]->GetWinner() != 0 and
-        match->sets[1]->GetWinner() != 0 and
-        match->sets[0]->GetWinner() != match->sets[1]->GetWinner()) {
+    if (match->GetSet(0)->GetWinner() != 0 and
+        match->GetSet(1)->GetWinner() != 0 and
+        match->GetSet(0)->GetWinner() != match->GetSet(1)->GetWinner()) {
         ui->lineTeam1Set3->setEnabled(true);
         ui->lineTeam2Set3->setEnabled(true);
     }
@@ -62,7 +81,12 @@ void QMatchWidget::Update()
     }
 
     // Match nb
-    ui->groupBox->setTitle(QString("Match n°%1").arg(match->match_nb));
+    QString status;
+    if (match->GetStatus() == btm::Init) status = "";
+    if (match->GetStatus() == btm::Terminated) status = "terminé";
+    if (match->GetStatus() == btm::Playing) status = "en cours";
+    ui->groupBox->setTitle(QString("Match n°%1 \t\t %2")
+                           .arg(match->GetMatchNb()).arg(status));
 
     // Status win/loose
     if (match->GetWinner() == 1) {
@@ -85,8 +109,8 @@ void QMatchWidget::SetScore(int team, int set, const QString & v)
     int value = v.toInt(&ok);
     if (ok) {
         match->SetScore(team,set, value);
-        //if (team == 1) match->sets[set]->team1_points = value;
-        //else match->sets[set]->team2_points = value;
+        //if (team == 1) match->GetSet(set)->team1_points = value;
+        //else match->GetSet(set)->team2_points = value;
     }
     Update();
 }

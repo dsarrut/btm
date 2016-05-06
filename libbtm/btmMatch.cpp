@@ -4,7 +4,6 @@ btm::Match::Match(int n)
 {
     score = 0;
     for(auto i=0; i<3; i++) sets.push_back(btm::Set::New());
-    status = Init;
     match_nb = n;
 }
 
@@ -67,4 +66,21 @@ int btm::Match::GetWinner()
         return sets[0]->GetWinner();
     if (sets[1]->GetWinner() == 0) return 0;
     return sets[2]->GetWinner();
+}
+
+btm::Status btm::Match::GetStatus()
+{
+    if (GetWinner() != 0) return Terminated;
+    if (sets[0]->GetStatus() == Init and
+        sets[1]->GetStatus() == Init and
+        sets[2]->GetStatus() == Init) return Init;
+    return Playing;
+}
+
+void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
+{
+    if (i<4) players[i] = p;
+    else {
+        DD("Error set player");
+    }
 }

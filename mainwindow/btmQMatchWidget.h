@@ -2,6 +2,7 @@
 #define QMATCHWIDGET_H
 
 #include <QWidget>
+#include <QLabel>
 #include "btmTournament.h"
 
 namespace Ui {
@@ -22,6 +23,10 @@ public:
 
 protected:
     btm::Match::pointer match;
+    QString style_winner;
+    QString style_looser;
+    QString style_in_progress;
+    std::vector<QLabel*> labels;
 
 private slots:
     void on_lineTeam1Set1_textEdited(const QString &arg1);

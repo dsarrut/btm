@@ -2,7 +2,6 @@
 
 btm::Round::Round()
 {
-    status = Init;
 }
 
 std::string btm::Round::ToString()
@@ -26,4 +25,20 @@ void btm::Round::UpdatePlayersStatus()
     for(auto p:waiting_players) {
         p->nb_of_wait_rounds++;
     }
+}
+
+btm::Status btm::Round::GetStatus()
+{
+    btm::Status status = Init;
+    unsigned int playing=0;
+    unsigned int term=0;
+    for(auto m:matches) {
+     if (m->GetStatus() == Init) status = Init;
+     if (m->GetStatus() == Playing) ++playing;
+     if (m->GetStatus() == Terminated) ++term;
+    }
+    if (playing == matches.size()) status = Playing;
+    if (term == matches.size()) status = Terminated;
+    DD(status);
+    return status;
 }

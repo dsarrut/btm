@@ -49,3 +49,18 @@ void btm::Set::SetScore(int team, int points)
     if (team == 1) team1_points = points;
     else team2_points = points;
 }
+
+unsigned int btm::Set::GetTeamPoints(unsigned int team) const
+{
+    if (team == 1) return GetTeam1Points();
+    if (team == 2) return GetTeam2Points();
+    DD("Error team");
+    exit(1);
+}
+
+btm::Status btm::Set::GetStatus()
+{
+    if (team1_points == team2_points and team1_points == 0) return Init;
+    if (GetWinner() != 0) return Terminated;
+    return Playing;
+}

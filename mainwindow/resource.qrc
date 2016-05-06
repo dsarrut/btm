@@ -1,1 +1,6 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/go-next-9.png</file>
+        <file>icons/go-previous-9.png</file>
+    </qresource>
+</RCC>
