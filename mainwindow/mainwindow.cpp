@@ -100,3 +100,12 @@ void MainWindow::StartNewTournament()
     ui->widgetRound->SetTournament(tournament);
     UpdateDisplayPlayersStatus();
 }
+
+void MainWindow::on_buttonAddPlayer_clicked()
+{
+    auto p = btm::Player::New();
+    p->name = "pas de nom encore";
+    tournament->players.push_back(p);
+    players_table->AddPlayer(p);
+    UpdateDisplayPlayersStatus();
+}

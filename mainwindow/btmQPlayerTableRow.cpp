@@ -3,8 +3,8 @@
 #include "btmQTableWidgetItemWithPlayer.h"
 
 btm::QPlayerTableRow::QPlayerTableRow(btm::Player::pointer p,
-                       QTableWidget * t,
-                       int row)
+                                      QTableWidget * t,
+                                      int row)
 {
     player = p;
     table = t;
@@ -44,8 +44,8 @@ void btm::QPlayerTableRow::Update()
 }
 
 btm::QPlayerTableRow::pointer btm::QPlayerTableRow::New(btm::Player::pointer p,
-                                              QTableWidget *t,
-                                              int r)
+                                                        QTableWidget *t,
+                                                        int r)
 {
     return std::make_shared<QPlayerTableRow>(p, t, r);
 }

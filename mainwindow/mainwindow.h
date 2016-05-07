@@ -34,6 +34,8 @@ private slots:
     void on_buttonSave_clicked();
     void on_buttonLoad_clicked();
 
+    void on_buttonAddPlayer_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
