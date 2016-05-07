@@ -57,12 +57,22 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
+               <widget class="QRadioButton" name="radioButtonTeam1Player1">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLabel" name="labelPlayer1">
                 <property name="font">
                  <font>
                   <weight>50</weight>
                   <bold>false</bold>
                  </font>
+                </property>
+                <property name="acceptDrops">
+                 <bool>true</bool>
                 </property>
                 <property name="text">
                  <string>Machin-Chose Bidule</string>
@@ -79,6 +89,13 @@
                 </property>
                 <property name="text">
                  <string>/</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButtonTeam1Player2">
+                <property name="text">
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -113,6 +130,13 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
+               <widget class="QRadioButton" name="radioButtonTeam2Player1">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLabel" name="labelPlayer3">
                 <property name="font">
                  <font>
@@ -135,6 +159,13 @@
                 </property>
                 <property name="text">
                  <string>/</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButtonTeam2Player2">
+                <property name="text">
+                 <string/>
                 </property>
                </widget>
               </item>

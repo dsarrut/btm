@@ -23,12 +23,14 @@ public:
 
 public slots:
     void Update();
+    void playerSwitched(QMatchWidget *w, int player);
 
 protected:
     btm::Tournament::pointer tournament;
     btm::Round::pointer round;
     std::vector<QMatchWidget*> widgetMatches;
     QWaitingPlayersWidget * waitingPlayersWidget;
+    bool switchPlayerMode;
 
 signals:
     void newRound();
@@ -38,6 +40,8 @@ private slots:
     void on_buttonNewRound_clicked();
     void on_buttonBack_clicked();
     void on_buttonForward_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::QRoundWidget *ui;

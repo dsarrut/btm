@@ -11,6 +11,7 @@ QRoundWidget::QRoundWidget(QWidget *parent) :
     ui->frameMatches->setLayout(layout);
     waitingPlayersWidget = new QWaitingPlayersWidget();
     layout->addWidget(waitingPlayersWidget, 0, 0);
+    switchPlayerMode = false;
 }
 
 QRoundWidget::~QRoundWidget()
@@ -21,9 +22,7 @@ QRoundWidget::~QRoundWidget()
 void QRoundWidget::SetTournament(btm::Tournament::pointer t)
 {
     tournament = t;
-    DD("ici");
     round = NULL;
-    DD("ici");
     Update();
 }
 
@@ -43,6 +42,8 @@ void QRoundWidget::AddWidget()
     widgetMatches.push_back(w);
     QObject::connect(w, SIGNAL(matchScoreChanged(btm::Match::pointer)),
                      this, SLOT(Update()));
+    QObject::connect(w, SIGNAL(playerSwitched(QMatchWidget*,int)),
+                     this, SLOT(playerSwitched(QMatchWidget*, int)));
 }
 
 void QRoundWidget::Update()
@@ -87,6 +88,35 @@ void QRoundWidget::Update()
     if (round->round_nb == tournament->rounds.size())
         ui->buttonForward->setEnabled(false);
     else ui->buttonForward->setEnabled(true);
+
+    if (switchPlayerMode) {
+        ui->buttonBack->setEnabled(false);
+        ui->buttonForward->setEnabled(false);
+        ui->buttonNewRound->setEnabled(false);
+        ui->buttonRandomScores->setEnabled(false);
+    }
+}
+
+void QRoundWidget::playerSwitched(QMatchWidget *w, int player)
+{
+    static QMatchWidget * previous = NULL;
+    static int previous_player;
+
+    if (previous != NULL) {
+        auto m1 = w->GetMatch();
+        auto m2 = previous->GetMatch();
+        auto temp = m1->GetPlayer(player);
+        m1->SetPlayer(player, m2->GetPlayer(previous_player));
+        m2->SetPlayer(previous_player, temp);
+        w->UncheckSwitch();
+        previous->UncheckSwitch();
+        previous = NULL;
+        Update();
+    }
+    else {
+        previous = w;
+        previous_player = player;
+    }
 }
 
 void QRoundWidget::on_buttonRandomScores_clicked()
@@ -120,5 +150,13 @@ void QRoundWidget::on_buttonForward_clicked()
     auto i = round->round_nb;
     if (i==tournament->rounds.size()) return;
     round = tournament->rounds[i];
+    Update();
+}
+
+void QRoundWidget::on_pushButton_clicked()
+{
+    switchPlayerMode = !switchPlayerMode;
+    for(auto & w:widgetMatches)
+        w->enableModeSwitchPlayer(switchPlayerMode);
     Update();
 }

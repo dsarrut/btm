@@ -45,6 +45,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="buttonBack">
        <property name="enabled">
         <bool>false</bool>
@@ -56,7 +63,12 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>&lt;--</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normalon>:/icons/icons/go-previous-9.png</normalon>
+        </iconset>
        </property>
       </widget>
      </item>
@@ -72,7 +84,12 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>--&gt;</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normalon>:/icons/icons/go-next-9.png</normalon>
+        </iconset>
        </property>
       </widget>
      </item>
@@ -96,7 +113,7 @@
         <x>0</x>
         <y>0</y>
         <width>685</width>
-        <height>374</height>
+        <height>373</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
