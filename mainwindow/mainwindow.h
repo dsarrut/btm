@@ -20,7 +20,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void UpdateDisplayCurrentRound();
     void StartNewTournament();
 
     btm::Tournament::pointer tournament;
@@ -33,7 +32,6 @@ private slots:
     void UpdateDisplayPlayersStatus();
     void on_tablePlayers_itemClicked(QTableWidgetItem *item);
     void on_buttonSave_clicked();
-
     void on_buttonLoad_clicked();
 
 private:

@@ -40,14 +40,14 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>random scores</string>
+        <string>Scores aléatoires</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="buttonSwitch">
        <property name="text">
-        <string>PushButton</string>
+        <string>Modifier les matchs</string>
        </property>
       </widget>
      </item>

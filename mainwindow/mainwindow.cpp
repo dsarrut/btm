@@ -46,15 +46,6 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 
 
 //----------------------------------------------------------------------------
-void MainWindow::UpdateDisplayCurrentRound()
-{
-    auto round = tournament->rounds.back();
-    QString s = QString::fromStdString(round->ToString());
-}
-//----------------------------------------------------------------------------
-
-
-//----------------------------------------------------------------------------
 void MainWindow::UpdateDisplayPlayersStatus()
 {
     tournament->ComputePlayersStatus();
@@ -68,6 +59,7 @@ void MainWindow::UpdateDisplayPlayersStatus()
 void MainWindow::on_tablePlayers_cellChanged(int row, int column)
 {
     players_table->cellChanged(row, column);
+    ui->widgetRound->Update();
 }
 
 
@@ -75,6 +67,7 @@ void MainWindow::on_tablePlayers_itemClicked(QTableWidgetItem *item)
 {
     auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
     a->itemClicked();
+    ui->widgetRound->Update();
 }
 
 void MainWindow::on_buttonSave_clicked()

@@ -53,7 +53,13 @@ void QRoundWidget::Update()
         ui->labelRound->setText("Tour n°0");
         btm::Player::vector a; // empty
         waitingPlayersWidget->SetPlayers(a);
+        waitingPlayersWidget->setVisible(false);
+        ui->buttonSwitch->setEnabled(false);
         return;
+    }
+    else {
+        ui->buttonSwitch->setEnabled(true);
+        waitingPlayersWidget->setVisible(false);
     }
 
     //waitingPlayersWidget
@@ -94,6 +100,10 @@ void QRoundWidget::Update()
         ui->buttonForward->setEnabled(false);
         ui->buttonNewRound->setEnabled(false);
         ui->buttonRandomScores->setEnabled(false);
+        ui->buttonSwitch->setText("Reprendre");
+    }
+    else {
+        ui->buttonSwitch->setText("Modifier les matchs");
     }
 }
 
@@ -153,7 +163,7 @@ void QRoundWidget::on_buttonForward_clicked()
     Update();
 }
 
-void QRoundWidget::on_pushButton_clicked()
+void QRoundWidget::on_buttonSwitch_clicked()
 {
     switchPlayerMode = !switchPlayerMode;
     for(auto & w:widgetMatches)

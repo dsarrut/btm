@@ -118,7 +118,6 @@ void btm::Tournament::LoadPlayersFromFile(std::string filename)
     {
         btm::Player::pointer p = btm::Player::New();
         p->name = line;
-        DD(line);
         p->ResetStatus();
         players.push_back(p);
     }

@@ -24,8 +24,9 @@ void QWaitingPlayersWidget::SetPlayers(btm::Player::vector p)
     else {
         ui->labelPlayers->setVisible(true);
         QString s="";
-        for(auto p:players)
+        for(auto p:players) {
             s.append(QString("%1\n").arg(QString::fromStdString(p->name)));
+        }
         ui->labelPlayers->setText(s);
     }
 }
