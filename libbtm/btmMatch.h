@@ -28,6 +28,9 @@ public:
     void SetPlayer(unsigned int i, btm::Player::pointer p);
     btm::Player::pointer GetPlayer(int i) { return players[i]; }
     btm::Set::pointer GetSet(int i) { return sets[i]; }
+    void SwitchPlayer(int player1,
+                      btm::Match::pointer m2,
+                      int player2);
 
 protected:
     std::array<btm::Player::pointer, 4> players;

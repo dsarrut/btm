@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include "btmTournament.h"
+#include "btmQPlayerWidget.h"
 
 namespace Ui {
 class QMatchWidget;
@@ -22,7 +23,10 @@ public:
     void SetScore(int team, int set, const QString & v);
     void enableModeSwitchPlayer(bool b);
     btm::Match::pointer GetMatch() { return match; }
-    void UncheckSwitch();
+    void ResetSelection();
+    void SetPlayer(int player, btm::Player::pointer p);
+    void ChangePlayer(btm::Player::pointer p1,
+                      btm::Player::pointer p2);
 
 public slots:
     void Update();
@@ -35,6 +39,7 @@ protected:
     QString style_switch;
     std::vector<QLabel*> labels;
     bool switchPlayerMode;
+    std::vector<QPlayerWidget*> playerWidgets;
 
 signals:
     void matchScoreChanged(btm::Match::pointer m);
@@ -47,10 +52,7 @@ private slots:
     void on_lineTeam2Set1_textEdited(const QString &arg1);
     void on_lineTeam2Set2_textEdited(const QString &arg1);
     void on_lineTeam2Set3_textEdited(const QString &arg1);
-    void on_radioButtonTeam1Player1_toggled(bool checked);
-    void on_radioButtonTeam1Player2_toggled(bool checked);
-    void on_radioButtonTeam2Player1_toggled(bool checked);
-    void on_radioButtonTeam2Player2_toggled(bool checked);
+    void playerSelectionToggled(QPlayerWidget*w, bool checked);
 
 private:
     Ui::QMatchWidget *ui;

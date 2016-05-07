@@ -9,9 +9,12 @@ QRoundWidget::QRoundWidget(QWidget *parent) :
     ui->setupUi(this);
     QGridLayout *layout = new QGridLayout();
     ui->frameMatches->setLayout(layout);
-    waitingPlayersWidget = new QWaitingPlayersWidget();
+    waitingPlayersWidget = new QWaitingPlayersWidget(this);
     layout->addWidget(waitingPlayersWidget, 0, 0);
     switchPlayerMode = false;
+    QObject::connect(waitingPlayersWidget,
+                     SIGNAL(playerSwitched(QMatchWidget*,int)),
+                     this, SLOT(playerSwitched(QMatchWidget*, int)));
 }
 
 QRoundWidget::~QRoundWidget()
@@ -30,7 +33,7 @@ void QRoundWidget::AddWidget()
 {
     static int row = 0;
     static int col = 1;
-    QMatchWidget * w = new QMatchWidget();
+    QMatchWidget * w = new QMatchWidget(this);
     QGridLayout * layout =
             static_cast<QGridLayout*>(ui->frameMatches->layout());
     layout->addWidget(w, row, col);
@@ -48,37 +51,23 @@ void QRoundWidget::AddWidget()
 
 void QRoundWidget::Update()
 {
+    DD("round update");
+
     if (round == NULL) {
         for(auto w:widgetMatches) w->setVisible(false);
         ui->labelRound->setText("Tour n°0");
-        btm::Player::vector a; // empty
-        waitingPlayersWidget->SetPlayers(a);
         waitingPlayersWidget->setVisible(false);
         ui->buttonSwitch->setEnabled(false);
         return;
     }
     else {
         ui->buttonSwitch->setEnabled(true);
-        waitingPlayersWidget->setVisible(false);
     }
 
-    //waitingPlayersWidget
-    waitingPlayersWidget->SetPlayers(round->waiting_players);
-
-    //  add widget if too much matches
-    for(unsigned int i=widgetMatches.size(); i<round->matches.size(); i++)
-        AddWidget();
-
-    // hide widget if too much
+    // Update matches
     for(unsigned int i=0; i<round->matches.size(); i++)
-        widgetMatches[i]->setVisible(true);
-    for(unsigned int i=round->matches.size(); i<widgetMatches.size(); i++)
-        widgetMatches[i]->setVisible(false);
+        widgetMatches[i]->Update();
 
-    // Update match widgets
-    for(unsigned int i=0; i<round->matches.size(); i++) {
-        widgetMatches[i]->SetMatch(round->matches[i]);
-    }
     // Update round nb
     ui->labelRound->setText(QString("Tour n°%1").arg(round->round_nb));
     if (tournament->rounds.back()->GetStatus() == btm::Terminated)
@@ -109,23 +98,51 @@ void QRoundWidget::Update()
 
 void QRoundWidget::playerSwitched(QMatchWidget *w, int player)
 {
-    static QMatchWidget * previous = NULL;
-    static int previous_player;
+    static QMatchWidget * w1 = NULL;
+    static int player1;
+    return;
 
-    if (previous != NULL) {
-        auto m1 = w->GetMatch();
-        auto m2 = previous->GetMatch();
-        auto temp = m1->GetPlayer(player);
-        m1->SetPlayer(player, m2->GetPlayer(previous_player));
-        m2->SetPlayer(previous_player, temp);
-        w->UncheckSwitch();
-        previous->UncheckSwitch();
-        previous = NULL;
+    if (w1 != NULL) {
+        auto w2 = w;
+        auto player2 = player;
+        auto m1 = w1->GetMatch();
+        auto m2 = w2->GetMatch();
+        // Change data
+        m1->SwitchPlayer(player1, m2, player2);
+        // Change ui
+        w1->SetPlayer(player1, m1->GetPlayer(player1));
+        w2->SetPlayer(player2, m2->GetPlayer(player2));
+        w1->ResetSelection();
+        w2->ResetSelection();
+        w1 = NULL;
         Update();
     }
     else {
+        w1 = w;
+        player1 = player;
+    }
+}
+
+void QRoundWidget::playerSelectionToggled(QPlayerWidget *w, bool checked)
+{
+    DD("here");
+    auto player = w->GetPlayer();
+    DD(player);
+    DD(checked);
+    if (!checked) return;
+    static QPlayerWidget * previous = NULL;
+    if (previous != NULL) {
+        auto p2 = previous->GetPlayer();
+        auto p1 = w->GetPlayer();
+        DD(p1);
+        DD(p2);
+        SwapPlayers(p1,p2);
+        w->ResetSelection();
+        previous->ResetSelection();
+        previous = NULL;
+    }
+    else {
         previous = w;
-        previous_player = player;
     }
 }
 
@@ -142,25 +159,43 @@ void QRoundWidget::on_buttonNewRound_clicked()
     if (!tournament) return;
     if (!round or round->GetStatus() == btm::Terminated) {
         round = tournament->StartNewRound();
+        SetRound(round);
         emit newRound();
-        Update();
     }
 }
+
+
+void QRoundWidget::SetRound(btm::Round::pointer r)
+{
+    round = r;
+    waitingPlayersWidget->SetPlayers(round->waiting_players);
+    for(unsigned int i=widgetMatches.size(); i<round->matches.size(); i++)
+        AddWidget();
+    for(unsigned int i=0; i<round->matches.size(); i++)
+        widgetMatches[i]->SetMatch(round->matches[i]);
+    Update();
+}
+
+void QRoundWidget::SwapPlayers(btm::Player::pointer p1,
+                               btm::Player::pointer p2)
+{
+    waitingPlayersWidget->ChangePlayer(p1,p2);
+    for(auto w:widgetMatches) w->ChangePlayer(p1,p2);
+}
+
 
 void QRoundWidget::on_buttonBack_clicked()
 {
     auto i = round->round_nb;
     if (i==1) return;
-    round = tournament->rounds[i-2];
-    Update();
+    SetRound(tournament->rounds[i-2]);
 }
 
 void QRoundWidget::on_buttonForward_clicked()
 {
     auto i = round->round_nb;
     if (i==tournament->rounds.size()) return;
-    round = tournament->rounds[i];
-    Update();
+    SetRound(tournament->rounds[i]);
 }
 
 void QRoundWidget::on_buttonSwitch_clicked()
@@ -168,5 +203,6 @@ void QRoundWidget::on_buttonSwitch_clicked()
     switchPlayerMode = !switchPlayerMode;
     for(auto & w:widgetMatches)
         w->enableModeSwitchPlayer(switchPlayerMode);
+    waitingPlayersWidget->enableModeSwitchPlayer(switchPlayerMode);
     Update();
 }

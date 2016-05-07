@@ -13,10 +13,15 @@ QMatchWidget::QMatchWidget(QWidget *parent) :
     QObject::connect(this, SIGNAL(matchScoreChanged(btm::Match::pointer)),
                      this, SLOT(Update()));
     switchPlayerMode = false;
-    ui->radioButtonTeam1Player1->setAutoExclusive(false);
-    ui->radioButtonTeam1Player2->setAutoExclusive(false);
-    ui->radioButtonTeam2Player1->setAutoExclusive(false);
-    ui->radioButtonTeam2Player2->setAutoExclusive(false);
+    playerWidgets.push_back(ui->player1Widget);
+    playerWidgets.push_back(ui->player2Widget);
+    playerWidgets.push_back(ui->player3Widget);
+    playerWidgets.push_back(ui->player4Widget);
+    for(auto i=0; i<4; i++)
+        QObject::connect(playerWidgets[i],
+                         SIGNAL(selectedToggled(QPlayerWidget*, bool)),
+                         parent,
+                         SLOT(playerSelectionToggled(QPlayerWidget*,bool)));
 }
 
 QMatchWidget::~QMatchWidget()
@@ -27,34 +32,32 @@ QMatchWidget::~QMatchWidget()
 void QMatchWidget::SetMatch(btm::Match::pointer m)
 {
     match = m;
+    for(auto i=0; i<4; i++)
+        playerWidgets[i]->SetPlayer(match->GetPlayer(i));
     Update();
 }
 
 void QMatchWidget::Update()
 {
     if (switchPlayerMode) {
-        ui->radioButtonTeam1Player1->setVisible(true);
-        ui->radioButtonTeam1Player2->setVisible(true);
-        ui->radioButtonTeam2Player1->setVisible(true);
-        ui->radioButtonTeam2Player2->setVisible(true);
+        /*
         ui->lineTeam1Set1->setEnabled(false);
         ui->lineTeam2Set1->setEnabled(false);
         ui->lineTeam1Set2->setEnabled(false);
         ui->lineTeam2Set2->setEnabled(false);
         ui->lineTeam1Set3->setEnabled(false);
         ui->lineTeam2Set3->setEnabled(false);
+        */
     }
     else {
-        ui->radioButtonTeam1Player1->setVisible(false);
-        ui->radioButtonTeam1Player2->setVisible(false);
-        ui->radioButtonTeam2Player1->setVisible(false);
-        ui->radioButtonTeam2Player2->setVisible(false);
+        /*
         ui->lineTeam1Set1->setEnabled(true);
         ui->lineTeam2Set1->setEnabled(true);
         ui->lineTeam1Set2->setEnabled(true);
         ui->lineTeam2Set2->setEnabled(true);
         ui->lineTeam1Set3->setEnabled(true);
         ui->lineTeam2Set3->setEnabled(true);
+        */
     }
 
     // Color
@@ -70,12 +73,6 @@ void QMatchWidget::Update()
         ui->labelTeam1Status->setStyleSheet(style_in_progress);
         ui->labelTeam2Status->setStyleSheet(style_in_progress);
     }
-
-    // Player names
-    ui->labelPlayer1->setText(QString::fromStdString(match->GetPlayer(0)->name));
-    ui->labelPlayer2->setText(QString::fromStdString(match->GetPlayer(1)->name));
-    ui->labelPlayer3->setText(QString::fromStdString(match->GetPlayer(2)->name));
-    ui->labelPlayer4->setText(QString::fromStdString(match->GetPlayer(3)->name));
 
     // Scores
     ui->lineTeam1Set1->setText(QString("%1").arg(match->GetSet(0)->GetTeam1Points()));
@@ -145,15 +142,24 @@ void QMatchWidget::SetScore(int team, int set, const QString & v)
 void QMatchWidget::enableModeSwitchPlayer(bool b)
 {
     switchPlayerMode = b;
+    for(auto w:playerWidgets) w->EnableSelectMode(b);
     Update();
 }
 
-void QMatchWidget::UncheckSwitch()
+void QMatchWidget::ResetSelection()
 {
-    ui->radioButtonTeam1Player1->setChecked(false);
-    ui->radioButtonTeam1Player2->setChecked(false);
-    ui->radioButtonTeam2Player1->setChecked(false);
-    ui->radioButtonTeam2Player2->setChecked(false);
+    for(auto p:playerWidgets) p->ResetSelection();
+}
+
+void QMatchWidget::SetPlayer(int player, btm::Player::pointer p)
+{
+    playerWidgets[player]->SetPlayer(p);
+}
+
+void QMatchWidget::ChangePlayer(btm::Player::pointer p1,
+                                btm::Player::pointer p2)
+{
+    for(auto p:playerWidgets) p->ChangePlayer(p1,p2);
 }
 
 void QMatchWidget::on_lineTeam1Set1_textEdited(const QString &arg1)
@@ -186,38 +192,10 @@ void QMatchWidget::on_lineTeam2Set3_textEdited(const QString &arg1)
     SetScore(2,3,arg1);
 }
 
-void QMatchWidget::on_radioButtonTeam1Player1_toggled(bool checked)
+void QMatchWidget::playerSelectionToggled(QPlayerWidget * w, bool checked)
 {
-    if (checked) {
-        ui->labelPlayer1->setStyleSheet(style_switch);
-        emit playerSwitched(this, 0);
-    }
-    else ui->labelPlayer1->setStyleSheet(style_in_progress);
-}
-
-void QMatchWidget::on_radioButtonTeam1Player2_toggled(bool checked)
-{
-    if (checked) {
-        ui->labelPlayer2->setStyleSheet(style_switch);
-        emit playerSwitched(this, 1);
-    }
-    else ui->labelPlayer2->setStyleSheet(style_in_progress);
-}
-
-void QMatchWidget::on_radioButtonTeam2Player1_toggled(bool checked)
-{
-    if (checked) {
-        ui->labelPlayer3->setStyleSheet(style_switch);
-        emit playerSwitched(this, 2);
-    }
-    else ui->labelPlayer3->setStyleSheet(style_in_progress);
-}
-
-void QMatchWidget::on_radioButtonTeam2Player2_toggled(bool checked)
-{
-    if (checked) {
-        ui->labelPlayer4->setStyleSheet(style_switch);
-        emit playerSwitched(this, 3);
-    }
-    else ui->labelPlayer4->setStyleSheet(style_in_progress);
+    if (!checked) return;
+    int i=0;
+    while (w != playerWidgets[i]) ++i;
+    emit playerSwitched(this, i);
 }

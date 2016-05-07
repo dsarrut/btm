@@ -20,10 +20,13 @@ public:
 
     void SetTournament(btm::Tournament::pointer tournament);
     void AddWidget();
+    void SetRound(btm::Round::pointer r);
+    void SwapPlayers(btm::Player::pointer p1, btm::Player::pointer p2);
 
 public slots:
     void Update();
     void playerSwitched(QMatchWidget *w, int player);
+    void playerSelectionToggled(QPlayerWidget * w, bool checked);
 
 protected:
     btm::Tournament::pointer tournament;

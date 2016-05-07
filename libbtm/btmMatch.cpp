@@ -11,9 +11,9 @@ std::string btm::Match::ToString()
 {
     std::stringstream ss;
     ss << players[0]->ToString() << "+" << players[1]->ToString()
-       << "    vs    "
-       << players[2]->ToString() << "+" << players[3]->ToString()
-       << " --> " << score;
+                                 << "    vs    "
+                                 << players[2]->ToString() << "+" << players[3]->ToString()
+                                 << " --> " << score;
     return ss.str();
 }
 
@@ -59,8 +59,8 @@ void btm::Match::SetScore(int team, int set, int points)
     sets[set-1]->SetScore(team,points);
     if (GetWinner() != 0) {
         if (sets[0]->GetWinner() == sets[1]->GetWinner()) {
-                sets[2]->SetScore(1,0);
-                sets[2]->SetScore(2,0);
+            sets[2]->SetScore(1,0);
+            sets[2]->SetScore(2,0);
         }
     }
 }
@@ -78,8 +78,8 @@ btm::Status btm::Match::GetStatus()
 {
     if (GetWinner() != 0) return Terminated;
     if (sets[0]->GetStatus() == Init and
-        sets[1]->GetStatus() == Init and
-        sets[2]->GetStatus() == Init) return Init;
+            sets[1]->GetStatus() == Init and
+            sets[2]->GetStatus() == Init) return Init;
     return Playing;
 }
 
@@ -89,4 +89,13 @@ void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
     else {
         DD("Error set player");
     }
+}
+
+void btm::Match::SwitchPlayer(int player1,
+                              btm::Match::pointer m2,
+                              int player2)
+{
+    auto temp = GetPlayer(player1);
+    SetPlayer(player1, m2->GetPlayer(player2));
+    m2->SetPlayer(player2, temp);
 }

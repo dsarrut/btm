@@ -7,6 +7,12 @@ QWaitingPlayersWidget::QWaitingPlayersWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     setVisible(false);
+    playerWidgets.push_back(ui->widgetPlayer1);
+    playerWidgets.push_back(ui->widgetPlayer2);
+    playerWidgets.push_back(ui->widgetPlayer3);
+    for(auto p:playerWidgets)
+        QObject::connect(p, SIGNAL(selectedToggled(QPlayerWidget*, bool)),
+                         parent, SLOT(playerSelectionToggled(QPlayerWidget*, bool)));
 }
 
 QWaitingPlayersWidget::~QWaitingPlayersWidget()
@@ -16,17 +22,31 @@ QWaitingPlayersWidget::~QWaitingPlayersWidget()
 
 void QWaitingPlayersWidget::SetPlayers(btm::Player::vector p)
 {
+    DD("wating");
     setVisible(true);
     players = p;
+    DD(players.size());
+    for(unsigned int i=0; i<players.size(); i++)
+        playerWidgets[i]->SetPlayer(players[i]);
     if (players.size() == 0) {
-        ui->labelPlayers->setText("aucun");
+        setVisible(false);
+        return;
     }
-    else {
-        ui->labelPlayers->setVisible(true);
-        QString s="";
-        for(auto p:players) {
-            s.append(QString("%1\n").arg(QString::fromStdString(p->name)));
-        }
-        ui->labelPlayers->setText(s);
-    }
+}
+
+void QWaitingPlayersWidget::enableModeSwitchPlayer(bool b)
+{
+    for(unsigned int i=0; i<players.size(); i++)
+        playerWidgets[i]->EnableSelectMode(b);
+}
+
+void QWaitingPlayersWidget::ChangePlayer(btm::Player::pointer p1,
+                                         btm::Player::pointer p2)
+{
+    for(auto w:playerWidgets) w->ChangePlayer(p1,p2);
+}
+
+void QWaitingPlayersWidget::playerSelectionToggled(QPlayerWidget *, bool c)
+{
+
 }
