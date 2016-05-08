@@ -27,9 +27,6 @@ public:
 signals:
     void playerSwitched(QWaitingPlayersWidget *, int player);
 
-public slots:
-    void playerSelectionToggled(QPlayerWidget*, bool c);
-
 protected:
     btm::Player::vector players;
     std::vector<QPlayerWidget*> playerWidgets;

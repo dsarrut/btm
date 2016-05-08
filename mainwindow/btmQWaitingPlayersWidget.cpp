@@ -22,10 +22,8 @@ QWaitingPlayersWidget::~QWaitingPlayersWidget()
 
 void QWaitingPlayersWidget::SetPlayers(btm::Player::vector p)
 {
-    DD("wating");
     setVisible(true);
     players = p;
-    DD(players.size());
     for(unsigned int i=0; i<players.size(); i++)
         playerWidgets[i]->SetPlayer(players[i]);
     if (players.size() == 0) {
@@ -46,7 +44,3 @@ void QWaitingPlayersWidget::ChangePlayer(btm::Player::pointer p1,
     for(auto w:playerWidgets) w->ChangePlayer(p1,p2);
 }
 
-void QWaitingPlayersWidget::playerSelectionToggled(QPlayerWidget *, bool c)
-{
-
-}

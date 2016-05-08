@@ -12,9 +12,6 @@ QRoundWidget::QRoundWidget(QWidget *parent) :
     waitingPlayersWidget = new QWaitingPlayersWidget(this);
     layout->addWidget(waitingPlayersWidget, 0, 0);
     switchPlayerMode = false;
-    QObject::connect(waitingPlayersWidget,
-                     SIGNAL(playerSwitched(QMatchWidget*,int)),
-                     this, SLOT(playerSwitched(QMatchWidget*, int)));
 }
 
 QRoundWidget::~QRoundWidget()
@@ -45,19 +42,16 @@ void QRoundWidget::AddWidget()
     widgetMatches.push_back(w);
     QObject::connect(w, SIGNAL(matchScoreChanged(btm::Match::pointer)),
                      this, SLOT(Update()));
-    QObject::connect(w, SIGNAL(playerSwitched(QMatchWidget*,int)),
-                     this, SLOT(playerSwitched(QMatchWidget*, int)));
 }
 
 void QRoundWidget::Update()
 {
-    DD("round update");
-
     if (round == NULL) {
         for(auto w:widgetMatches) w->setVisible(false);
         ui->labelRound->setText("Tour n°0");
         waitingPlayersWidget->setVisible(false);
         ui->buttonSwitch->setEnabled(false);
+        //ui->butt
         return;
     }
     else {
@@ -125,17 +119,12 @@ void QRoundWidget::playerSwitched(QMatchWidget *w, int player)
 
 void QRoundWidget::playerSelectionToggled(QPlayerWidget *w, bool checked)
 {
-    DD("here");
     auto player = w->GetPlayer();
-    DD(player);
-    DD(checked);
     if (!checked) return;
     static QPlayerWidget * previous = NULL;
     if (previous != NULL) {
         auto p2 = previous->GetPlayer();
         auto p1 = w->GetPlayer();
-        DD(p1);
-        DD(p2);
         SwapPlayers(p1,p2);
         w->ResetSelection();
         previous->ResetSelection();

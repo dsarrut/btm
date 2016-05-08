@@ -22,6 +22,10 @@ QMatchWidget::QMatchWidget(QWidget *parent) :
                          SIGNAL(selectedToggled(QPlayerWidget*, bool)),
                          parent,
                          SLOT(playerSelectionToggled(QPlayerWidget*,bool)));
+    pixWin = QPixmap(":/icons/icons/face-smile-big-2.png");
+    pixLoose = QPixmap(":/icons/icons/face-crying-2.png");
+    ui->iconTeam1->setPixmap(QPixmap());
+    ui->iconTeam2->setPixmap(QPixmap());
 }
 
 QMatchWidget::~QMatchWidget()
@@ -39,27 +43,6 @@ void QMatchWidget::SetMatch(btm::Match::pointer m)
 
 void QMatchWidget::Update()
 {
-    if (switchPlayerMode) {
-        /*
-        ui->lineTeam1Set1->setEnabled(false);
-        ui->lineTeam2Set1->setEnabled(false);
-        ui->lineTeam1Set2->setEnabled(false);
-        ui->lineTeam2Set2->setEnabled(false);
-        ui->lineTeam1Set3->setEnabled(false);
-        ui->lineTeam2Set3->setEnabled(false);
-        */
-    }
-    else {
-        /*
-        ui->lineTeam1Set1->setEnabled(true);
-        ui->lineTeam2Set1->setEnabled(true);
-        ui->lineTeam1Set2->setEnabled(true);
-        ui->lineTeam2Set2->setEnabled(true);
-        ui->lineTeam1Set3->setEnabled(true);
-        ui->lineTeam2Set3->setEnabled(true);
-        */
-    }
-
     // Color
     if (match->GetWinner() == 1) {
         ui->labelTeam1Status->setStyleSheet(style_winner);
@@ -118,17 +101,26 @@ void QMatchWidget::Update()
 
     // Status win/loose
     if (match->GetWinner() == 1) {
+        ui->iconTeam1->setPixmap(pixWin);
+        ui->iconTeam2->setPixmap(pixLoose);
+
         ui->labelTeam1Status->setText("Victoire");
         ui->labelTeam2Status->setText("Défaite");
     }
     if (match->GetWinner() == 2) {
+        ui->iconTeam2->setPixmap(pixWin);
+        ui->iconTeam1->setPixmap(pixLoose);
         ui->labelTeam2Status->setText("Victoire");
         ui->labelTeam1Status->setText("Défaite");
     }
     if (match->GetWinner() == 0) {
+        ui->iconTeam1->setPixmap(QPixmap());
+        ui->iconTeam2->setPixmap(QPixmap());
         ui->labelTeam1Status->setText("");
         ui->labelTeam2Status->setText("");
     }
+    //ui->iconTeam1->repaint();
+    //ui->iconTeam2->repaint();
 }
 
 void QMatchWidget::SetScore(int team, int set, const QString & v)
@@ -151,7 +143,8 @@ void QMatchWidget::ResetSelection()
     for(auto p:playerWidgets) p->ResetSelection();
 }
 
-void QMatchWidget::SetPlayer(int player, btm::Player::pointer p)
+void QMatchWidget::SetPlayer(int player,
+                             btm::Player::pointer p)
 {
     playerWidgets[player]->SetPlayer(p);
 }
@@ -190,12 +183,4 @@ void QMatchWidget::on_lineTeam2Set2_textEdited(const QString &arg1)
 void QMatchWidget::on_lineTeam2Set3_textEdited(const QString &arg1)
 {
     SetScore(2,3,arg1);
-}
-
-void QMatchWidget::playerSelectionToggled(QPlayerWidget * w, bool checked)
-{
-    if (!checked) return;
-    int i=0;
-    while (w != playerWidgets[i]) ++i;
-    emit playerSwitched(this, i);
 }

@@ -38,7 +38,7 @@ void QPlayerWidget::Update()
     ui->label->setText(QString::fromStdString(player->name));
     if (selectMode) {
         ui->radioButton->setVisible(true);
-        ui->radioButton->setText("   ");
+        ui->radioButton->setText(" ");
     }
     else {
         ui->radioButton->setVisible(false);
@@ -54,6 +54,5 @@ void QPlayerWidget::ChangePlayer(btm::Player::pointer p1,
 
 void QPlayerWidget::on_radioButton_toggled(bool checked)
 {
-    DD(checked);
     emit selectedToggled(this, checked);
 }

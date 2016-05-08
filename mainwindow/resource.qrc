@@ -2,5 +2,13 @@
     <qresource prefix="/icons">
         <file>icons/go-next-9.png</file>
         <file>icons/go-previous-9.png</file>
+        <file>icons/face-angry.png</file>
+        <file>icons/face-crying.png</file>
+        <file>icons/face-grin.png</file>
+        <file>icons/face-tired.png</file>
+        <file>icons/emoticon-wink.png</file>
+        <file>icons/face-crying-2.png</file>
+        <file>icons/face-smile-big-2.png</file>
+        <file>icons/face-smile-big-4.png</file>
     </qresource>
 </RCC>
