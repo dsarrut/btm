@@ -227,9 +227,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonBack">
+           <widget class="QPushButton" name="buttonRoundBack">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -248,9 +248,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonForward">
+           <widget class="QPushButton" name="buttonRoundForward">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
