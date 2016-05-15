@@ -227,7 +227,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonBack">
+           <widget class="QPushButton" name="buttonRoundBack">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -248,7 +248,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonForward">
+           <widget class="QPushButton" name="buttonROForward">
             <property name="enabled">
              <bool>false</bool>
             </property>

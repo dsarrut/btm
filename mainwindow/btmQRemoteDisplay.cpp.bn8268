@@ -1,0 +1,47 @@
+#include "btmQRemoteDisplay.h"
+#include "ui_btmQRemoteDisplay.h"
+
+QRemoteDisplay::QRemoteDisplay(QWidget *parent) :
+    QFrame(parent),
+    ui(new Ui::QRemoteDisplay)
+{
+    ui->setupUi(this);
+}
+
+QRemoteDisplay::~QRemoteDisplay()
+{
+    delete ui;
+}
+
+void QRemoteDisplay::on_QRemoteDisplay_destroyed()
+{
+
+}
+
+void QRemoteDisplay::on_RoundChanged(btm::Round::pointer r)
+{
+    round = r;
+    int n = round->matches.size();
+    auto l = ui->groupBoxRight->layout();
+    for(unqigned int i=matchWidgets.size(); i<n; i++) {
+        matchWidgets.push_back(new QMatchWidget(this));
+        l->addWidget(matchWidgets[i]);
+    }
+    DD(n);
+   /*
+    DD(l->count());
+    for(int i=l->count(); i<n; i++)
+        l->addWidget(matchWidgets[i]);
+        */
+    for(unsigned int i=0; i<round->matches.size(); i++) {
+        auto m = round->matches[i];
+        auto w = matchWidgets[i];
+        w->SetMatch(m);
+        w->SetEditableScore(false);
+    }
+}
+
+void QRemoteDisplay::playerSelectionToggled(QPlayerWidget *, bool)
+{
+
+}

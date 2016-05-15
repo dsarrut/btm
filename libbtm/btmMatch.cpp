@@ -52,17 +52,24 @@ void btm::Match::GenerateRandomScore(std::mt19937 & rng)
         sets[2]->SetScore(2,0);
     }
     score = GetWinner();
+    emit matchScoreHasChanged();
+    emit matchStatusHasChanged();
 }
 
 void btm::Match::SetScore(int team, int set, int points)
 {
+    int s = GetStatus();
+    DD(s);
     sets[set-1]->SetScore(team,points);
+    emit matchScoreHasChanged();
     if (GetWinner() != 0) {
         if (sets[0]->GetWinner() == sets[1]->GetWinner()) {
             sets[2]->SetScore(1,0);
             sets[2]->SetScore(2,0);
         }
     }
+    DD(GetStatus());
+    if (s != GetStatus()) emit matchStatusHasChanged();
 }
 
 int btm::Match::GetWinner()
@@ -85,10 +92,12 @@ btm::Status btm::Match::GetStatus()
 
 void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
 {
-    if (i<4) players[i] = p;
-    else {
-        DD("Error set player");
+    if (i>=4) return;
+    if (players[i] != p) {
+        players[i] = p;
+        emit matchPlayersHaveChanged();
     }
+    DD("Set player is the same");
 }
 
 void btm::Match::SwitchPlayer(int player1,

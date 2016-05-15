@@ -1,14 +1,17 @@
 #ifndef TOURNAMENT_H
 #define TOURNAMENT_H
 
-#include <btmRound.h>
-#include <btmPlayer.h>
+#include "btmRound.h"
+#include "btmPlayer.h"
 #include <memory>
+#include <QObject>
 
 namespace btm {
 
-class Tournament
+class Tournament : public QObject
 {
+    Q_OBJECT
+
 public:
     Tournament();
 
@@ -31,6 +34,9 @@ public:
 
     btm::Player::vector players;
     btm::Round::vector rounds;
+
+signals:
+    void currentRoundHasChanged(btm::Round::pointer);
 
 };
 } // end namespace

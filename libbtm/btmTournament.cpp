@@ -21,6 +21,7 @@ btm::Round::pointer btm::Tournament::StartNewRound()
     PairSwissSystem(r, temp);
     //PairRandom(r, players);
     rounds.push_back(r);
+    emit currentRoundHasChanged(r);
     return r;
 }
 

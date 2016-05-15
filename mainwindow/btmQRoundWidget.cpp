@@ -60,7 +60,7 @@ void QRoundWidget::Update()
 
     // Update matches
     for(unsigned int i=0; i<round->matches.size(); i++)
-        widgetMatches[i]->Update();
+        widgetMatches[i]->on_match_changed();
 
     // Update round nb
     ui->labelRound->setText(QString("Tour n°%1").arg(round->round_nb));
@@ -137,6 +137,7 @@ void QRoundWidget::playerSelectionToggled(QPlayerWidget *w, bool checked)
 
 void QRoundWidget::on_buttonRandomScores_clicked()
 {
+    DD("old random");
     std::mt19937 rng(std::time(0));
     for(auto & m:round->matches)
         m->GenerateRandomScore(rng);
@@ -149,7 +150,7 @@ void QRoundWidget::on_buttonNewRound_clicked()
     if (!round or round->GetStatus() == btm::Terminated) {
         round = tournament->StartNewRound();
         SetRound(round);
-        emit newRound();
+        emit newCurrentRound(round);
     }
 }
 

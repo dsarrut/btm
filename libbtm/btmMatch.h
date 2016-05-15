@@ -4,13 +4,16 @@
 #include "btmPlayer.h"
 #include "btmSet.h"
 #include <array>
+#include <QObject>
 
 namespace btm {
 
-class Match
+class Match : public QObject
 {
+    Q_OBJECT
+
 public:
-    // Const
+    // Constructor
     Match(int n);
 
     // Types
@@ -31,6 +34,11 @@ public:
     void SwitchPlayer(int player1,
                       btm::Match::pointer m2,
                       int player2);
+
+signals:
+    void matchPlayersHaveChanged();
+    void matchScoreHasChanged();
+    void matchStatusHasChanged();
 
 protected:
     std::array<btm::Player::pointer, 4> players;

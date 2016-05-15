@@ -10,8 +10,8 @@ QMatchWidget::QMatchWidget(QWidget *parent) :
     style_looser = "QLabel { color : red; }";
     style_in_progress = "QLabel { color : black; }";
     style_switch = "QLabel { color : blue; }";
-    QObject::connect(this, SIGNAL(matchScoreChanged(btm::Match::pointer)),
-                     this, SLOT(Update()));
+   // QObject::connect(this, SIGNAL(matchScoreChanged(btm::Match::pointer)),
+    //                 this, SLOT(on_match_changed()));
     switchPlayerMode = false;
     playerWidgets.push_back(ui->player1Widget);
     playerWidgets.push_back(ui->player2Widget);
@@ -26,6 +26,7 @@ QMatchWidget::QMatchWidget(QWidget *parent) :
     pixLoose = QPixmap(":/icons/icons/face-crying-2.png");
     ui->iconTeam1->setPixmap(QPixmap());
     ui->iconTeam2->setPixmap(QPixmap());
+    scoresAreEditable = true;
 }
 
 QMatchWidget::~QMatchWidget()
@@ -38,10 +39,10 @@ void QMatchWidget::SetMatch(btm::Match::pointer m)
     match = m;
     for(auto i=0; i<4; i++)
         playerWidgets[i]->SetPlayer(match->GetPlayer(i));
-    Update();
+    on_match_changed();
 }
 
-void QMatchWidget::Update()
+void QMatchWidget::on_match_changed()
 {
     // Color
     if (match->GetWinner() == 1) {
@@ -119,15 +120,27 @@ void QMatchWidget::Update()
         ui->labelTeam1Status->setText("");
         ui->labelTeam2Status->setText("");
     }
-    //ui->iconTeam1->repaint();
-    //ui->iconTeam2->repaint();
+
+    if (!scoresAreEditable) {
+        DD("not editable");
+        ui->lineTeam1Set1->setReadOnly(true);
+        ui->lineTeam1Set2->setReadOnly(true);
+        ui->lineTeam1Set3->setReadOnly(true);
+        ui->lineTeam2Set1->setReadOnly(true);
+        ui->lineTeam2Set2->setReadOnly(true);
+        ui->lineTeam2Set3->setReadOnly(true);
+
+    }
 }
+
+
 
 void QMatchWidget::SetScore(int team, int set, const QString & v)
 {
     bool ok;
     int value = v.toInt(&ok);
     if (ok) match->SetScore(team,set, value);
+    on_match_changed();
     emit matchScoreChanged(match);
 }
 
@@ -135,7 +148,7 @@ void QMatchWidget::enableModeSwitchPlayer(bool b)
 {
     switchPlayerMode = b;
     for(auto w:playerWidgets) w->EnableSelectMode(b);
-    Update();
+    on_match_changed();
 }
 
 void QMatchWidget::ResetSelection()
@@ -153,6 +166,11 @@ void QMatchWidget::ChangePlayer(btm::Player::pointer p1,
                                 btm::Player::pointer p2)
 {
     for(auto p:playerWidgets) p->ChangePlayer(p1,p2);
+}
+
+void QMatchWidget::SetEditableScore(bool b)
+{
+    scoresAreEditable = b;
 }
 
 void QMatchWidget::on_lineTeam1Set1_textEdited(const QString &arg1)

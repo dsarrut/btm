@@ -27,9 +27,10 @@ public:
     void ChangePlayer(btm::Player::pointer p1,
                       btm::Player::pointer p2);
     btm::Match::pointer GetMatch() { return match; }
+    void SetEditableScore(bool b);
 
 public slots:
-    void Update();
+    void on_match_changed();
 
 protected:
     btm::Match::pointer match;
@@ -42,6 +43,7 @@ protected:
     std::vector<QPlayerWidget*> playerWidgets;
     QPixmap pixWin;
     QPixmap pixLoose;
+    bool scoresAreEditable;
 
 signals:
     void matchScoreChanged(btm::Match::pointer m);

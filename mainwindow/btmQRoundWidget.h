@@ -36,7 +36,7 @@ protected:
     bool switchPlayerMode;
 
 signals:
-    void newRound();
+    void newCurrentRound(btm::Round::pointer);
 
 private slots:
     void on_buttonRandomScores_clicked();

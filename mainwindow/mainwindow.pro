@@ -25,7 +25,11 @@ SOURCES += main.cpp\
     btmQMatchWidget.cpp \
     btmQRoundWidget.cpp \
     btmQWaitingPlayersWidget.cpp \
-    btmQPlayerWidget.cpp
+    btmQPlayerWidget.cpp \
+    btmQRemoteDisplay.cpp \
+    btmQRemoteDisplayDialog.cpp \
+    btmQRoundWidget2.cpp \
+    btmQMatchWidget2.cpp
 
 HEADERS  += mainwindow.h \
     btmQPlayersTable.h \
@@ -34,14 +38,22 @@ HEADERS  += mainwindow.h \
     btmQMatchWidget.h \
     btmQRoundWidget.h \
     btmQWaitingPlayersWidget.h \
-    btmQPlayerWidget.h
+    btmQPlayerWidget.h \
+    btmQRemoteDisplay.h \
+    btmQRemoteDisplayDialog.h \
+    btmQRoundWidget2.h \
+    btmQMatchWidget2.h
     btm_global.h
 
 FORMS    += mainwindow.ui \
     btmQMatchWidget.ui \
     btmQRoundWidget.ui \
     btmQWaitingPlayersWidget.ui \
-    btmQPlayerWidget.ui
+    btmQPlayerWidget.ui \
+    btmQRemoteDisplay.ui \
+    btmQRemoteDisplayDialog.ui \
+    btmQRoundWidget2.ui \
+    btmQMatchWidget2.ui
 
 RESOURCES += \
     resource.qrc
