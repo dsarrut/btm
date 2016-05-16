@@ -20,12 +20,15 @@ public:
 
     void SetRound(btm::Round::pointer r);
     void SetNumberOfColumns(int i);
+    void SetSwitchPlayerMode(bool b);
+    bool GetSwitchPlayerMode() const;
 
 protected:
     btm::Round::pointer round;
     std::vector<QMatchWidget2*> matchWidgets;
     QGridLayout * gridLayout;
     int nbOfColumns;
+    bool switchPlayerMode;
 
 private:
     Ui::QRoundWidget2 *ui;

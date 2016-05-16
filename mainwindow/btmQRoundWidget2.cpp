@@ -11,6 +11,7 @@ QRoundWidget2::QRoundWidget2(QWidget *parent) :
     gridLayout = new QGridLayout();
     setLayout(gridLayout);
     nbOfColumns = 2;
+    switchPlayerMode = false;
 }
 
 QRoundWidget2::~QRoundWidget2()
@@ -25,7 +26,11 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     auto nb = round->matches.size();
     DD(nb);
     DD(matchWidgets.size());
+    // remove old widget
+    for(auto w:matchWidgets)
+        gridLayout->removeWidget(w);
     matchWidgets.clear();
+
     // Add the widget if some are needed
     int row=0;
     int col=0;
@@ -49,5 +54,21 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
 void QRoundWidget2::SetNumberOfColumns(int i)
 {
     nbOfColumns = i;
+}
+
+void QRoundWidget2::SetSwitchPlayerMode(bool b)
+{
+    switchPlayerMode = b;
+    if (b) {
+    // disable set edition
+    // set visible select button
+    }
+    else {
+    }
+}
+
+bool QRoundWidget2::GetSwitchPlayerMode() const
+{
+    return switchPlayerMode;
 }
 

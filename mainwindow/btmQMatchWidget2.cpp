@@ -55,6 +55,12 @@ void QMatchWidget2::on_players_changed()
     QString p4 = QString::fromStdString(match->GetPlayer(3)->name);
     ui->labelTeam1->setText(QString("%1 / %2").arg(p1).arg(p2));
     ui->labelTeam2->setText(QString("%1 / %2").arg(p3).arg(p4));
+
+    ui->widgetPlayer1->SetPlayer(match->GetPlayer(0));
+    ui->widgetPlayer2->SetPlayer(match->GetPlayer(1));
+    ui->widgetPlayer3->SetPlayer(match->GetPlayer(2));
+    ui->widgetPlayer4->SetPlayer(match->GetPlayer(3));
+
 }
 
 void QMatchWidget2::on_scores_changed()

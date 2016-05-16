@@ -55,6 +55,8 @@ void btm::Tournament::PairRandom(btm::Round::pointer r,
         m->SetPlayer(2, temp[i+2]);
         m->SetPlayer(3, temp[i+3]);
         r->matches.push_back(m);
+        QObject::connect(m.get(), SIGNAL(matchStatusHasChanged()),
+                         r.get(), SLOT(on_match_status_changed()));
     }
 }
 
@@ -75,7 +77,9 @@ void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
         m->SetPlayer(1, temp[i+2]); // first with third
         m->SetPlayer(2, temp[i+1]);
         m->SetPlayer(3, temp[i+3]);
-        r->matches.push_back(m);
+        r->matches.push_back(m); //
+        QObject::connect(m.get(), SIGNAL(matchStatusHasChanged()),
+                         r.get(), SLOT(on_match_status_changed()));
         ++nb;
     }
 }

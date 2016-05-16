@@ -29,6 +29,7 @@ public:
     btm::QPlayersTable * players_table;
     QRemoteDisplay * mRemoteDisplay;
     QRemoteDisplayDialog * mRemoteDisplayDialog;
+    btm::Round::pointer currentRound;
 
     void InitRemoteDisplayDialog();
 
@@ -43,10 +44,10 @@ private slots:
     void on_menuRemoteDisplayTriggered();
     void on_newRound_clicked();
     void on_buttonRndScore_clicked();
-
     void on_buttonRoundBack_clicked();
-
     void on_buttonRoundForward_clicked();
+    void on_currentRound_changed();
+    void on_buttonModifyPlayers_clicked();
 
 private:
     Ui::MainWindow *ui;

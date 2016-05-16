@@ -215,12 +215,12 @@
           <item>
            <widget class="QPushButton" name="buttonRndScore">
             <property name="text">
-             <string>PushButton</string>
+             <string>Scores au hasard</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonSwitch">
+           <widget class="QPushButton" name="buttonModifyPlayers">
             <property name="text">
              <string>Modifier les matchs</string>
             </property>

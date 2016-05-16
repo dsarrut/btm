@@ -2,12 +2,15 @@
 #define BTMROUND_H
 
 #include <iostream>
+#include <QObject>
 #include "btmMatch.h"
 
 namespace btm {
 
-class Round
+class Round : public QObject
 {
+    Q_OBJECT
+
 public:
     Round();
 
@@ -22,6 +25,16 @@ public:
     unsigned int round_nb;
     btm::Match::vector matches;
     btm::Player::vector waiting_players;
+
+public slots:
+    void on_match_status_changed();
+
+protected:
+    btm::Status currentStatus;
+
+signals:
+    void RoundStatusHasChanged();
+
 };
 
 } // end namespace

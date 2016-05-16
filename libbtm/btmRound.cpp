@@ -2,6 +2,7 @@
 
 btm::Round::Round()
 {
+    currentStatus = Init;
 }
 
 std::string btm::Round::ToString()
@@ -29,6 +30,8 @@ void btm::Round::UpdatePlayersStatus()
 
 btm::Status btm::Round::GetStatus()
 {
+    return currentStatus;
+    /*
     btm::Status status = Init;
     unsigned int playing=0;
     unsigned int term=0;
@@ -40,4 +43,27 @@ btm::Status btm::Round::GetStatus()
     if (playing == matches.size()) status = Playing;
     if (term == matches.size()) status = Terminated;
     return status;
+    */
+}
+
+void btm::Round::on_match_status_changed()
+{
+    DD("Round::on_match_status_changed");
+    DD(currentStatus);
+    btm::Status status = Init;
+    unsigned int playing=0;
+    unsigned int term=0;
+    for(auto m:matches) {
+     if (m->GetStatus() == Init) status = Init;
+     if (m->GetStatus() == Playing) ++playing;
+     if (m->GetStatus() == Terminated) ++term;
+    }
+    if (playing == matches.size()) status = Playing;
+    if (term == matches.size()) status = Terminated;
+    if (currentStatus != status) {
+        currentStatus = status;
+        DD("changed");
+        DD(currentStatus);
+        emit RoundStatusHasChanged();
+    }
 }

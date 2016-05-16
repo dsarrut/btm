@@ -108,6 +108,7 @@ void MainWindow::StartNewTournament()
     players_table->SetPlayers(tournament->players);
     ui->widgetRound->SetTournament(tournament);
     UpdateDisplayPlayersStatus();
+//    QObject::connect(
 }
 
 void MainWindow::InitRemoteDisplayDialog()
@@ -150,19 +151,20 @@ void MainWindow::on_newRound_clicked()
 {
     DD("new tour");
     if (!tournament) return;
-    btm::Round::pointer round;
     if (tournament->rounds.size() == 0)
-        round = tournament->StartNewRound();
+        currentRound = tournament->StartNewRound();
     else {
         auto r = tournament->rounds.back();
         if (r->GetStatus() == btm::Terminated) {
-            round = tournament->StartNewRound();
+            currentRound = tournament->StartNewRound();
         }
         else return;
     }
     DD("ici");
-    ui->roundWidget2->SetRound(round);
-    if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(round);
+    if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(currentRound);
+    QObject::connect(currentRound.get(), SIGNAL(RoundStatusHasChanged()),
+                     this, SLOT(UpdateDisplayPlayersStatus()));
+    on_currentRound_changed();
 }
 
 
@@ -180,10 +182,42 @@ void MainWindow::on_buttonRndScore_clicked()
 
 void MainWindow::on_buttonRoundBack_clicked()
 {
-
+    if (!currentRound) return;
+    auto i = currentRound->round_nb;
+    if (i==1) return;
+    currentRound = tournament->rounds[i-2];
+    on_currentRound_changed();
 }
 
 void MainWindow::on_buttonRoundForward_clicked()
 {
+    if (!currentRound) return;
+    auto i = currentRound->round_nb;
+    if (i==tournament->rounds.size()) return;
+    currentRound = tournament->rounds[i];
+    on_currentRound_changed();
+}
 
+void MainWindow::on_currentRound_changed()
+{
+    ui->roundWidget2->SetRound(currentRound);
+    if (currentRound->round_nb == 1)
+        ui->buttonRoundBack->setEnabled(false);
+    else ui->buttonRoundBack->setEnabled(true);
+    if (currentRound->round_nb == tournament->rounds.size())
+        ui->buttonRoundForward->setEnabled(false);
+    else ui->buttonRoundForward->setEnabled(true);
+}
+
+void MainWindow::on_buttonModifyPlayers_clicked()
+{
+    DD("switch");
+    if (ui->roundWidget2->GetSwitchPlayerMode()) {
+        ui->roundWidget2->SetSwitchPlayerMode(false);
+        //ui->buttonModifyPlayers->SetText("Modifier les matchs");
+    }
+    else {
+        ui->roundWidget2->SetSwitchPlayerMode(true);
+        //ui->buttonModifyPlayers->SetText("Reprendre");
+    }
 }
