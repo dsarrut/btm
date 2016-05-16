@@ -84,6 +84,8 @@ void QRoundWidget2::on_player_selected(btm::Player::pointer p, bool b)
     if (selectedPlayers.size() == 2) {
         DD("switch");
         round->SwitchPlayers(selectedPlayers[0], selectedPlayers[1]);
+        selectedPlayers.clear();
+        for(auto w:matchWidgets) w->ResetSelection();
     }
 }
 

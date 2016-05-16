@@ -1,6 +1,5 @@
 #include "btmQMatchWidget2.h"
 #include "ui_btmQMatchWidget2.h"
-#include "btmQRoundWidget2.h"
 
 QMatchWidget2::QMatchWidget2(QWidget *parent) :
     QFrame(parent),
@@ -62,9 +61,8 @@ void QMatchWidget2::SetSwitchPlayerMode(bool b)
     ui->lineTeam2Set3->setEnabled(!b);
 }
 
-void QMatchWidget2::ConnectPlayerSelection(QRoundWidget2 *o)
+void QMatchWidget2::ConnectPlayerSelection(QObject *o)
 {
-    DD("here");
     QObject::connect(ui->widgetPlayer1,
                      SIGNAL(selectedToggled(btm::Player::pointer,bool)),
                      o, SLOT(on_player_selected(btm::Player::pointer,bool)));
@@ -77,6 +75,14 @@ void QMatchWidget2::ConnectPlayerSelection(QRoundWidget2 *o)
     QObject::connect(ui->widgetPlayer4,
                      SIGNAL(selectedToggled(btm::Player::pointer,bool)),
                      o, SLOT(on_player_selected(btm::Player::pointer,bool)));
+}
+
+void QMatchWidget2::ResetSelection()
+{
+    ui->widgetPlayer1->ResetSelection();
+    ui->widgetPlayer2->ResetSelection();
+    ui->widgetPlayer3->ResetSelection();
+    ui->widgetPlayer4->ResetSelection();
 }
 
 void QMatchWidget2::on_players_changed()
@@ -152,11 +158,6 @@ void QMatchWidget2::on_status_changed()
     if (match->GetStatus() == btm::Playing) status = "en cours";
     ui->groupBox->setTitle(QString("Match n°%1 \t\t %2")
                            .arg(match->GetMatchNb()).arg(status));
-}
-
-void QMatchWidget2::on_test()
-{
-    DD("recu MatchW");
 }
 
 void QMatchWidget2::on_lineTeam1Set1_textChanged(const QString &arg1)
