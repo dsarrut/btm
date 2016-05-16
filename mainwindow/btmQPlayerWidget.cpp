@@ -41,6 +41,7 @@ void QPlayerWidget::Update()
         ui->radioButton->setText(" ");
     }
     else {
+        ui->radioButton->setChecked(false);
         ui->radioButton->setVisible(false);
     }
 }
@@ -54,5 +55,6 @@ void QPlayerWidget::ChangePlayer(btm::Player::pointer p1,
 
 void QPlayerWidget::on_radioButton_toggled(bool checked)
 {
-    emit selectedToggled(this, checked);
+    DD("emit");
+    emit selectedToggled(player, checked);
 }

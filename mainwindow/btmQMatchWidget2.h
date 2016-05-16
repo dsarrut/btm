@@ -3,10 +3,13 @@
 
 #include <QFrame>
 #include "btmMatch.h"
+#include "btmQRoundWidget2.h"
 
 namespace Ui {
 class QMatchWidget2;
 }
+
+class QRoundWidget2;
 
 class QMatchWidget2 : public QFrame
 {
@@ -18,11 +21,14 @@ public:
 
     void SetMatch(btm::Match::pointer m);
     void SetScore(int team, int set, const QString & v);
+    void SetSwitchPlayerMode(bool b);
+    void ConnectPlayerSelection(QRoundWidget2 *o);
 
 public slots:
     void on_players_changed();
     void on_scores_changed();
     void on_status_changed();
+    void on_test();
 
 protected:
     btm::Match::pointer match;

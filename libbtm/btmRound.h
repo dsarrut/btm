@@ -21,6 +21,7 @@ public:
     std::string ToString();
     void UpdatePlayersStatus();
     btm::Status GetStatus();
+    void SwitchPlayers(btm::Player::pointer p1, btm::Player::pointer p2);
 
     unsigned int round_nb;
     btm::Match::vector matches;

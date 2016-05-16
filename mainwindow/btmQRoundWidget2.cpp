@@ -1,4 +1,5 @@
 #include "btmQRoundWidget2.h"
+#include "btmQMatchWidget2.h"
 #include "ui_btmQRoundWidget2.h"
 #include <QGridLayout>
 
@@ -37,6 +38,7 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     for(unsigned int i=0; i<nb; i++) {
         DD(i);
         QMatchWidget2 * w = new QMatchWidget2(this);
+        w->ConnectPlayerSelection(this);
         gridLayout->addWidget(w, row, col);
         matchWidgets.push_back(w);
         ++col;
@@ -59,16 +61,29 @@ void QRoundWidget2::SetNumberOfColumns(int i)
 void QRoundWidget2::SetSwitchPlayerMode(bool b)
 {
     switchPlayerMode = b;
-    if (b) {
-    // disable set edition
-    // set visible select button
-    }
-    else {
-    }
+    for(auto w:matchWidgets) w->SetSwitchPlayerMode(b);
 }
 
 bool QRoundWidget2::GetSwitchPlayerMode() const
 {
     return switchPlayerMode;
+}
+
+void QRoundWidget2::on_player_selected(btm::Player::pointer p, bool b)
+{
+    DD("recu");
+    DD(selectedPlayers.size());
+    DD(b);
+    // Update list of selected players
+    if (b) selectedPlayers.push_back(p);
+    else {
+          auto i = std::find(selectedPlayers.begin(), selectedPlayers.end(), p);
+          if (i != selectedPlayers.end()) selectedPlayers.erase(i);
+    }
+    // check if 2
+    if (selectedPlayers.size() == 2) {
+        DD("switch");
+        round->SwitchPlayers(selectedPlayers[0], selectedPlayers[1]);
+    }
 }
 

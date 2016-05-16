@@ -1,5 +1,6 @@
 #include "btmQMatchWidget2.h"
 #include "ui_btmQMatchWidget2.h"
+#include "btmQRoundWidget2.h"
 
 QMatchWidget2::QMatchWidget2(QWidget *parent) :
     QFrame(parent),
@@ -46,26 +47,49 @@ void QMatchWidget2::SetScore(int team, int set, const QString &v)
     if (ok) match->SetScore(team, set, value);
 }
 
+void QMatchWidget2::SetSwitchPlayerMode(bool b)
+{
+    ui->widgetPlayer1->EnableSelectMode(b);
+    ui->widgetPlayer2->EnableSelectMode(b);
+    ui->widgetPlayer3->EnableSelectMode(b);
+    ui->widgetPlayer4->EnableSelectMode(b);
+
+    ui->lineTeam1Set1->setEnabled(!b);
+    ui->lineTeam1Set2->setEnabled(!b);
+    ui->lineTeam1Set3->setEnabled(!b);
+    ui->lineTeam1Set1->setEnabled(!b);
+    ui->lineTeam2Set2->setEnabled(!b);
+    ui->lineTeam2Set3->setEnabled(!b);
+}
+
+void QMatchWidget2::ConnectPlayerSelection(QRoundWidget2 *o)
+{
+    DD("here");
+    QObject::connect(ui->widgetPlayer1,
+                     SIGNAL(selectedToggled(btm::Player::pointer,bool)),
+                     o, SLOT(on_player_selected(btm::Player::pointer,bool)));
+    QObject::connect(ui->widgetPlayer2,
+                     SIGNAL(selectedToggled(btm::Player::pointer,bool)),
+                     o, SLOT(on_player_selected(btm::Player::pointer,bool)));
+    QObject::connect(ui->widgetPlayer3,
+                     SIGNAL(selectedToggled(btm::Player::pointer,bool)),
+                     o, SLOT(on_player_selected(btm::Player::pointer,bool)));
+    QObject::connect(ui->widgetPlayer4,
+                     SIGNAL(selectedToggled(btm::Player::pointer,bool)),
+                     o, SLOT(on_player_selected(btm::Player::pointer,bool)));
+}
+
 void QMatchWidget2::on_players_changed()
 {
     DD("widget player changed");
-    QString p1 = QString::fromStdString(match->GetPlayer(0)->name);
-    QString p2 = QString::fromStdString(match->GetPlayer(1)->name);
-    QString p3 = QString::fromStdString(match->GetPlayer(2)->name);
-    QString p4 = QString::fromStdString(match->GetPlayer(3)->name);
-    ui->labelTeam1->setText(QString("%1 / %2").arg(p1).arg(p2));
-    ui->labelTeam2->setText(QString("%1 / %2").arg(p3).arg(p4));
-
     ui->widgetPlayer1->SetPlayer(match->GetPlayer(0));
     ui->widgetPlayer2->SetPlayer(match->GetPlayer(1));
     ui->widgetPlayer3->SetPlayer(match->GetPlayer(2));
     ui->widgetPlayer4->SetPlayer(match->GetPlayer(3));
-
 }
 
 void QMatchWidget2::on_scores_changed()
 {
-    DD(" widget score changed");
     ui->lineTeam1Set1->setText(QString("%1").arg(match->GetSet(0)->GetTeam1Points()));
     ui->lineTeam2Set1->setText(QString("%1").arg(match->GetSet(0)->GetTeam2Points()));
     ui->lineTeam1Set2->setText(QString("%1").arg(match->GetSet(1)->GetTeam1Points()));
@@ -98,7 +122,6 @@ void QMatchWidget2::on_scores_changed()
 
 void QMatchWidget2::on_status_changed()
 {
-    DD("status changed");
     if (match->GetWinner() == 1) {
         ui->labelTeam1Status->setStyleSheet(style_winner);
         ui->labelTeam2Status->setStyleSheet(style_looser);
@@ -129,6 +152,11 @@ void QMatchWidget2::on_status_changed()
     if (match->GetStatus() == btm::Playing) status = "en cours";
     ui->groupBox->setTitle(QString("Match n°%1 \t\t %2")
                            .arg(match->GetMatchNb()).arg(status));
+}
+
+void QMatchWidget2::on_test()
+{
+    DD("recu MatchW");
 }
 
 void QMatchWidget2::on_lineTeam1Set1_textChanged(const QString &arg1)

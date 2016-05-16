@@ -23,12 +23,12 @@ public:
     btm::Player::pointer GetPlayer() { return player; }
     void ChangePlayer(btm::Player::pointer p1, btm::Player::pointer p2);
 
-signals:
-    void selectedToggled(QPlayerWidget*, bool checked);
-
 protected:
     btm::Player::pointer player;
     bool selectMode;
+
+signals:
+    void selectedToggled(btm::Player::pointer, bool);
 
 private slots:
     void on_radioButton_toggled(bool checked);

@@ -59,7 +59,6 @@ void btm::Match::GenerateRandomScore(std::mt19937 & rng)
 void btm::Match::SetScore(int team, int set, int points)
 {
     int s = GetStatus();
-    DD(s);
     sets[set-1]->SetScore(team,points);
     emit matchScoreHasChanged();
     if (GetWinner() != 0) {
@@ -68,7 +67,6 @@ void btm::Match::SetScore(int team, int set, int points)
             sets[2]->SetScore(2,0);
         }
     }
-    DD(GetStatus());
     if (s != GetStatus()) emit matchStatusHasChanged();
 }
 
@@ -97,7 +95,6 @@ void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
         players[i] = p;
         emit matchPlayersHaveChanged();
     }
-    DD("Set player is the same");
 }
 
 void btm::Match::SwitchPlayer(int player1,

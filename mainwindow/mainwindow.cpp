@@ -16,10 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     players_table = new btm::QPlayersTable(ui->tablePlayers);
     tournament = btm::Tournament::New();
-    QObject::connect(ui->widgetRound,
+    /*QObject::connect(ui->widgetRound,
                      SIGNAL(newCurrentRound(btm::Round::pointer)),
                      this,
-                     SLOT(UpdateDisplayPlayersStatus()));
+                     SLOT(UpdateDisplayPlayersStatus()));*/
     ui->menuBar->addAction(ui->actionRemoteDisplay);
     QObject::connect(ui->actionRemoteDisplay, SIGNAL(triggered(bool)),
                      this, SLOT(on_menuRemoteDisplayTriggered()));
@@ -68,7 +68,7 @@ void MainWindow::UpdateDisplayPlayersStatus()
 void MainWindow::on_tablePlayers_cellChanged(int row, int column)
 {
     players_table->cellChanged(row, column);
-    ui->widgetRound->Update();
+    //ui->widgetRound->Update();
 }
 
 
@@ -76,7 +76,7 @@ void MainWindow::on_tablePlayers_itemClicked(QTableWidgetItem *item)
 {
     auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
     a->itemClicked();
-    ui->widgetRound->Update();
+   // ui->widgetRound->Update();
 }
 
 void MainWindow::on_buttonSave_clicked()
@@ -106,7 +106,7 @@ void MainWindow::on_buttonLoad_clicked()
 void MainWindow::StartNewTournament()
 {
     players_table->SetPlayers(tournament->players);
-    ui->widgetRound->SetTournament(tournament);
+    //ui->widgetRound->SetTournament(tournament);
     UpdateDisplayPlayersStatus();
 //    QObject::connect(
 }
@@ -214,10 +214,10 @@ void MainWindow::on_buttonModifyPlayers_clicked()
     DD("switch");
     if (ui->roundWidget2->GetSwitchPlayerMode()) {
         ui->roundWidget2->SetSwitchPlayerMode(false);
-        //ui->buttonModifyPlayers->SetText("Modifier les matchs");
+        ui->buttonModifyPlayers->setText("Modifier les matchs");
     }
     else {
         ui->roundWidget2->SetSwitchPlayerMode(true);
-        //ui->buttonModifyPlayers->SetText("Reprendre");
+        ui->buttonModifyPlayers->setText("Reprendre");
     }
 }

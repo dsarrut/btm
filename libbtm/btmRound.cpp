@@ -46,6 +46,11 @@ btm::Status btm::Round::GetStatus()
     */
 }
 
+void btm::Round::SwitchPlayers(btm::Player::pointer p1, btm::Player::pointer p2)
+{
+    DD("do it");
+}
+
 void btm::Round::on_match_status_changed()
 {
     DD("Round::on_match_status_changed");
