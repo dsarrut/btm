@@ -20,6 +20,9 @@
       <property name="currentIndex">
        <number>1</number>
       </property>
+      <property name="tabBarAutoHide">
+       <bool>false</bool>
+      </property>
       <widget class="QWidget" name="tabPlayer">
        <attribute name="title">
         <string>Joueurs</string>
@@ -176,15 +179,9 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tabRound">
-       <attribute name="title">
-        <string>Tour actuel</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_2"/>
-      </widget>
       <widget class="QWidget" name="tabRound2">
        <attribute name="title">
-        <string>Test round</string>
+        <string>Tours</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -203,6 +200,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="buttonRndScore">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Scores au hasard</string>
             </property>
@@ -210,6 +210,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="buttonModifyPlayers">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Modifier les matchs</string>
             </property>
@@ -218,7 +221,7 @@
           <item>
            <widget class="QPushButton" name="buttonRoundBack">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -239,7 +242,7 @@
           <item>
            <widget class="QPushButton" name="buttonRoundForward">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -258,7 +261,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="newRound">
+           <widget class="QPushButton" name="buttonNewRound">
             <property name="text">
              <string>Nouveau tour</string>
             </property>

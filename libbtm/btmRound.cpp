@@ -33,7 +33,7 @@ btm::Status btm::Round::GetStatus()
     return currentStatus;
 }
 
-void btm::Round::SwitchPlayers(btm::Player::pointer p1,
+void btm::Round::SwapPlayers(btm::Player::pointer p1,
                                btm::Player::pointer p2)
 {
     btm::Match::pointer m1;

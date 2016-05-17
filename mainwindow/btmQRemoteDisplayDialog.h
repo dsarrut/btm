@@ -16,7 +16,6 @@ public:
     explicit QRemoteDisplayDialog(QWidget *parent = 0);
     ~QRemoteDisplayDialog();
 
-    //QRemoteDisplay *GetWidget();
     void SetRound(btm::Round::pointer r);
 
 protected:

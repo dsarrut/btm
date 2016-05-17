@@ -94,9 +94,7 @@ void btm::Tournament::GenerateRandomScores(btm::Round::pointer r)
 void btm::Tournament::ComputePlayersStatus()
 {
     for(auto p:players) p->ResetStatus();
-    for(auto r:rounds) {
-        r->UpdatePlayersStatus();
-    }
+    for(auto r:rounds) r->UpdatePlayersStatus();
 }
 
 std::string btm::Tournament::GetPlayersStatus()

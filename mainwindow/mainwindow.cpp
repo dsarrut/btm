@@ -16,10 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     players_table = new btm::QPlayersTable(ui->tablePlayers);
     tournament = btm::Tournament::New();
-    /*QObject::connect(ui->widgetRound,
-                     SIGNAL(newCurrentRound(btm::Round::pointer)),
-                     this,
-                     SLOT(UpdateDisplayPlayersStatus()));*/
     ui->menuBar->addAction(ui->actionRemoteDisplay);
     QObject::connect(ui->actionRemoteDisplay, SIGNAL(triggered(bool)),
                      this, SLOT(on_menuRemoteDisplayTriggered()));
@@ -61,6 +57,7 @@ void MainWindow::UpdateDisplayPlayersStatus()
     auto x = tournament->GetPlayersStatus();
     QString s = QString::fromStdString(x);
     players_table->Update();
+    UpdateButtons();
 }
 //----------------------------------------------------------------------------
 
@@ -68,7 +65,6 @@ void MainWindow::UpdateDisplayPlayersStatus()
 void MainWindow::on_tablePlayers_cellChanged(int row, int column)
 {
     players_table->cellChanged(row, column);
-    //ui->widgetRound->Update();
 }
 
 
@@ -76,7 +72,6 @@ void MainWindow::on_tablePlayers_itemClicked(QTableWidgetItem *item)
 {
     auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
     a->itemClicked();
-   // ui->widgetRound->Update();
 }
 
 void MainWindow::on_buttonSave_clicked()
@@ -106,9 +101,7 @@ void MainWindow::on_buttonLoad_clicked()
 void MainWindow::StartNewTournament()
 {
     players_table->SetPlayers(tournament->players);
-    //ui->widgetRound->SetTournament(tournament);
     UpdateDisplayPlayersStatus();
-//    QObject::connect(
 }
 
 void MainWindow::InitRemoteDisplayDialog()
@@ -116,16 +109,8 @@ void MainWindow::InitRemoteDisplayDialog()
     DD("creation");
     mRemoteDisplayDialog = new QRemoteDisplayDialog(this);
     DD(mRemoteDisplayDialog->isModal());
-
-    /*
-    QObject::connect(ui->widgetRound,
-                     SIGNAL(newCurrentRound(btm::Round::pointer)),
-                     mRemoteDisplayDialog->GetWidget(),
-                     SLOT(on_RoundChanged(btm::Round::pointer)));
-    if (tournament->rounds.size() > 0)
-        mRemoteDisplayDialog->GetWidget()->on_RoundChanged(tournament->rounds.back());
-        */
 }
+
 
 void MainWindow::on_buttonAddPlayer_clicked()
 {
@@ -138,7 +123,6 @@ void MainWindow::on_buttonAddPlayer_clicked()
 
 void MainWindow::on_menuRemoteDisplayTriggered()
 {
-    DD("here");
     if (mRemoteDisplayDialog == NULL) InitRemoteDisplayDialog();
     if (!mRemoteDisplayDialog->isVisible()) mRemoteDisplayDialog->show();
     else mRemoteDisplayDialog->hide();
@@ -147,9 +131,8 @@ void MainWindow::on_menuRemoteDisplayTriggered()
     mRemoteDisplayDialog->SetRound(tournament->rounds.back());
 }
 
-void MainWindow::on_newRound_clicked()
+void MainWindow::on_buttonNewRound_clicked()
 {
-    DD("new tour");
     if (!tournament) return;
     if (tournament->rounds.size() == 0)
         currentRound = tournament->StartNewRound();
@@ -160,7 +143,6 @@ void MainWindow::on_newRound_clicked()
         }
         else return;
     }
-    DD("ici");
     if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(currentRound);
     QObject::connect(currentRound.get(), SIGNAL(RoundStatusHasChanged()),
                      this, SLOT(UpdateDisplayPlayersStatus()));
@@ -170,12 +152,10 @@ void MainWindow::on_newRound_clicked()
 
 void MainWindow::on_buttonRndScore_clicked()
 {
-    DD("rand");
     std::mt19937 rng(std::time(0));
     if (!tournament) return;
     if (tournament->rounds.size() == 0) return;
     btm::Round::pointer round = tournament->rounds.back();
-    DD("here");
     for(auto & m:round->matches)
         m->GenerateRandomScore(rng);
 }
@@ -201,23 +181,57 @@ void MainWindow::on_buttonRoundForward_clicked()
 void MainWindow::on_currentRound_changed()
 {
     ui->roundWidget2->SetRound(currentRound);
+    ui->roundWidget2->SetSwapPlayerMode(false);
+    UpdateButtons();
+}
+
+void MainWindow::UpdateButtons()
+{
+    if (!currentRound) {
+        ui->buttonModifyPlayers->setEnabled(false);
+        ui->buttonRoundBack->setEnabled(false);
+        ui->buttonRoundForward->setEnabled(false);
+        ui->buttonRndScore->setEnabled(false);
+        return;
+    }
+    ui->buttonModifyPlayers->setEnabled(true);
+
+    // Back forward
     if (currentRound->round_nb == 1)
         ui->buttonRoundBack->setEnabled(false);
     else ui->buttonRoundBack->setEnabled(true);
     if (currentRound->round_nb == tournament->rounds.size())
         ui->buttonRoundForward->setEnabled(false);
     else ui->buttonRoundForward->setEnabled(true);
+
+    // Rnd button
+    if (currentRound->GetStatus() == btm::Terminated)
+        ui->buttonRndScore->setEnabled(false);
+    else ui->buttonRndScore->setEnabled(true);
+
+    // Swap player
+    if (ui->roundWidget2->GetSwapPlayerMode()) {
+        ui->buttonRoundBack->setEnabled(false);
+        ui->buttonRoundForward->setEnabled(false);
+        ui->buttonRndScore->setEnabled(false);
+    }
+
+    // Swap mode
+    if (ui->roundWidget2->GetSwapPlayerMode())
+        ui->buttonModifyPlayers->setText("Reprendre");
+    else ui->buttonModifyPlayers->setText("Modifier les matchs");
+
+    // New round
+    if (currentRound == tournament->rounds.back() and
+            currentRound->GetStatus() == btm::Terminated) {
+        ui->buttonNewRound->setEnabled(true);
+    }
+    else ui->buttonNewRound->setEnabled(false);
 }
 
 void MainWindow::on_buttonModifyPlayers_clicked()
 {
-    DD("switch");
-    if (ui->roundWidget2->GetSwitchPlayerMode()) {
-        ui->roundWidget2->SetSwitchPlayerMode(false);
-        ui->buttonModifyPlayers->setText("Modifier les matchs");
-    }
-    else {
-        ui->roundWidget2->SetSwitchPlayerMode(true);
-        ui->buttonModifyPlayers->setText("Reprendre");
-    }
+    auto b = ui->roundWidget2->GetSwapPlayerMode();
+    ui->roundWidget2->SetSwapPlayerMode(!b);
+    UpdateButtons();
 }

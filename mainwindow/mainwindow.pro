@@ -22,11 +22,8 @@ SOURCES += main.cpp\
     btmQPlayersTable.cpp \
     btmQTableWidgetItemWithPlayer.cpp \
     btmQPlayerTableRow.cpp \
-    btmQMatchWidget.cpp \
-    btmQRoundWidget.cpp \
     btmQWaitingPlayersWidget.cpp \
     btmQPlayerWidget.cpp \
-    btmQRemoteDisplay.cpp \
     btmQRemoteDisplayDialog.cpp \
     btmQRoundWidget2.cpp \
     btmQMatchWidget2.cpp
@@ -35,11 +32,8 @@ HEADERS  += mainwindow.h \
     btmQPlayersTable.h \
     btmQTableWidgetItemWithPlayer.h \
     btmQPlayerTableRow.h \
-    btmQMatchWidget.h \
-    btmQRoundWidget.h \
     btmQWaitingPlayersWidget.h \
     btmQPlayerWidget.h \
-    btmQRemoteDisplay.h \
     btmQRemoteDisplayDialog.h \
     btmQRoundWidget2.h \
     btmQMatchWidget2.h

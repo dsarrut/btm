@@ -22,8 +22,8 @@ public:
 
     void SetRound(btm::Round::pointer r);
     void SetNumberOfColumns(int i);
-    void SetSwitchPlayerMode(bool b);
-    bool GetSwitchPlayerMode() const;
+    void SetSwapPlayerMode(bool b);
+    bool GetSwapPlayerMode() const;
 
 public slots:
     void on_player_selected(btm::Player::pointer p, bool b);
@@ -33,7 +33,7 @@ protected:
     std::vector<QMatchWidget2*> matchWidgets;
     QGridLayout * gridLayout;
     int nbOfColumns;
-    bool switchPlayerMode;
+    bool swapPlayerMode;
     std::vector<btm::Player::pointer> selectedPlayers;
 
 private:

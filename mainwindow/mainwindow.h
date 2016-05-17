@@ -6,9 +6,7 @@
 #include "btmTournament.h"
 #include <btmQPlayersTable.h>
 #include <btmQTableWidgetItemWithPlayer.h>
-#include "btmQMatchWidget.h"
 #include "btmQRoundWidget2.h"
-#include "btmQRemoteDisplay.h"
 #include "btmQRemoteDisplayDialog.h"
 
 namespace Ui {
@@ -27,11 +25,11 @@ public:
 
     btm::Tournament::pointer tournament;
     btm::QPlayersTable * players_table;
-    QRemoteDisplay * mRemoteDisplay;
     QRemoteDisplayDialog * mRemoteDisplayDialog;
     btm::Round::pointer currentRound;
 
     void InitRemoteDisplayDialog();
+    void UpdateButtons();
 
 private slots:
     void on_pushButton_rnd_players_clicked();
@@ -42,7 +40,7 @@ private slots:
     void on_buttonLoad_clicked();
     void on_buttonAddPlayer_clicked();
     void on_menuRemoteDisplayTriggered();
-    void on_newRound_clicked();
+    void on_buttonNewRound_clicked();
     void on_buttonRndScore_clicked();
     void on_buttonRoundBack_clicked();
     void on_buttonRoundForward_clicked();

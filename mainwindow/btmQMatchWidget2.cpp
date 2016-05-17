@@ -10,7 +10,7 @@ QMatchWidget2::QMatchWidget2(QWidget *parent) :
     style_winner = "QLabel { color : green; }";
     style_looser = "QLabel { color : red; }";
     style_in_progress = "QLabel { color : black; }";
-    style_switch = "QLabel { color : blue; }";
+    style_Swap = "QLabel { color : blue; }";
     pixWin = QPixmap(":/icons/icons/face-smile-big-2.png");
     pixLoose = QPixmap(":/icons/icons/face-crying-2.png");
 }
@@ -22,7 +22,6 @@ QMatchWidget2::~QMatchWidget2()
 
 void QMatchWidget2::SetMatch(btm::Match::pointer m)
 {
-    DD("here set match");
     // Disconnet previous signals
     if (match != NULL) {
         QObject::disconnect(match.get(), 0, this, 0);
@@ -46,7 +45,7 @@ void QMatchWidget2::SetScore(int team, int set, const QString &v)
     if (ok) match->SetScore(team, set, value);
 }
 
-void QMatchWidget2::SetSwitchPlayerMode(bool b)
+void QMatchWidget2::SetSwapPlayerMode(bool b)
 {
     ui->widgetPlayer1->EnableSelectMode(b);
     ui->widgetPlayer2->EnableSelectMode(b);
@@ -87,7 +86,6 @@ void QMatchWidget2::ResetSelection()
 
 void QMatchWidget2::on_players_changed()
 {
-    DD("widget player changed");
     ui->widgetPlayer1->SetPlayer(match->GetPlayer(1));
     ui->widgetPlayer2->SetPlayer(match->GetPlayer(2));
     ui->widgetPlayer3->SetPlayer(match->GetPlayer(3));

@@ -18,7 +18,7 @@ public:
 
     void SetMatch(btm::Match::pointer m);
     void SetScore(int team, int set, const QString & v);
-    void SetSwitchPlayerMode(bool b);
+    void SetSwapPlayerMode(bool b);
     void ConnectPlayerSelection(QObject *o);
     void ResetSelection();
 
@@ -32,7 +32,7 @@ protected:
     QString style_winner;
     QString style_looser;
     QString style_in_progress;
-    QString style_switch;
+    QString style_Swap;
     QPixmap pixWin;
     QPixmap pixLoose;
 

@@ -2,7 +2,6 @@
 
 btm::Match::Match(int n)
 {
-    score = 0;
     for(auto i=0; i<3; i++) sets.push_back(btm::Set::New());
     match_nb = n;
 }
@@ -13,12 +12,13 @@ std::string btm::Match::ToString()
     ss << players[0]->ToString() << "+" << players[1]->ToString()
                                  << "    vs    "
                                  << players[2]->ToString() << "+" << players[3]->ToString()
-                                 << " --> " << score;
+                                 << " --> " << GetWinner();
     return ss.str();
 }
 
 void btm::Match::UpdatePlayersStatus()
 {
+    int score = GetWinner();
     if (score == 0) return;
     for(auto p:players) p->nb_of_matches++;
     if (score == 1) {
@@ -51,7 +51,6 @@ void btm::Match::GenerateRandomScore(std::mt19937 & rng)
         sets[2]->SetScore(1,0);
         sets[2]->SetScore(2,0);
     }
-    score = GetWinner();
     emit matchScoreHasChanged();
     emit matchStatusHasChanged();
 }

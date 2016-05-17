@@ -12,7 +12,7 @@ QRoundWidget2::QRoundWidget2(QWidget *parent) :
     gridLayout = new QGridLayout();
     setLayout(gridLayout);
     nbOfColumns = 2;
-    switchPlayerMode = false;
+    swapPlayerMode = false;
 }
 
 QRoundWidget2::~QRoundWidget2()
@@ -22,11 +22,8 @@ QRoundWidget2::~QRoundWidget2()
 
 void QRoundWidget2::SetRound(btm::Round::pointer r)
 {
-    DD(" new round");
     round = r;
     auto nb = round->matches.size();
-    DD(nb);
-    DD(matchWidgets.size());
     // remove old widget
     for(auto w:matchWidgets)
         gridLayout->removeWidget(w);
@@ -36,7 +33,6 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     int row=0;
     int col=0;
     for(unsigned int i=0; i<nb; i++) {
-        DD(i);
         QMatchWidget2 * w = new QMatchWidget2(this);
         w->ConnectPlayerSelection(this);
         gridLayout->addWidget(w, row, col);
@@ -44,11 +40,9 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
         ++col;
         if (col == nbOfColumns) { col = 0; ++row; }
     }
-    DD(matchWidgets.size());
 
     // Install widget
     for(unsigned int i=0; i<nb; i++) {
-        DD(i);
         matchWidgets[i]->SetMatch(round->matches[i]);
     }
 }
@@ -58,34 +52,28 @@ void QRoundWidget2::SetNumberOfColumns(int i)
     nbOfColumns = i;
 }
 
-void QRoundWidget2::SetSwitchPlayerMode(bool b)
+void QRoundWidget2::SetSwapPlayerMode(bool b)
 {
-    switchPlayerMode = b;
-    for(auto w:matchWidgets) w->SetSwitchPlayerMode(b);
+    swapPlayerMode = b;
+    for(auto w:matchWidgets) w->SetSwapPlayerMode(b);
 }
 
-bool QRoundWidget2::GetSwitchPlayerMode() const
+bool QRoundWidget2::GetSwapPlayerMode() const
 {
-    return switchPlayerMode;
+    return swapPlayerMode;
 }
 
 void QRoundWidget2::on_player_selected(btm::Player::pointer p, bool b)
 {
-    DD("recu");
-    DD(selectedPlayers.size());
-    DD(b);
     // Update list of selected players
     if (b) selectedPlayers.push_back(p);
     else {
-          auto i = std::find(selectedPlayers.begin(), selectedPlayers.end(), p);
-          if (i != selectedPlayers.end()) selectedPlayers.erase(i);
+        auto i = std::find(selectedPlayers.begin(), selectedPlayers.end(), p);
+        if (i != selectedPlayers.end()) selectedPlayers.erase(i);
     }
     // check if 2
     if (selectedPlayers.size() == 2) {
-        DD("switch");
-        DD(selectedPlayers[0]);
-        DD(selectedPlayers[1]);
-        round->SwitchPlayers(selectedPlayers[0], selectedPlayers[1]);
+        round->SwapPlayers(selectedPlayers[0], selectedPlayers[1]);
         selectedPlayers.clear();
         for(auto w:matchWidgets) w->ResetSelection();
     }

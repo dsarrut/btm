@@ -55,6 +55,5 @@ void QPlayerWidget::ChangePlayer(btm::Player::pointer p1,
 
 void QPlayerWidget::on_radioButton_toggled(bool checked)
 {
-    DD("emit");
     emit selectedToggled(player, checked);
 }
