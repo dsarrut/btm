@@ -5,6 +5,7 @@
 #include <QGridLayout>
 #include "btmRound.h"
 #include "btmQMatchWidget2.h"
+#include "btmQWaitingPlayersWidget.h"
 
 namespace Ui {
 class QRoundWidget2;
@@ -35,6 +36,7 @@ protected:
     int nbOfColumns;
     bool swapPlayerMode;
     std::vector<btm::Player::pointer> selectedPlayers;
+    QWaitingPlayersWidget * waitingWidget;
 
 private:
     Ui::QRoundWidget2 *ui;

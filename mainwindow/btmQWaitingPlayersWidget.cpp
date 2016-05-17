@@ -32,15 +32,28 @@ void QWaitingPlayersWidget::SetPlayers(btm::Player::vector p)
     }
 }
 
-void QWaitingPlayersWidget::enableModeSwitchPlayer(bool b)
+void QWaitingPlayersWidget::ConnectPlayerSelection(QObject *o)
+{
+    QObject::connect(playerWidgets[0],
+                     SIGNAL(selectedToggled(btm::Player::pointer,bool)),
+                     o, SLOT(on_player_selected(btm::Player::pointer,bool)));
+    QObject::connect(playerWidgets[1],
+                     SIGNAL(selectedToggled(btm::Player::pointer,bool)),
+                     o, SLOT(on_player_selected(btm::Player::pointer,bool)));
+    QObject::connect(playerWidgets[2],
+                     SIGNAL(selectedToggled(btm::Player::pointer,bool)),
+                     o, SLOT(on_player_selected(btm::Player::pointer,bool)));
+}
+
+void QWaitingPlayersWidget::SetSwapPlayerMode(bool b)
 {
     for(unsigned int i=0; i<players.size(); i++)
         playerWidgets[i]->EnableSelectMode(b);
 }
 
-void QWaitingPlayersWidget::ChangePlayer(btm::Player::pointer p1,
+/*void QWaitingPlayersWidget::ChangePlayer(btm::Player::pointer p1,
                                          btm::Player::pointer p2)
 {
     for(auto w:playerWidgets) w->ChangePlayer(p1,p2);
 }
-
+*/

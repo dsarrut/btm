@@ -13,6 +13,7 @@ QRoundWidget2::QRoundWidget2(QWidget *parent) :
     setLayout(gridLayout);
     nbOfColumns = 2;
     swapPlayerMode = false;
+    waitingWidget = NULL;
 }
 
 QRoundWidget2::~QRoundWidget2()
@@ -25,13 +26,26 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     round = r;
     auto nb = round->matches.size();
     // remove old widget
-    for(auto w:matchWidgets)
+    for(auto w:matchWidgets) {
         gridLayout->removeWidget(w);
+        delete w;
+    }
+    if (waitingWidget) gridLayout->removeWidget(waitingWidget);
     matchWidgets.clear();
+    if (waitingWidget) delete waitingWidget;
 
     // Add the widget if some are needed
     int row=0;
     int col=0;
+    if (!waitingWidget) {
+        DD("new");
+        waitingWidget = new QWaitingPlayersWidget(this);
+        waitingWidget->ConnectPlayerSelection(this);
+    }
+    waitingWidget->SetPlayers(round->waiting_players);
+    gridLayout->addWidget(waitingWidget, row, col);
+    ++col;
+    if (col == nbOfColumns) { col = 0; ++row; }
     for(unsigned int i=0; i<nb; i++) {
         QMatchWidget2 * w = new QMatchWidget2(this);
         w->ConnectPlayerSelection(this);
@@ -56,6 +70,7 @@ void QRoundWidget2::SetSwapPlayerMode(bool b)
 {
     swapPlayerMode = b;
     for(auto w:matchWidgets) w->SetSwapPlayerMode(b);
+    waitingWidget->SetSwapPlayerMode(b);
 }
 
 bool QRoundWidget2::GetSwapPlayerMode() const

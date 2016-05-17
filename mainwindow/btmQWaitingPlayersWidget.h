@@ -20,12 +20,14 @@ public:
     ~QWaitingPlayersWidget();
 
     void SetPlayers(btm::Player::vector p);
-    void enableModeSwitchPlayer(bool b);
-    void ChangePlayer(btm::Player::pointer p1,
-                      btm::Player::pointer p2);
+    void ConnectPlayerSelection(QObject *o);
 
-signals:
-    void playerSwitched(QWaitingPlayersWidget *, int player);
+    void SetSwapPlayerMode(bool b);
+   // void ChangePlayer(btm::Player::pointer p1,
+    //                  btm::Player::pointer p2);
+
+//signals:
+  //  void playerSwaped(QWaitingPlayersWidget *, int player);
 
 protected:
     btm::Player::vector players;
