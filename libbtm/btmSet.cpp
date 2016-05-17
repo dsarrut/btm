@@ -53,9 +53,7 @@ void btm::Set::SetScore(int team, int points)
 unsigned int btm::Set::GetTeamPoints(unsigned int team) const
 {
     if (team == 1) return GetTeam1Points();
-    if (team == 2) return GetTeam2Points();
-    DD("Error team");
-    exit(1);
+    return GetTeam2Points();
 }
 
 void btm::Set::UpdatePlayerStats(int team, btm::Player::pointer m)

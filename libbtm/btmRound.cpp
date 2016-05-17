@@ -31,37 +31,19 @@ void btm::Round::UpdatePlayersStatus()
 btm::Status btm::Round::GetStatus()
 {
     return currentStatus;
-    /*
-    btm::Status status = Init;
-    unsigned int playing=0;
-    unsigned int term=0;
-    for(auto m:matches) {
-     if (m->GetStatus() == Init) status = Init;
-     if (m->GetStatus() == Playing) ++playing;
-     if (m->GetStatus() == Terminated) ++term;
-    }
-    if (playing == matches.size()) status = Playing;
-    if (term == matches.size()) status = Terminated;
-    return status;
-    */
 }
 
 void btm::Round::SwitchPlayers(btm::Player::pointer p1,
                                btm::Player::pointer p2)
 {
-    DD("do it");
-    DD(p1);
-    DD(p2);
     btm::Match::pointer m1;
     btm::Match::pointer m2;
     int ip1, ip2;
     FindPlayer(p1, m1, ip1);
     FindPlayer(p2, m2, ip2);
-    DD(ip1);
-    DD(ip2);
     if (ip1 and ip2) {
-     m1->SwapPlayer(ip1, m2, ip2);
-     return;
+        m1->SwapPlayer(ip1, m2, ip2);
+        return;
     }
     DD(" in waiting TODO");
 }
@@ -73,7 +55,6 @@ void btm::Round::FindPlayer(btm::Player::pointer p,
     ip = 0;
     for(auto match:matches) {
         match->FindPlayer(p, ip);
-        DD(ip);
         if (ip) {
             m = match;
             return;
@@ -83,22 +64,18 @@ void btm::Round::FindPlayer(btm::Player::pointer p,
 
 void btm::Round::on_match_status_changed()
 {
-    DD("Round::on_match_status_changed");
-    DD(currentStatus);
     btm::Status status = Init;
     unsigned int playing=0;
     unsigned int term=0;
     for(auto m:matches) {
-     if (m->GetStatus() == Init) status = Init;
-     if (m->GetStatus() == Playing) ++playing;
-     if (m->GetStatus() == Terminated) ++term;
+        if (m->GetStatus() == Init) status = Init;
+        if (m->GetStatus() == Playing) ++playing;
+        if (m->GetStatus() == Terminated) ++term;
     }
     if (playing == matches.size()) status = Playing;
     if (term == matches.size()) status = Terminated;
     if (currentStatus != status) {
         currentStatus = status;
-        DD("changed");
-        DD(currentStatus);
         emit RoundStatusHasChanged();
     }
 }
