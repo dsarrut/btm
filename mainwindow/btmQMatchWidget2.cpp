@@ -56,7 +56,7 @@ void QMatchWidget2::SetSwitchPlayerMode(bool b)
     ui->lineTeam1Set1->setEnabled(!b);
     ui->lineTeam1Set2->setEnabled(!b);
     ui->lineTeam1Set3->setEnabled(!b);
-    ui->lineTeam1Set1->setEnabled(!b);
+    ui->lineTeam2Set1->setEnabled(!b);
     ui->lineTeam2Set2->setEnabled(!b);
     ui->lineTeam2Set3->setEnabled(!b);
 }
@@ -88,10 +88,10 @@ void QMatchWidget2::ResetSelection()
 void QMatchWidget2::on_players_changed()
 {
     DD("widget player changed");
-    ui->widgetPlayer1->SetPlayer(match->GetPlayer(0));
-    ui->widgetPlayer2->SetPlayer(match->GetPlayer(1));
-    ui->widgetPlayer3->SetPlayer(match->GetPlayer(2));
-    ui->widgetPlayer4->SetPlayer(match->GetPlayer(3));
+    ui->widgetPlayer1->SetPlayer(match->GetPlayer(1));
+    ui->widgetPlayer2->SetPlayer(match->GetPlayer(2));
+    ui->widgetPlayer3->SetPlayer(match->GetPlayer(3));
+    ui->widgetPlayer4->SetPlayer(match->GetPlayer(4));
 }
 
 void QMatchWidget2::on_scores_changed()

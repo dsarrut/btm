@@ -29,11 +29,12 @@ public:
     btm::Status GetStatus();
     unsigned int GetMatchNb() const { return match_nb; }
     void SetPlayer(unsigned int i, btm::Player::pointer p);
-    btm::Player::pointer GetPlayer(int i) { return players[i]; }
+    btm::Player::pointer GetPlayer(int i);
     btm::Set::pointer GetSet(int i) { return sets[i]; }
-    void SwitchPlayer(int player1,
-                      btm::Match::pointer m2,
-                      int player2);
+    void SwapPlayer(int player1,
+                    btm::Match::pointer m2,
+                    int player2);
+    void FindPlayer(btm::Player::pointer p, int & ip);
 
 signals:
     void matchPlayersHaveChanged();

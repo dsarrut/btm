@@ -22,6 +22,9 @@ public:
     void UpdatePlayersStatus();
     btm::Status GetStatus();
     void SwitchPlayers(btm::Player::pointer p1, btm::Player::pointer p2);
+    void FindPlayer(btm::Player::pointer p,
+                    btm::Match::pointer & m,
+                    int & ip);
 
     unsigned int round_nb;
     btm::Match::vector matches;

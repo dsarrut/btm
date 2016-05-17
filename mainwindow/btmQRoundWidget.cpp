@@ -102,7 +102,7 @@ void QRoundWidget::playerSwitched(QMatchWidget *w, int player)
         auto m1 = w1->GetMatch();
         auto m2 = w2->GetMatch();
         // Change data
-        m1->SwitchPlayer(player1, m2, player2);
+        m1->SwapPlayer(player1, m2, player2);
         // Change ui
         w1->SetPlayer(player1, m1->GetPlayer(player1));
         w2->SetPlayer(player2, m2->GetPlayer(player2));

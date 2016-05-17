@@ -90,18 +90,33 @@ btm::Status btm::Match::GetStatus()
 
 void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
 {
-    if (i>=4) return;
-    if (players[i] != p) {
-        players[i] = p;
+    if (i==0) return;
+    if (i>4) return;
+    if (players[i-1] != p) {
+        players[i-1] = p;
         emit matchPlayersHaveChanged();
     }
 }
 
-void btm::Match::SwitchPlayer(int player1,
-                              btm::Match::pointer m2,
-                              int player2)
+btm::Player::pointer btm::Match::GetPlayer(int i)
+{
+    return players[i-1];
+}
+
+void btm::Match::SwapPlayer(int player1,
+                            btm::Match::pointer m2,
+                            int player2)
 {
     auto temp = GetPlayer(player1);
     SetPlayer(player1, m2->GetPlayer(player2));
     m2->SetPlayer(player2, temp);
+}
+
+void btm::Match::FindPlayer(btm::Player::pointer p, int &ip)
+{
+    ip = 0;
+    if (p == players[0]) ip = 1;
+    if (p == players[1]) ip = 2;
+    if (p == players[2]) ip = 3;
+    if (p == players[3]) ip = 4;
 }

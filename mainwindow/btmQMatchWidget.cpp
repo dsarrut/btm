@@ -38,7 +38,7 @@ void QMatchWidget::SetMatch(btm::Match::pointer m)
 {
     match = m;
     for(auto i=0; i<4; i++)
-        playerWidgets[i]->SetPlayer(match->GetPlayer(i));
+        playerWidgets[i]->SetPlayer(match->GetPlayer(i+1));
     on_match_changed();
 }
 
