@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QRadioButton>
 #include "btmPlayer.h"
+#include "btmRound.h"
 #include "btmQPlayerWidget.h"
 
 namespace Ui {
@@ -20,18 +21,18 @@ public:
     ~QWaitingPlayersWidget();
 
     void SetPlayers(btm::Player::vector p);
+    void SetRound(btm::Round::pointer r);
     void ConnectPlayerSelection(QObject *o);
-
+    void ResetSelection();
     void SetSwapPlayerMode(bool b);
-   // void ChangePlayer(btm::Player::pointer p1,
-    //                  btm::Player::pointer p2);
 
-//signals:
-  //  void playerSwaped(QWaitingPlayersWidget *, int player);
+public slots:
+    void on_waiting_players_changed();
 
 protected:
     btm::Player::vector players;
     std::vector<QPlayerWidget*> playerWidgets;
+    btm::Round::pointer round;
 
 private:
     Ui::QWaitingPlayersWidget *ui;

@@ -38,6 +38,7 @@ protected:
 
 signals:
     void RoundStatusHasChanged();
+    void WaitingPlayersHaveChanged();
 
 };
 

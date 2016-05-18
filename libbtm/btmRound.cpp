@@ -1,4 +1,5 @@
 #include "btmRound.h"
+# include <algorithm>
 
 btm::Round::Round()
 {
@@ -34,7 +35,7 @@ btm::Status btm::Round::GetStatus()
 }
 
 void btm::Round::SwapPlayers(btm::Player::pointer p1,
-                               btm::Player::pointer p2)
+                             btm::Player::pointer p2)
 {
     btm::Match::pointer m1;
     btm::Match::pointer m2;
@@ -45,7 +46,17 @@ void btm::Round::SwapPlayers(btm::Player::pointer p1,
         m1->SwapPlayer(ip1, m2, ip2);
         return;
     }
-    DD(" in waiting TODO");
+    if (ip1) {
+        auto i = std::find(waiting_players.begin(), waiting_players.end(), p2);
+        m1->SetPlayer(ip1, *i);
+        *i = p1;
+    }
+    else {
+        auto i = std::find(waiting_players.begin(), waiting_players.end(), p1);
+        m2->SetPlayer(ip2, *i);
+        *i = p2;
+    }
+    emit WaitingPlayersHaveChanged();
 }
 
 void btm::Round::FindPlayer(btm::Player::pointer p,

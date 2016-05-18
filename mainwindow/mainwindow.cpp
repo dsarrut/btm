@@ -106,9 +106,7 @@ void MainWindow::StartNewTournament()
 
 void MainWindow::InitRemoteDisplayDialog()
 {
-    DD("creation");
     mRemoteDisplayDialog = new QRemoteDisplayDialog(this);
-    DD(mRemoteDisplayDialog->isModal());
 }
 
 

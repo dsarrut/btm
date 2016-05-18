@@ -27,22 +27,20 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     auto nb = round->matches.size();
     // remove old widget
     for(auto w:matchWidgets) {
-        gridLayout->removeWidget(w);
+        //gridLayout->removeWidget(w);
         delete w;
     }
     if (waitingWidget) gridLayout->removeWidget(waitingWidget);
     matchWidgets.clear();
-    if (waitingWidget) delete waitingWidget;
+    //if (waitingWidget) delete waitingWidget; // no seg fault
 
     // Add the widget if some are needed
     int row=0;
     int col=0;
     if (!waitingWidget) {
-        DD("new");
         waitingWidget = new QWaitingPlayersWidget(this);
         waitingWidget->ConnectPlayerSelection(this);
     }
-    waitingWidget->SetPlayers(round->waiting_players);
     gridLayout->addWidget(waitingWidget, row, col);
     ++col;
     if (col == nbOfColumns) { col = 0; ++row; }
@@ -59,6 +57,8 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     for(unsigned int i=0; i<nb; i++) {
         matchWidgets[i]->SetMatch(round->matches[i]);
     }
+    waitingWidget->SetPlayers(round->waiting_players);
+    waitingWidget->SetRound(round);
 }
 
 void QRoundWidget2::SetNumberOfColumns(int i)
@@ -91,6 +91,7 @@ void QRoundWidget2::on_player_selected(btm::Player::pointer p, bool b)
         round->SwapPlayers(selectedPlayers[0], selectedPlayers[1]);
         selectedPlayers.clear();
         for(auto w:matchWidgets) w->ResetSelection();
+        waitingWidget->ResetSelection();
     }
 }
 
