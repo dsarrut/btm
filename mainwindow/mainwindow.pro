@@ -40,8 +40,6 @@ HEADERS  += mainwindow.h \
     btm_global.h
 
 FORMS    += mainwindow.ui \
-    btmQMatchWidget.ui \
-    btmQRoundWidget.ui \
     btmQWaitingPlayersWidget.ui \
     btmQPlayerWidget.ui \
     btmQRemoteDisplay.ui \

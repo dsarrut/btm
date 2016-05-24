@@ -180,6 +180,7 @@ void MainWindow::on_currentRound_changed()
 {
     ui->roundWidget2->SetRound(currentRound);
     ui->roundWidget2->SetSwapPlayerMode(false);
+    ui->labelRound->setText(QString("Tour n°%1").arg(currentRound->round_nb));
     UpdateButtons();
 }
 

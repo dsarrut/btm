@@ -27,12 +27,12 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     auto nb = round->matches.size();
     // remove old widget
     for(auto w:matchWidgets) {
-        //gridLayout->removeWidget(w);
         delete w;
     }
-    if (waitingWidget) gridLayout->removeWidget(waitingWidget);
+    if (waitingWidget) {
+        gridLayout->removeWidget(waitingWidget);
+    }
     matchWidgets.clear();
-    //if (waitingWidget) delete waitingWidget; // no seg fault
 
     // Add the widget if some are needed
     int row=0;

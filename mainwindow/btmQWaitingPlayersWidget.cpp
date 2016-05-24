@@ -24,8 +24,11 @@ void QWaitingPlayersWidget::SetPlayers(btm::Player::vector p)
 {
     setVisible(true);
     players = p;
-    for(unsigned int i=0; i<players.size(); i++)
+    for(auto p:playerWidgets) p->setVisible(false);
+    for(unsigned int i=0; i<players.size(); i++) {
         playerWidgets[i]->SetPlayer(players[i]);
+        playerWidgets[i]->setVisible(true);
+    }
     if (players.size() == 0) {
         setVisible(false);
         return;
