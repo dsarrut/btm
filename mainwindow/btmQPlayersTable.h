@@ -24,7 +24,7 @@ public:
     btm::QPlayerTableRow::vector row_items;
 
 public slots:
-    void Update();
+    void UpdateTable();
 
 };
 

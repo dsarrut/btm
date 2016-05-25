@@ -56,7 +56,7 @@ void MainWindow::UpdateDisplayPlayersStatus()
     tournament->ComputePlayersStatus();
     auto x = tournament->GetPlayersStatus();
     QString s = QString::fromStdString(x);
-    players_table->Update();
+    players_table->UpdateTable();
     UpdateButtons();
 }
 //----------------------------------------------------------------------------
@@ -102,6 +102,8 @@ void MainWindow::StartNewTournament()
 {
     players_table->SetPlayers(tournament->players);
     UpdateDisplayPlayersStatus();
+    QObject::connect(tournament.get(), SIGNAL(scoreHasChanged()),
+                     players_table, SLOT(UpdateTable()));
 }
 
 void MainWindow::InitRemoteDisplayDialog()
@@ -142,7 +144,7 @@ void MainWindow::on_buttonNewRound_clicked()
         else return;
     }
     if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(currentRound);
-    QObject::connect(currentRound.get(), SIGNAL(RoundStatusHasChanged()),
+    QObject::connect(currentRound.get(), SIGNAL(roundStatusHasChanged()),
                      this, SLOT(UpdateDisplayPlayersStatus()));
     on_currentRound_changed();
 }

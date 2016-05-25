@@ -35,8 +35,12 @@ public:
     btm::Player::vector players;
     btm::Round::vector rounds;
 
+public slots:
+    void on_round_score_changed();
+
 signals:
     void currentRoundHasChanged(btm::Round::pointer);
+    void scoreHasChanged();
 
 };
 } // end namespace

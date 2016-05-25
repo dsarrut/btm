@@ -21,7 +21,7 @@ public:
     typedef std::vector<pointer> vector;
     static pointer New(int n) { return std::make_shared<Match>(n); }
 
-    void UpdatePlayersStatus();
+    void ComputePlayersStatus();
     void GenerateRandomScore(std::mt19937 &rng);
 
     int GetWinner();

@@ -19,7 +19,6 @@ public:
     static pointer New() { return std::make_shared<Round>(); }
 
     std::string ToString();
-    void UpdatePlayersStatus();
     btm::Status GetStatus();
     void SwapPlayers(btm::Player::pointer p1, btm::Player::pointer p2);
     void FindPlayer(btm::Player::pointer p,
@@ -29,16 +28,19 @@ public:
     unsigned int round_nb;
     btm::Match::vector matches;
     btm::Player::vector waiting_players;
+    void ComputePlayersStatus();
 
 public slots:
     void on_match_status_changed();
+    void on_match_score_changed();
 
 protected:
     btm::Status currentStatus;
 
 signals:
-    void RoundStatusHasChanged();
-    void WaitingPlayersHaveChanged();
+    void roundStatusHasChanged();
+    void waitingPlayersHaveChanged();
+    void roundScoreHasChanged();
 
 };
 

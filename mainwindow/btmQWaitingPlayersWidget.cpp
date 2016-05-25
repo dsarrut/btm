@@ -38,7 +38,7 @@ void QWaitingPlayersWidget::SetPlayers(btm::Player::vector p)
 void QWaitingPlayersWidget::SetRound(btm::Round::pointer r)
 {
     round = r;
-    QObject::connect(round.get(), SIGNAL(WaitingPlayersHaveChanged()),
+    QObject::connect(round.get(), SIGNAL(waitingPlayersHaveChanged()),
                      this, SLOT(on_waiting_players_changed()));
 }
 

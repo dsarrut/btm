@@ -16,7 +16,7 @@ std::string btm::Match::ToString()
     return ss.str();
 }
 
-void btm::Match::UpdatePlayersStatus()
+void btm::Match::ComputePlayersStatus()
 {
     int score = GetWinner();
     if (score == 0) return;
@@ -94,6 +94,7 @@ void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
     if (players[i-1] != p) {
         players[i-1] = p;
         emit matchPlayersHaveChanged();
+        emit matchScoreHasChanged();
     }
 }
 

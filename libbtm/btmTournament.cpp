@@ -21,6 +21,8 @@ btm::Round::pointer btm::Tournament::StartNewRound()
     PairSwissSystem(r, temp);
     //PairRandom(r, players);
     rounds.push_back(r);
+    QObject::connect(r.get(), SIGNAL(roundScoreHasChanged()),
+                     this, SLOT(on_round_score_changed()));
     emit currentRoundHasChanged(r);
     return r;
 }
@@ -57,6 +59,8 @@ void btm::Tournament::PairRandom(btm::Round::pointer r,
         r->matches.push_back(m);
         QObject::connect(m.get(), SIGNAL(matchStatusHasChanged()),
                          r.get(), SLOT(on_match_status_changed()));
+        QObject::connect(m.get(), SIGNAL(matchScoreHasChanged()),
+                         r.get(), SLOT(on_match_score_changed()));
     }
 }
 
@@ -80,6 +84,8 @@ void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
         r->matches.push_back(m); //
         QObject::connect(m.get(), SIGNAL(matchStatusHasChanged()),
                          r.get(), SLOT(on_match_status_changed()));
+        QObject::connect(m.get(), SIGNAL(matchScoreHasChanged()),
+                         r.get(), SLOT(on_match_score_changed()));
         ++nb;
     }
 }
@@ -94,7 +100,8 @@ void btm::Tournament::GenerateRandomScores(btm::Round::pointer r)
 void btm::Tournament::ComputePlayersStatus()
 {
     for(auto p:players) p->ResetStatus();
-    for(auto r:rounds) r->UpdatePlayersStatus();
+    for(auto r:rounds) r->ComputePlayersStatus();
+    emit scoreHasChanged();
 }
 
 std::string btm::Tournament::GetPlayersStatus()
@@ -125,4 +132,10 @@ void btm::Tournament::LoadPlayersFromFile(std::string filename)
         players.push_back(p);
     }
     is.close();
+}
+
+void btm::Tournament::on_round_score_changed()
+{
+    DD("tour: on round score changed");
+    ComputePlayersStatus();
 }

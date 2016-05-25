@@ -19,14 +19,21 @@ std::string btm::Round::ToString()
     return ss.str();
 }
 
-void btm::Round::UpdatePlayersStatus()
+
+void btm::Round::ComputePlayersStatus()
 {
     for(auto m:matches) {
-        m->UpdatePlayersStatus();
+        m->ComputePlayersStatus();
     }
     for(auto p:waiting_players) {
         p->nb_of_wait_rounds++;
     }
+}
+
+void btm::Round::on_match_score_changed()
+{
+    DD("round:on match score recompute");
+    emit roundScoreHasChanged();
 }
 
 btm::Status btm::Round::GetStatus()
@@ -44,6 +51,7 @@ void btm::Round::SwapPlayers(btm::Player::pointer p1,
     FindPlayer(p2, m2, ip2);
     if (ip1 and ip2) {
         m1->SwapPlayer(ip1, m2, ip2);
+        emit roundScoreHasChanged();
         return;
     }
     if (ip1) {
@@ -56,7 +64,8 @@ void btm::Round::SwapPlayers(btm::Player::pointer p1,
         m2->SetPlayer(ip2, *i);
         *i = p2;
     }
-    emit WaitingPlayersHaveChanged();
+    emit waitingPlayersHaveChanged();
+    emit roundScoreHasChanged();
 }
 
 void btm::Round::FindPlayer(btm::Player::pointer p,
@@ -87,6 +96,6 @@ void btm::Round::on_match_status_changed()
     if (term == matches.size()) status = Terminated;
     if (currentStatus != status) {
         currentStatus = status;
-        emit RoundStatusHasChanged();
+        emit roundStatusHasChanged();
     }
 }

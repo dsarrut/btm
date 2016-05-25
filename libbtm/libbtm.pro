@@ -10,7 +10,7 @@ TARGET = libbtm
 TEMPLATE = lib
 CONFIG += staticlib
 
-SOURCES += libbtm.cpp \
+SOURCES += \
     btmDD.cpp \
     btmMatch.cpp \
     btmPlayer.cpp \
@@ -19,7 +19,7 @@ SOURCES += libbtm.cpp \
     btmUtils.cpp \
     btmSet.cpp
 
-HEADERS += libbtm.h \
+HEADERS += \
     btmDD.h \
     btmMatch.h \
     btmPlayer.h \

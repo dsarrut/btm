@@ -13,7 +13,7 @@ void btm::QPlayersTable::SetPlayers(btm::Player::vector pv)
     table->setRowCount(pv.size());
     table->blockSignals(true);
     for(auto p:pv) AddPlayer(p);
-    Update();
+    UpdateTable();
     table->blockSignals(false);
 }
 
@@ -26,7 +26,7 @@ void btm::QPlayersTable::AddPlayer(btm::Player::pointer p)
     row_items.push_back(row);
 }
 
-void btm::QPlayersTable::Update()
+void btm::QPlayersTable::UpdateTable()
 {
     table->blockSignals(true);
     for(auto r:row_items) r->Update();
