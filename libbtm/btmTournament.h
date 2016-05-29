@@ -20,7 +20,7 @@ public:
     typedef std::vector<pointer> vector;
     static pointer New() { return std::make_shared<Tournament>(); }
 
-    btm::Round::pointer StartNewRound();
+    btm::Round::pointer StartNewRound(int set_score_max);
     void ComputeWaitingPlayers(btm::Round::pointer r,
                                btm::Player::vector & players);
     void PairRandom(btm::Round::pointer r,
@@ -40,7 +40,6 @@ public:
 
     btm::Player::vector players;
     btm::Round::vector rounds;
-
 
 public slots:
     void on_round_score_changed();

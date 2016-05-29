@@ -2,15 +2,16 @@
 #include "btmTournament.h"
 #include <algorithm>
 
-btm::Round::Round(std::shared_ptr<Tournament> t)
+btm::Round::Round(std::shared_ptr<Tournament> t, int n)
 {
     currentStatus = Init;
     tournament = t;
+    nb_points_to_win = n;
 }
 
-btm::Round::pointer btm::Round::New(btm::Tournament::pointer t)
+btm::Round::pointer btm::Round::New(btm::Tournament::pointer t, int n)
 {
-    return std::make_shared<Round>(t);
+    return std::make_shared<Round>(t, n);
 }
 
 std::string btm::Round::ToString()
@@ -40,6 +41,7 @@ void btm::Round::ComputePlayersStatus()
 void btm::Round::Save(std::ostream & os)
 {
     os << round_nb << " "
+       << nb_points_to_win << " "
        << waiting_players.size() << " "
        << matches.size() << std::endl;
     for(auto p:waiting_players) os << p->id << " ";
@@ -53,6 +55,7 @@ void btm::Round::Load(std::istream & is)
     int nb_w;
     int nb_m;
     is >> round_nb;
+    is >> nb_points_to_win;
     is >> nb_w;
     is >> nb_m;
     // Waiting players

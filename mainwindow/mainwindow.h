@@ -27,6 +27,7 @@ public:
     btm::QPlayersTable * players_table;
     QRemoteDisplayDialog * mRemoteDisplayDialog;
     btm::Round::pointer currentRound;
+    int current_nb_of_points_to_win;
 
     void InitRemoteDisplayDialog();
     void UpdateButtons();
@@ -48,6 +49,7 @@ private slots:
     void on_buttonModifyPlayers_clicked();
     void on_buttonSaveTournament_clicked();
     void on_buttonLoadTournament_clicked();
+    void on_actionScore_triggered();
 
 private:
     Ui::MainWindow *ui;

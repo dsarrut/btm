@@ -383,6 +383,14 @@
    <property name="nativeMenuBar">
     <bool>false</bool>
    </property>
+   <widget class="QMenu" name="menuOptions">
+    <property name="title">
+     <string>Options</string>
+    </property>
+    <addaction name="actionRemoteDisplay"/>
+    <addaction name="actionScore"/>
+   </widget>
+   <addaction name="menuOptions"/>
   </widget>
   <action name="actionRemoteDisplay">
    <property name="icon">
@@ -392,6 +400,11 @@
    </property>
    <property name="text">
     <string>RemoteDisplay</string>
+   </property>
+  </action>
+  <action name="actionScore">
+   <property name="text">
+    <string>Score</string>
    </property>
   </action>
  </widget>

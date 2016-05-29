@@ -5,6 +5,7 @@
 #include <QMenuBar>
 #include <QBoxLayout>
 #include <QDialog>
+#include <QInputDialog>
 
 #include "btmQTableWidgetItemWithPlayer.h"
 
@@ -16,10 +17,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     players_table = new btm::QPlayersTable(ui->tablePlayers);
     tournament = btm::Tournament::New();
-    ui->menuBar->addAction(ui->actionRemoteDisplay);
+    //ui->menuBar->addAction(ui->actionRemoteDisplay);
     QObject::connect(ui->actionRemoteDisplay, SIGNAL(triggered(bool)),
                      this, SLOT(on_menuRemoteDisplayTriggered()));
     mRemoteDisplayDialog = NULL;
+    current_nb_of_points_to_win = 11;
 }
 //----------------------------------------------------------------------------
 
@@ -53,12 +55,7 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 //----------------------------------------------------------------------------
 void MainWindow::UpdateDisplayPlayersStatus()
 {
-    DD("udpate");
     tournament->ComputePlayersStatus();
-    DD("end compute p status")
-            auto x = tournament->GetPlayersStatus();
-    DD(x);
-    QString s = QString::fromStdString(x);
     players_table->UpdateTable();
     UpdateButtons();
 }
@@ -114,9 +111,7 @@ void MainWindow::StartNewTournament()
         QObject::connect(currentRound.get(), SIGNAL(roundStatusHasChanged()),
                          this, SLOT(UpdateDisplayPlayersStatus()));
         on_currentRound_changed();
-        UpdateButtons();
     }
-    DD("end");
 }
 
 void MainWindow::InitRemoteDisplayDialog()
@@ -148,11 +143,11 @@ void MainWindow::on_buttonNewRound_clicked()
 {
     if (!tournament) return;
     if (tournament->rounds.size() == 0)
-        currentRound = tournament->StartNewRound();
+        currentRound = tournament->StartNewRound(current_nb_of_points_to_win);
     else {
         auto r = tournament->rounds.back();
         if (r->GetStatus() == btm::Terminated) {
-            currentRound = tournament->StartNewRound();
+            currentRound = tournament->StartNewRound(current_nb_of_points_to_win);
         }
         else return;
     }
@@ -193,7 +188,6 @@ void MainWindow::on_buttonRoundForward_clicked()
 
 void MainWindow::on_currentRound_changed()
 {
-    DD("main W current round");
     ui->roundWidget2->SetRound(currentRound);
     ui->roundWidget2->SetSwapPlayerMode(false);
     ui->labelRound->setText(QString("Tour n°%1").arg(currentRound->round_nb));
@@ -262,7 +256,6 @@ void MainWindow::on_buttonSaveTournament_clicked()
 
 void MainWindow::on_buttonLoadTournament_clicked()
 {
-    DD("load tournament");
     if (tournament->players.size() != 0) {
         auto reply = QMessageBox::question(this, "Question",
                                            "Cela va effacer tout le tournoi actuel. Souhaitez vous continuer ?",
@@ -275,7 +268,20 @@ void MainWindow::on_buttonLoadTournament_clicked()
     if(!fileName.isEmpty()&& !fileName.isNull()){
         tournament = btm::Tournament::New();
         tournament->LoadFromFile(fileName.toStdString());
-        DD("here");
         StartNewTournament();
+    }
+}
+
+void MainWindow::on_actionScore_triggered()
+{
+    if (tournament) {
+        bool ok;
+        int score_max = QInputDialog::getInt(this, tr("Indiquez le score nécessaire pour gagner le set"),
+                                             tr("Score:"),
+                                             current_nb_of_points_to_win,
+                                             3, 101, 1, &ok);
+           if (ok) {
+               current_nb_of_points_to_win = score_max;
+           }
     }
 }

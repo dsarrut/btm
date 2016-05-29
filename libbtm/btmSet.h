@@ -14,12 +14,12 @@ class Set
 {
 public:
     // Const
-    Set();
+    Set(int s);
 
     // Types
     typedef std::shared_ptr<Set> pointer;
     typedef std::vector<pointer> vector;
-    static pointer New() { return std::make_shared<Set>(); }
+    static pointer New(int s) { return std::make_shared<Set>(s); }
 
     int GetWinner(); // 0=in progress, 1=team1 2=team2
     void GenerateRandomScore(std::mt19937 &rng);

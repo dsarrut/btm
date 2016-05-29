@@ -5,8 +5,13 @@
 btm::Match::Match(std::shared_ptr<btm::Round> r, int n)
 {
     round = r;
-    for(auto i=0; i<3; i++) sets.push_back(btm::Set::New());
+    for(auto i=0; i<3; i++)
+        sets.push_back(btm::Set::New(round->GetNumberOfPointsToWin()));
     match_nb = n;
+    QObject::connect(this, SIGNAL(matchStatusHasChanged()),
+                     r.get(), SLOT(on_match_status_changed()));
+    QObject::connect(this, SIGNAL(matchScoreHasChanged()),
+                     r.get(), SLOT(on_match_score_changed()));
 }
 
 btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r, int n)
@@ -75,7 +80,8 @@ void btm::Match::SetScore(int team, int set, int points)
             sets[2]->SetScore(2,0);
         }
     }
-    if (s != GetStatus()) emit matchStatusHasChanged();
+    if (s != GetStatus())
+        emit matchStatusHasChanged();
 }
 
 int btm::Match::GetWinner()
@@ -158,6 +164,6 @@ std::string btm::Match::ToString() const
     for(auto p:players)
         ss << p << " ";
     for(auto s:sets)
-         ss << s << " ";
+        ss << s << " ";
     return ss.str();
 }

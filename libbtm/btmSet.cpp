@@ -1,10 +1,10 @@
 #include "btmSet.h"
 
-btm::Set::Set()
+btm::Set::Set(int s)
 {
     team1_points = 0;
     team2_points = 0;
-    nb_points_to_win = 11;
+    nb_points_to_win = s;
 }
 
 int btm::Set::GetWinner()
@@ -79,6 +79,7 @@ std::string btm::Set::ToString() const
 {
     std::stringstream ss;
     ss << team1_points << "/" << team2_points << " " ;
+    return ss.str();
 }
 
 btm::Status btm::Set::GetStatus()

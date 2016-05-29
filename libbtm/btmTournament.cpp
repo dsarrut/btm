@@ -9,10 +9,10 @@ btm::Tournament::Tournament()
     std::srand(std::time(0));
 }
 
-btm::Round::pointer btm::Tournament::StartNewRound()
+btm::Round::pointer btm::Tournament::StartNewRound(int set_score_max)
 {
     btm::Tournament::pointer t(this);
-    auto r = btm::Round::New(t);
+    auto r = btm::Round::New(t, set_score_max);
     r->round_nb = rounds.size()+1;// to start at one
     btm::Player::vector temp;//= players; //copy
     for(auto p:players)
@@ -82,11 +82,7 @@ void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
         m->SetPlayer(2, temp[i+2]); // first with third
         m->SetPlayer(3, temp[i+1]);
         m->SetPlayer(4, temp[i+3]);
-        r->matches.push_back(m); //
-        QObject::connect(m.get(), SIGNAL(matchStatusHasChanged()),
-                         r.get(), SLOT(on_match_status_changed()));
-        QObject::connect(m.get(), SIGNAL(matchScoreHasChanged()),
-                         r.get(), SLOT(on_match_score_changed()));
+        r->matches.push_back(m);
         ++nb;
     }
 }
@@ -168,7 +164,7 @@ void btm::Tournament::LoadFromFile(std::string filename)
        auto r = btm::Round::New(shared_from_this());
        r->Load(is);
        rounds.push_back(r);
-       QObject::connect(r.get(), SIGNAL(btm::Round::roundScoreHasChanged()),
+       QObject::connect(r.get(), SIGNAL(roundScoreHasChanged()),
                         this, SLOT(on_round_score_changed()));
     }
     is.close();
@@ -181,7 +177,7 @@ btm::Player::pointer btm::Tournament::FindPlayerById(int id)
         if (p->id == id) return p;
     }
     DD("error player id ")
-    exit(0);
+            exit(0);
 }
 
 void btm::Tournament::on_round_score_changed()

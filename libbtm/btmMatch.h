@@ -15,6 +15,7 @@ class Match : public QObject
     Q_OBJECT
 
 public:
+
     // Constructor
     Match(std::shared_ptr<btm::Round> r, int n);
 
