@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
-    <height>568</height>
+    <width>1069</width>
+    <height>584</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -373,7 +373,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>887</width>
+     <width>1069</width>
      <height>21</height>
     </rect>
    </property>
@@ -394,9 +394,9 @@
   </widget>
   <action name="actionRemoteDisplay">
    <property name="icon">
-    <iconset>
-     <normalon>:/icons/icons/face-angry.png</normalon>
-    </iconset>
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/icons/document-preview.png</normaloff>
+     <normalon>:/icons/icons/face-angry.png</normalon>:/icons/icons/document-preview.png</iconset>
    </property>
    <property name="text">
     <string>RemoteDisplay</string>
@@ -417,6 +417,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

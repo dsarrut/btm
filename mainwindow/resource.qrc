@@ -12,5 +12,6 @@
         <file>icons/face-smile-big-4.png</file>
         <file>icons/bad.jpg</file>
         <file>icons/bad.png</file>
+        <file>icons/document-preview.png</file>
     </qresource>
 </RCC>

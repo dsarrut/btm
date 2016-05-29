@@ -22,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
                      this, SLOT(on_menuRemoteDisplayTriggered()));
     mRemoteDisplayDialog = NULL;
     current_nb_of_points_to_win = 11;
+    QString s = QString("Score à atteindre: %1")
+            .arg(current_nb_of_points_to_win);
+    ui->actionScore->setText(s);
 }
 //----------------------------------------------------------------------------
 
@@ -282,6 +285,9 @@ void MainWindow::on_actionScore_triggered()
                                              3, 101, 1, &ok);
            if (ok) {
                current_nb_of_points_to_win = score_max;
+               QString s = QString("Score à atteindre: %1")
+                       .arg(current_nb_of_points_to_win);
+               ui->actionScore->setText(s);
            }
     }
 }
