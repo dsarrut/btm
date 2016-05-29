@@ -53,12 +53,10 @@ void btm::Round::Load(std::istream & is)
     int nb_w;
     int nb_m;
     is >> round_nb;
-    DD(round_nb);
     is >> nb_w;
     is >> nb_m;
-    DD(nb_w);
-    DD(nb_m);
     // Waiting players
+    waiting_players.clear();
     for(int i=0; i<nb_w; i++) {
         int id;
         is >> id;
@@ -66,11 +64,16 @@ void btm::Round::Load(std::istream & is)
         waiting_players.push_back(player);
     }
     // matchs
-    btm::Round::pointer r(this);
+    matches.clear();
     for(int i=0; i<nb_m; i++) {
-        DD(i);
-        btm::Match::pointer match = btm::Match::New(r, i);
+        btm::Match::pointer match = btm::Match::New(shared_from_this(), i);
         match->Load(is);
+        matches.push_back(match);
+    }
+    DD(nb_m);
+    DD(matches.size());
+    for(auto m:matches) {
+        DD(m);
     }
     DD("end roundload");
 }
@@ -129,6 +132,7 @@ void btm::Round::FindPlayer(btm::Player::pointer p,
 
 void btm::Round::on_match_status_changed()
 {
+    DD("slot round::on_match_status_changed");
     btm::Status status = Init;
     unsigned int playing=0;
     unsigned int term=0;

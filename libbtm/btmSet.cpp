@@ -75,6 +75,12 @@ void btm::Set::Load(std::istream &is)
     is >> team2_points;
 }
 
+std::string btm::Set::ToString() const
+{
+    std::stringstream ss;
+    ss << team1_points << "/" << team2_points << " " ;
+}
+
 btm::Status btm::Set::GetStatus()
 {
     if (team1_points == team2_points and team1_points == 0) return Init;

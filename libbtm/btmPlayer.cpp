@@ -56,7 +56,6 @@ void btm::Player::Load(std::istream &is)
         if (n != ")")
             name = name +" "+n;
     } while (n !=")");
-    DD(name);
 }
 
 void btm::GenerateRandomPlayers(btm::Player::vector & players, int n)

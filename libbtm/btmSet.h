@@ -31,6 +31,14 @@ public:
     void UpdatePlayerStats(int team, btm::Player::pointer m);
     void Save(std::ostream & os);
     void Load(std::istream & is);
+    std::string ToString() const;
+
+    /// Default function to print an element (must be inline here).
+    friend std::ostream& operator<<(std::ostream& os,
+                                    const Set::pointer  m) {
+        os << m->ToString();
+        return os;
+    }
 
 protected:
     unsigned int team1_points;

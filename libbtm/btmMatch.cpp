@@ -142,14 +142,22 @@ void btm::Match::Load(std::istream &is)
 {
     for(unsigned int i=0; i<players.size(); i++) {
         int id;
-        is >> id; DD(id);
+        is >> id;
         auto p = round->tournament->FindPlayerById(id);
         //SetPlayer(i,p);
-        players[0] = p;
+        players[i] = p;
     }
     int nb_sets;
     is >> nb_sets;
-    DD(nb_sets);
     for(auto s:sets) s->Load(is);
-    DD("end match");
+}
+
+std::string btm::Match::ToString() const
+{
+    std::stringstream ss;
+    for(auto p:players)
+        ss << p << " ";
+    for(auto s:sets)
+         ss << s << " ";
+    return ss.str();
 }

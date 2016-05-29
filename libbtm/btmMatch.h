@@ -41,6 +41,14 @@ public:
     void FindPlayer(btm::Player::pointer p, int & ip);
     void Save(std::ostream & os);
     void Load(std::istream & is);
+    std::string ToString() const;
+
+    /// Default function to print an element (must be inline here).
+    friend std::ostream& operator<<(std::ostream& os,
+                                    const Match::pointer  m) {
+        os << m->ToString();
+        return os;
+    }
 
 signals:
     void matchPlayersHaveChanged();
