@@ -6,8 +6,8 @@
 
 TEMPLATE  = subdirs
 CONFIG   += ordered
-#CONFIG += static
-#QMAKE_LFLAGS += -static-libgcc -static-libstdc++ -Wl,--enable-auto-image-base -Wl,--add-stdcall-alias -Wl,--enable-auto-import
+CONFIG += static
+QMAKE_LFLAGS += -static-libgcc -static-libstdc++ -Wl,--enable-auto-image-base -Wl,--add-stdcall-alias -Wl,--enable-auto-import
 SUBDIRS = libbtm mainwindow
 mainwindow.depends = libbtm
 

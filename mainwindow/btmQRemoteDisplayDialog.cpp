@@ -18,5 +18,6 @@ void QRemoteDisplayDialog::SetRound(btm::Round::pointer r)
     round = r;
     ui->frame_2->SetNumberOfColumns(1);
     ui->frame_2->SetRound(round);
+    setWindowTitle(QString("Tour n°%1").arg(round->round_nb));
 }
 
