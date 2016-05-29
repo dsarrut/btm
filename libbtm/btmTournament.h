@@ -8,7 +8,8 @@
 
 namespace btm {
 
-class Tournament : public QObject
+class Tournament : public QObject,
+        public std::enable_shared_from_this<Tournament>
 {
     Q_OBJECT
 

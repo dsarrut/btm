@@ -168,7 +168,7 @@
              <bool>true</bool>
             </property>
             <property name="rowCount">
-             <number>10</number>
+             <number>0</number>
             </property>
             <property name="columnCount">
              <number>7</number>
@@ -185,16 +185,6 @@
             <attribute name="verticalHeaderStretchLastSection">
              <bool>false</bool>
             </attribute>
-            <row/>
-            <row/>
-            <row/>
-            <row/>
-            <row/>
-            <row/>
-            <row/>
-            <row/>
-            <row/>
-            <row/>
             <column>
              <property name="text">
               <string>Nom</string>

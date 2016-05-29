@@ -100,7 +100,6 @@ void btm::Tournament::GenerateRandomScores(btm::Round::pointer r)
 
 void btm::Tournament::ComputePlayersStatus()
 {
-    DD("tournament compute play status");
     for(auto p:players) p->ResetStatus();
     for(auto r:rounds) r->ComputePlayersStatus();
     emit scoreHasChanged();
@@ -146,11 +145,8 @@ void btm::Tournament::LoadPlayers(std::istream & is)
     for(int i=0; i<n; i++) {
         btm::Player::pointer p = btm::Player::New();
         p->Load(is);
-        //p->ResetStatus();
         players.push_back(p);
     }
-    DD(players.size());
-    //for(auto p:players) DD(p->name);
 }
 
 void btm::Tournament::SaveToFile(std::string filename)
@@ -164,12 +160,9 @@ void btm::Tournament::SaveToFile(std::string filename)
 void btm::Tournament::LoadFromFile(std::string filename)
 {
     std::ifstream is(filename);
-    DD("load from ");
-    DD(filename);
     LoadPlayers(is);
      int nb;
     is >> nb; // nb of rounds
-    DD(nb);
     rounds.clear();
     for(int i=0; i<nb; i++) {
        auto r = btm::Round::New(shared_from_this());
@@ -178,9 +171,8 @@ void btm::Tournament::LoadFromFile(std::string filename)
        QObject::connect(r.get(), SIGNAL(btm::Round::roundScoreHasChanged()),
                         this, SLOT(on_round_score_changed()));
     }
-    DD(rounds.size());
-    DD("load done");
     is.close();
+
 }
 
 btm::Player::pointer btm::Tournament::FindPlayerById(int id)
@@ -194,6 +186,5 @@ btm::Player::pointer btm::Tournament::FindPlayerById(int id)
 
 void btm::Tournament::on_round_score_changed()
 {
-    DD("tourn: on_round_score_changed");
     ComputePlayersStatus();
 }

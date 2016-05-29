@@ -52,12 +52,7 @@ void QMatchWidget2::SetSwapPlayerMode(bool b)
     ui->widgetPlayer3->EnableSelectMode(b);
     ui->widgetPlayer4->EnableSelectMode(b);
 
-    ui->lineTeam1Set1->setEnabled(!b);
-    ui->lineTeam1Set2->setEnabled(!b);
-    ui->lineTeam1Set3->setEnabled(!b);
-    ui->lineTeam2Set1->setEnabled(!b);
-    ui->lineTeam2Set2->setEnabled(!b);
-    ui->lineTeam2Set3->setEnabled(!b);
+    on_scores_changed();
 }
 
 void QMatchWidget2::ConnectPlayerSelection(QObject *o)

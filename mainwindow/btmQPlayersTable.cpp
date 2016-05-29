@@ -8,10 +8,13 @@ btm::QPlayersTable::QPlayersTable(QTableWidget * t)
 
 void btm::QPlayersTable::SetPlayers(btm::Player::vector pv)
 {
+    DD(" set players");
     players.clear();
     row_items.clear();
+    DD(pv.size());
     table->setRowCount(pv.size());
     table->blockSignals(true);
+    DD("here");
     for(auto p:pv) AddPlayer(p);
     UpdateTable();
     table->blockSignals(false);

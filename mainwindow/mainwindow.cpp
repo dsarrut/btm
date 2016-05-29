@@ -53,8 +53,11 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 //----------------------------------------------------------------------------
 void MainWindow::UpdateDisplayPlayersStatus()
 {
+    DD("udpate");
     tournament->ComputePlayersStatus();
-    auto x = tournament->GetPlayersStatus();
+    DD("end compute p status")
+            auto x = tournament->GetPlayersStatus();
+    DD(x);
     QString s = QString::fromStdString(x);
     players_table->UpdateTable();
     UpdateButtons();
@@ -100,7 +103,6 @@ void MainWindow::on_buttonLoad_clicked()
 
 void MainWindow::StartNewTournament()
 {
-    DD("start new tournament");
     players_table->SetPlayers(tournament->players);
     UpdateDisplayPlayersStatus();
     QObject::connect(tournament.get(), SIGNAL(scoreHasChanged()),
@@ -111,7 +113,10 @@ void MainWindow::StartNewTournament()
         if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(currentRound);
         QObject::connect(currentRound.get(), SIGNAL(roundStatusHasChanged()),
                          this, SLOT(UpdateDisplayPlayersStatus()));
+        on_currentRound_changed();
+        UpdateButtons();
     }
+    DD("end");
 }
 
 void MainWindow::InitRemoteDisplayDialog()
@@ -257,6 +262,7 @@ void MainWindow::on_buttonSaveTournament_clicked()
 
 void MainWindow::on_buttonLoadTournament_clicked()
 {
+    DD("load tournament");
     if (tournament->players.size() != 0) {
         auto reply = QMessageBox::question(this, "Question",
                                            "Cela va effacer tout le tournoi actuel. Souhaitez vous continuer ?",

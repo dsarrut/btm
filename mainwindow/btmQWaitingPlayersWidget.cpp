@@ -68,6 +68,7 @@ void QWaitingPlayersWidget::SetSwapPlayerMode(bool b)
 
 void QWaitingPlayersWidget::on_waiting_players_changed()
 {
+    DD(" QWaitingPlayersWidget::on_waiting_players_changed ");
     SetPlayers(round->waiting_players);
 }
 
