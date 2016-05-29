@@ -30,10 +30,15 @@ public:
     void ComputePlayersStatus();
     std::string GetPlayersStatus();
     void SavePlayersToFile(std::string filename);
+    void SavePlayers(std::ofstream & os);
     void LoadPlayersFromFile(std::string filename);
+    void LoadPlayers(std::ifstream &is);
+    void SaveToFile(std::string filename);
+    void LoadFromFile(std::string filename);
 
     btm::Player::vector players;
     btm::Round::vector rounds;
+
 
 public slots:
     void on_round_score_changed();

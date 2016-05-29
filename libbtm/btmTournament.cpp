@@ -116,13 +116,24 @@ std::string btm::Tournament::GetPlayersStatus()
 void btm::Tournament::SavePlayersToFile(std::string filename)
 {
     std::ofstream os(filename);
-    for(auto p:players) os << p->name << std::endl;
+    SavePlayers(os);
     os.close();
 }
 
 void btm::Tournament::LoadPlayersFromFile(std::string filename)
 {
     std::ifstream is(filename);
+    LoadPlayers(is);
+    is.close();
+}
+
+void btm::Tournament::SavePlayers(std::ofstream & os)
+{
+    for(auto p:players) os << p->name << std::endl;
+}
+
+void btm::Tournament::LoadPlayers(std::ifstream & is)
+{
     players.clear();
     for (std::string line; std::getline(is, line); )
     {
@@ -131,7 +142,16 @@ void btm::Tournament::LoadPlayersFromFile(std::string filename)
         p->ResetStatus();
         players.push_back(p);
     }
-    is.close();
+}
+
+void btm::Tournament::SaveToFile(std::string filename)
+{
+
+}
+
+void btm::Tournament::LoadFromFile(std::string filename)
+{
+
 }
 
 void btm::Tournament::on_round_score_changed()

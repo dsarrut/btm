@@ -46,6 +46,8 @@ private slots:
     void on_buttonRoundForward_clicked();
     void on_currentRound_changed();
     void on_buttonModifyPlayers_clicked();
+    void on_buttonSaveTournament_clicked();
+    void on_buttonLoadTournament_clicked();
 
 private:
     Ui::MainWindow *ui;

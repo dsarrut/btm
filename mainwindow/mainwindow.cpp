@@ -236,3 +236,30 @@ void MainWindow::on_buttonModifyPlayers_clicked()
     ui->roundWidget2->SetSwapPlayerMode(!b);
     UpdateButtons();
 }
+
+void MainWindow::on_buttonSaveTournament_clicked()
+{
+    auto fileName = QFileDialog::getSaveFileName(this,
+                                                 tr("Sauvegarder le tournoi actuel"));
+    if(!fileName.isEmpty()&& !fileName.isNull()){
+        tournament->SaveToFile(fileName.toStdString());
+    }
+}
+
+void MainWindow::on_buttonLoadTournament_clicked()
+{
+    if (tournament->players.size() != 0) {
+        auto reply = QMessageBox::question(this, "Question",
+                                           "Cela va effacer tout le tournoi actuel. Souhaitez vous continuer ?",
+                                           QMessageBox::Yes|QMessageBox::No);
+        if (reply != QMessageBox::Yes) return;
+    }
+
+    auto fileName = QFileDialog::getOpenFileName(this,
+                                                 tr("Charger un tournoi"));
+    if(!fileName.isEmpty()&& !fileName.isNull()){
+        tournament = btm::Tournament::New();
+        tournament->LoadFromFile(fileName.toStdString());
+        StartNewTournament();
+    }
+}
