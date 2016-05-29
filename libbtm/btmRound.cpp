@@ -1,9 +1,16 @@
 #include "btmRound.h"
-# include <algorithm>
+#include "btmTournament.h"
+#include <algorithm>
 
-btm::Round::Round()
+btm::Round::Round(std::shared_ptr<Tournament> t)
 {
     currentStatus = Init;
+    tournament = t;
+}
+
+btm::Round::pointer btm::Round::New(btm::Tournament::pointer t)
+{
+    return std::make_shared<Round>(t);
 }
 
 std::string btm::Round::ToString()
@@ -28,6 +35,44 @@ void btm::Round::ComputePlayersStatus()
     for(auto p:waiting_players) {
         p->nb_of_wait_rounds++;
     }
+}
+
+void btm::Round::Save(std::ostream & os)
+{
+    os << round_nb << " "
+       << waiting_players.size() << " "
+       << matches.size() << std::endl;
+    for(auto p:waiting_players) os << p->id << " ";
+    os << std::endl << std::endl;
+    for(auto m:matches) m->Save(os);
+    os << std::endl;
+}
+
+void btm::Round::Load(std::istream & is)
+{
+    int nb_w;
+    int nb_m;
+    is >> round_nb;
+    DD(round_nb);
+    is >> nb_w;
+    is >> nb_m;
+    DD(nb_w);
+    DD(nb_m);
+    // Waiting players
+    for(int i=0; i<nb_w; i++) {
+        int id;
+        is >> id;
+        auto player = tournament->FindPlayerById(id);
+        waiting_players.push_back(player);
+    }
+    // matchs
+    btm::Round::pointer r(this);
+    for(int i=0; i<nb_m; i++) {
+        DD(i);
+        btm::Match::pointer match = btm::Match::New(r, i);
+        match->Load(is);
+    }
+    DD("end roundload");
 }
 
 void btm::Round::on_match_score_changed()

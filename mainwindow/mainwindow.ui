@@ -127,7 +127,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonLoadoTournament">
+           <widget class="QPushButton" name="buttonLoadTournament">
             <property name="text">
              <string>Charger un tournoi</string>
             </property>

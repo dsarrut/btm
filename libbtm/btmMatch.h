@@ -8,18 +8,20 @@
 
 namespace btm {
 
+class Round;
+
 class Match : public QObject
 {
     Q_OBJECT
 
 public:
     // Constructor
-    Match(int n);
+    Match(std::shared_ptr<btm::Round> r, int n);
 
     // Types
     typedef std::shared_ptr<Match> pointer;
     typedef std::vector<pointer> vector;
-    static pointer New(int n) { return std::make_shared<Match>(n); }
+    static pointer New(std::shared_ptr<Round> r, int n);
 
     void ComputePlayersStatus();
     void GenerateRandomScore(std::mt19937 &rng);
@@ -37,6 +39,8 @@ public:
                     btm::Match::pointer m2,
                     int player2);
     void FindPlayer(btm::Player::pointer p, int & ip);
+    void Save(std::ostream & os);
+    void Load(std::istream & is);
 
 signals:
     void matchPlayersHaveChanged();
@@ -47,6 +51,7 @@ protected:
     std::array<btm::Player::pointer, 4> players;
     std::vector<btm::Set::pointer> sets;
     unsigned int match_nb;
+    std::shared_ptr<btm::Round> round;
     //unsigned int score; // 0=in progress 1=team1 or 2=team2
 
 };

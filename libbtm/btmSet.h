@@ -29,6 +29,8 @@ public:
     unsigned int GetTeam2Points() const { return team2_points; }
     unsigned int GetTeamPoints(unsigned int team) const;
     void UpdatePlayerStats(int team, btm::Player::pointer m);
+    void Save(std::ostream & os);
+    void Load(std::istream & is);
 
 protected:
     unsigned int team1_points;

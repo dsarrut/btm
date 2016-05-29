@@ -100,10 +100,18 @@ void MainWindow::on_buttonLoad_clicked()
 
 void MainWindow::StartNewTournament()
 {
+    DD("start new tournament");
     players_table->SetPlayers(tournament->players);
     UpdateDisplayPlayersStatus();
     QObject::connect(tournament.get(), SIGNAL(scoreHasChanged()),
                      players_table, SLOT(UpdateTable()));
+    if (tournament->rounds.size() != 0) {
+        DD(tournament->rounds.size());
+        currentRound = tournament->rounds.back();
+        if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(currentRound);
+        QObject::connect(currentRound.get(), SIGNAL(roundStatusHasChanged()),
+                         this, SLOT(UpdateDisplayPlayersStatus()));
+    }
 }
 
 void MainWindow::InitRemoteDisplayDialog()
@@ -180,6 +188,7 @@ void MainWindow::on_buttonRoundForward_clicked()
 
 void MainWindow::on_currentRound_changed()
 {
+    DD("main W current round");
     ui->roundWidget2->SetRound(currentRound);
     ui->roundWidget2->SetSwapPlayerMode(false);
     ui->labelRound->setText(QString("Tour n°%1").arg(currentRound->round_nb));
@@ -260,6 +269,7 @@ void MainWindow::on_buttonLoadTournament_clicked()
     if(!fileName.isEmpty()&& !fileName.isNull()){
         tournament = btm::Tournament::New();
         tournament->LoadFromFile(fileName.toStdString());
+        DD("here");
         StartNewTournament();
     }
 }

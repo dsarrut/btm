@@ -19,6 +19,7 @@ public:
     typedef std::vector<pointer> vector;
     static pointer New() { return std::make_shared<Player>(); }
 
+    int id;
     std::string name;
     int nb_of_wait_rounds;
     int nb_of_matches;
@@ -31,6 +32,8 @@ public:
     std::string ToString() const;
     std::string StatusToString() const;
     void ResetStatus();
+    void Save(std::ostream & os);
+    void Load(std::istream & is);
 
     /// Default function to print an element (must be inline here).
     friend std::ostream& operator<<(std::ostream& os, const Player & p) {

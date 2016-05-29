@@ -64,6 +64,17 @@ void btm::Set::UpdatePlayerStats(int team, btm::Player::pointer m)
     if (team == 2) m->nb_of_points += team2_points;
 }
 
+void btm::Set::Save(std::ostream &os)
+{
+    os << team1_points << " " << team2_points << std::endl;
+}
+
+void btm::Set::Load(std::istream &is)
+{
+    is >> team1_points;
+    is >> team2_points;
+}
+
 btm::Status btm::Set::GetStatus()
 {
     if (team1_points == team2_points and team1_points == 0) return Init;

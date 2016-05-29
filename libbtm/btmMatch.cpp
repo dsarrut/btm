@@ -1,9 +1,17 @@
 #include "btmMatch.h"
+#include "btmRound.h"
+#include "btmTournament.h"
 
-btm::Match::Match(int n)
+btm::Match::Match(std::shared_ptr<btm::Round> r, int n)
 {
+    round = r;
     for(auto i=0; i<3; i++) sets.push_back(btm::Set::New());
     match_nb = n;
+}
+
+btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r, int n)
+{
+    return std::make_shared<Match>(r, n);
 }
 
 std::string btm::Match::ToString()
@@ -11,7 +19,8 @@ std::string btm::Match::ToString()
     std::stringstream ss;
     ss << players[0]->ToString() << "+" << players[1]->ToString()
                                  << "    vs    "
-                                 << players[2]->ToString() << "+" << players[3]->ToString()
+                                 << players[2]->ToString() << "+"
+                                 << players[3]->ToString()
                                  << " --> " << GetWinner();
     return ss.str();
 }
@@ -119,4 +128,28 @@ void btm::Match::FindPlayer(btm::Player::pointer p, int &ip)
     if (p == players[1]) ip = 2;
     if (p == players[2]) ip = 3;
     if (p == players[3]) ip = 4;
+}
+
+void btm::Match::Save(std::ostream &os)
+{
+    for(auto p:players) os << p->id << " ";
+    os << std::endl;
+    os << sets.size() << std::endl;
+    for(auto s:sets) s->Save(os);
+}
+
+void btm::Match::Load(std::istream &is)
+{
+    for(unsigned int i=0; i<players.size(); i++) {
+        int id;
+        is >> id; DD(id);
+        auto p = round->tournament->FindPlayerById(id);
+        //SetPlayer(i,p);
+        players[0] = p;
+    }
+    int nb_sets;
+    is >> nb_sets;
+    DD(nb_sets);
+    for(auto s:sets) s->Load(is);
+    DD("end match");
 }

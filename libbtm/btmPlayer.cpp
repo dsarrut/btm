@@ -2,6 +2,9 @@
 
 btm::Player::Player()
 {
+    static int current_id = 0;
+    current_id++;
+    id = current_id;
     ResetStatus();
     participate = true;
 }
@@ -31,6 +34,29 @@ void btm::Player::ResetStatus()
     nb_of_win_matches = 0;
     nb_of_points = 0;
     nb_of_win_sets = 0;
+}
+
+void btm::Player::Save(std::ostream &os)
+{
+    os << id << " ( " << name << " ) " << std::endl;
+}
+
+void btm::Player::Load(std::istream &is)
+{
+    is >> id;
+    std::string n;
+    is >> n;
+    if (n != "(") {
+        DD("error reading player name");
+        exit(0);
+    }
+    name ="";
+    do {
+        is >> n;
+        if (n != ")")
+            name = name +" "+n;
+    } while (n !=")");
+    DD(name);
 }
 
 void btm::GenerateRandomPlayers(btm::Player::vector & players, int n)

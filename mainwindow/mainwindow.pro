@@ -14,8 +14,7 @@ CONFIG += static
 QMAKE_LFLAGS += -static-libgcc -static-libstdc++ -Wl,--enable-auto-image-base -Wl,--add-stdcall-alias -Wl,--enable-auto-import
 
 INCLUDEPATH += ../libbtm
-LIBS += -L../libbtm/release/ -L../libbtm/debug/ -llibbtm
-
+LIBS += -L../libbtm/release/   -L../libbtm/debug/ -llibbtm
 
 SOURCES += main.cpp\
     mainwindow.cpp \

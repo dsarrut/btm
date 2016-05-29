@@ -30,11 +30,12 @@ public:
     void ComputePlayersStatus();
     std::string GetPlayersStatus();
     void SavePlayersToFile(std::string filename);
-    void SavePlayers(std::ofstream & os);
+    void SavePlayers(std::ostream & os);
     void LoadPlayersFromFile(std::string filename);
-    void LoadPlayers(std::ifstream &is);
+    void LoadPlayers(std::istream &is);
     void SaveToFile(std::string filename);
     void LoadFromFile(std::string filename);
+    btm::Player::pointer FindPlayerById(int id);
 
     btm::Player::vector players;
     btm::Round::vector rounds;
