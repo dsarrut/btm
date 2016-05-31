@@ -9,18 +9,17 @@ btm::Set::Set(int s)
 
 int btm::Set::GetWinner()
 {
-    if (team1_points >= nb_points_to_win) {
-        int diff = team1_points-team2_points;
-        if (diff >= 2) return 1;
-        if (diff <= -2) return 2;
-        return 0;
-    }
-    if (team2_points >= nb_points_to_win) {
-        int diff = team2_points-team1_points;
-        if (diff >= 2) return 2;
-        if (diff <= -2) return 1;
-        return 0;
-    }
+    if (team1_points < nb_points_to_win-1 and
+            team2_points == nb_points_to_win) return 2;
+    if (team2_points < nb_points_to_win-1 and
+            team1_points == nb_points_to_win) return 1;
+
+    if (team1_points < nb_points_to_win and
+            team2_points < nb_points_to_win) return 0;
+
+    int diff = team1_points-team2_points;
+    if (diff == 2) return 1;
+    if (diff == -2) return 2;
     return 0;
 }
 
