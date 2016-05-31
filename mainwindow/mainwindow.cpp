@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QString s = QString("Score à atteindre: %1")
             .arg(current_nb_of_points_to_win);
     ui->actionScore->setText(s);
+    rnd_allowed = false;
 }
 //----------------------------------------------------------------------------
 
@@ -217,9 +218,11 @@ void MainWindow::UpdateButtons()
     else ui->buttonRoundForward->setEnabled(true);
 
     // Rnd button
-    if (currentRound->GetStatus() == btm::Terminated)
-        ui->buttonRndScore->setEnabled(false);
-    else ui->buttonRndScore->setEnabled(true);
+    if (rnd_allowed) {
+        if (currentRound->GetStatus() == btm::Terminated)
+            ui->buttonRndScore->setEnabled(false);
+        else ui->buttonRndScore->setEnabled(true);
+    }
 
     // Swap player
     if (ui->roundWidget2->GetSwapPlayerMode()) {
@@ -298,6 +301,8 @@ void MainWindow::on_actionScore_triggered()
 
 void MainWindow::on_buttonCancelRound_clicked()
 {
+    if (tournament->rounds.size() == 0) return;
+
     // message r u sure ?
     auto reply = QMessageBox::question(this, "Question",
                                        "Cela va effacer tout le tour actuel. Souhaitez vous continuer ?",
@@ -305,20 +310,32 @@ void MainWindow::on_buttonCancelRound_clicked()
     if (reply != QMessageBox::Yes) return;
 
     // Remove
-    DD(tournament->rounds.size());
     auto & r = tournament->rounds;
-    int i = currentRound->round_nb-1;
-    r.erase(r.begin()+i);
+    int n = currentRound->round_nb-1;
+    r.erase(r.begin()+n);
 
     // Re number rounds
     for(unsigned int i=0; i<r.size(); i++)
         r[i]->round_nb = i+1;
 
     // Change
-    if (tournament->rounds.size() >= 1) {
-        currentRound = tournament->rounds[i-1];
+    if (n > 1) currentRound = r[n-1];
+    else currentRound = r[0];
 
-    }
     on_currentRound_changed();
-    DD(tournament->rounds.size());
+}
+
+void MainWindow::on_actionRandom_triggered()
+{
+    rnd_allowed = !rnd_allowed;
+    if (rnd_allowed) {
+        ui->buttonRndScore->setEnabled(true);
+        ui->pushButton_rnd_players->setEnabled(true);
+        UpdateButtons();
+    }
+    else {
+        ui->buttonRndScore->setEnabled(false);
+        ui->pushButton_rnd_players->setEnabled(false);
+        UpdateButtons();
+    }
 }

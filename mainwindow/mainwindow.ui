@@ -74,6 +74,9 @@
           </property>
           <item>
            <widget class="QPushButton" name="pushButton_rnd_players">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Hasard</string>
             </property>
@@ -266,6 +269,9 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QPushButton" name="buttonCancelRound">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>120</width>
@@ -402,6 +408,7 @@
     </property>
     <addaction name="actionRemoteDisplay"/>
     <addaction name="actionScore"/>
+    <addaction name="actionRandom"/>
    </widget>
    <addaction name="menuOptions"/>
   </widget>
@@ -418,6 +425,11 @@
   <action name="actionScore">
    <property name="text">
     <string>Score</string>
+   </property>
+  </action>
+  <action name="actionRandom">
+   <property name="text">
+    <string>Hasard</string>
    </property>
   </action>
  </widget>
