@@ -265,6 +265,19 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
+           <widget class="QPushButton" name="buttonCancelRound">
+            <property name="maximumSize">
+             <size>
+              <width>120</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Effacer ce tour</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLabel" name="labelRound">
             <property name="font">
              <font>

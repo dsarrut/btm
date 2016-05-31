@@ -239,6 +239,10 @@ void MainWindow::UpdateButtons()
         ui->buttonNewRound->setEnabled(true);
     }
     else ui->buttonNewRound->setEnabled(false);
+
+    if (tournament->rounds.size() > 0)
+        ui->buttonCancelRound->setEnabled(true);
+    else ui->buttonCancelRound->setEnabled(false);
 }
 
 void MainWindow::on_buttonModifyPlayers_clicked()
@@ -283,11 +287,38 @@ void MainWindow::on_actionScore_triggered()
                                              tr("Score:"),
                                              current_nb_of_points_to_win,
                                              3, 101, 1, &ok);
-           if (ok) {
-               current_nb_of_points_to_win = score_max;
-               QString s = QString("Score à atteindre: %1")
-                       .arg(current_nb_of_points_to_win);
-               ui->actionScore->setText(s);
-           }
+        if (ok) {
+            current_nb_of_points_to_win = score_max;
+            QString s = QString("Score à atteindre: %1")
+                    .arg(current_nb_of_points_to_win);
+            ui->actionScore->setText(s);
+        }
     }
+}
+
+void MainWindow::on_buttonCancelRound_clicked()
+{
+    // message r u sure ?
+    auto reply = QMessageBox::question(this, "Question",
+                                       "Cela va effacer tout le tour actuel. Souhaitez vous continuer ?",
+                                       QMessageBox::Yes|QMessageBox::No);
+    if (reply != QMessageBox::Yes) return;
+
+    // Remove
+    DD(tournament->rounds.size());
+    auto & r = tournament->rounds;
+    int i = currentRound->round_nb-1;
+    r.erase(r.begin()+i);
+
+    // Re number rounds
+    for(unsigned int i=0; i<r.size(); i++)
+        r[i]->round_nb = i+1;
+
+    // Change
+    if (tournament->rounds.size() >= 1) {
+        currentRound = tournament->rounds[i-1];
+
+    }
+    on_currentRound_changed();
+    DD(tournament->rounds.size());
 }

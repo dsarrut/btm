@@ -51,6 +51,8 @@ private slots:
     void on_buttonLoadTournament_clicked();
     void on_actionScore_triggered();
 
+    void on_buttonCancelRound_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
