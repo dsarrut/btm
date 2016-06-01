@@ -126,16 +126,16 @@ void QMatchWidget2::on_status_changed()
         ui->labelTeam2Status->setStyleSheet(style_looser);
         ui->iconTeam1->setPixmap(pixWin);
         ui->iconTeam2->setPixmap(pixLoose);
-        ui->labelTeam1Status->setText("Victoire");
-        ui->labelTeam2Status->setText("Défaite");
+        ui->labelTeam1Status->setText(" Victoire ");
+        ui->labelTeam2Status->setText(" Défaite ");
     }
     if (match->GetWinner() == 2) {
         ui->labelTeam1Status->setStyleSheet(style_looser);
         ui->labelTeam2Status->setStyleSheet(style_winner);
         ui->iconTeam1->setPixmap(pixLoose);
         ui->iconTeam2->setPixmap(pixWin);
-        ui->labelTeam1Status->setText("Défaite");
-        ui->labelTeam2Status->setText("Victoire");
+        ui->labelTeam1Status->setText(" Défaite ");
+        ui->labelTeam2Status->setText(" Victoire ");
     }
     if (match->GetWinner() == 0) {
         ui->labelTeam1Status->setStyleSheet(style_in_progress);

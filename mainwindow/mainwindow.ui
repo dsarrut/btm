@@ -13,6 +13,11 @@
   <property name="windowTitle">
    <string>Badminton</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normalon>:/icons/icons/bad.png</normalon>
+   </iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">
@@ -36,7 +41,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
@@ -409,6 +414,7 @@
     <addaction name="actionRemoteDisplay"/>
     <addaction name="actionScore"/>
     <addaction name="actionRandom"/>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuOptions"/>
   </widget>
@@ -423,13 +429,36 @@
    </property>
   </action>
   <action name="actionScore">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/icons/vector-trophy-cup.jpg</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Score</string>
    </property>
   </action>
   <action name="actionRandom">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/icons/logo.256.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Hasard</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/icons/face-grin.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>A propos</string>
+   </property>
+   <property name="toolTip">
+    <string>A propos</string>
    </property>
   </action>
  </widget>

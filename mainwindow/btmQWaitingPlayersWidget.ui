@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
-    <height>256</height>
+    <width>222</width>
+    <height>156</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,6 +23,21 @@
    <enum>QFrame::Raised</enum>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QLabel" name="label">
      <property name="font">
@@ -173,7 +188,7 @@
         <pixmap resource="resource.qrc">:/icons/icons/bad.png</pixmap>
        </property>
        <property name="scaledContents">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>

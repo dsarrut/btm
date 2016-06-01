@@ -13,5 +13,7 @@
         <file>icons/bad.jpg</file>
         <file>icons/bad.png</file>
         <file>icons/document-preview.png</file>
+        <file>icons/logo.256.png</file>
+        <file>icons/vector-trophy-cup.jpg</file>
     </qresource>
 </RCC>

@@ -10,7 +10,7 @@ QRoundWidget2::QRoundWidget2(QWidget *parent) :
     ui->setupUi(this);
     round = NULL;
     gridLayout = new QGridLayout();
-    setLayout(gridLayout);
+    ui->scrollAreaWidgetContents->setLayout(gridLayout);
     nbOfColumns = 2;
     swapPlayerMode = false;
     waitingWidget = NULL;

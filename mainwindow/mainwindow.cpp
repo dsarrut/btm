@@ -339,3 +339,10 @@ void MainWindow::on_actionRandom_triggered()
         UpdateButtons();
     }
 }
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QString t = "http://github.com/dsarrut/btm";
+    t = QString("<a href=\"%1\">%1</a>").arg(t);
+    QMessageBox::about(this, "Badminton Tournament Management", t);
+}
