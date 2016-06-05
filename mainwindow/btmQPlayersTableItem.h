@@ -10,8 +10,9 @@ namespace btm {
 class QPlayersTable2;
 
 // ----------------------------------------------------------------------------
-class QPlayersTableItem : public QTableWidgetItem
+class QPlayersTableItem : public QObject, public QTableWidgetItem
 {
+    Q_OBJECT
 
 public:
     QPlayersTableItem(btm::Player::pointer player,
@@ -28,6 +29,10 @@ public:
     void itemClicked();
 
     bool operator <(const QPlayersTableItem &other) const;
+
+public slots:
+    void on_player_name_changed();
+    void on_player_scores_changed();
 
 protected:
     //bool checkable;

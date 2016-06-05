@@ -29,12 +29,17 @@ public:
 
     int GetWinner();
     btm::Status GetStatus();
+
+    // Player in [1-4]
     btm::Player::pointer GetPlayer(int i);
-    btm::Set::pointer GetSet(int i) { return sets[i]; }
+
+    // Set in [1-3]
+    btm::Set::pointer GetSet(int i);
+
     unsigned int GetMatchNb() const { return match_nb; }
 
     std::string ToString();
-    void SetScore(int team, int set, int points);
+    void SetScore(int team, int theSet, int points);
     void SetPlayer(unsigned int i, btm::Player::pointer p);
     void SwapPlayer(int player1,
                     btm::Match::pointer m2,

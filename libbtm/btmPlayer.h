@@ -5,13 +5,19 @@
 #include <sstream>
 #include <memory>
 
+#include <QObject>
+
 #include "btmDD.h"
 #include "btmUtils.h"
 
 namespace btm {
 
-class Player
+class Match;
+
+class Player: public QObject
 {
+    Q_OBJECT
+
 public:
     Player();
 
@@ -20,6 +26,16 @@ public:
     static pointer New() { return std::make_shared<Player>(); }
 
     std::string GetName() const { return name; }
+    void SetName(std::string s);
+
+    void UpdateWinPoints(int diff);
+    void UpdateWinSets(int diff);
+    void UpdateWinMatches(int diff);
+
+
+    void UpdateScores(std::shared_ptr<btm::Match> m);
+    void ResetStatus();
+
 
     int id;
     std::string name;
@@ -33,7 +49,6 @@ public:
 
     std::string ToString() const;
     std::string StatusToString() const;
-    void ResetStatus();
     void Save(std::ostream & os);
     void Load(std::istream & is);
 
@@ -47,6 +62,10 @@ public:
         os << p->ToString();
         return os;
     }
+
+signals:
+    void playerNameChanged();
+    void playerScoresChanged();
 
 };
 

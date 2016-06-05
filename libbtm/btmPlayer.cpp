@@ -1,4 +1,5 @@
 #include "btmPlayer.h"
+#include "btmMatch.h"
 
 btm::Player::Player()
 {
@@ -7,6 +8,17 @@ btm::Player::Player()
     id = current_id;
     ResetStatus();
     participate = true;
+}
+
+void btm::Player::SetName(std::string s)
+{
+    name = s;
+    emit playerNameChanged();
+}
+
+void btm::Player::UpdateScores(btm::Match::pointer match)
+{
+
 }
 
 std::string btm::Player::ToString() const

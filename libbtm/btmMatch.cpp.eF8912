@@ -167,7 +167,7 @@ void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
     if (players[i-1] != p) {
         players[i-1] = p;
         int team=2;
-        if (i == 1 or i == 2) team = 1;
+        if (i == 1 or i == 2) team == 1;
         for(auto s=1; s<=3; s++)
             SetScore(team, s, GetSet(s)->GetTeamPoints(team));
     }
@@ -176,11 +176,6 @@ void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
 btm::Player::pointer btm::Match::GetPlayer(int i)
 {
     return players[i-1];
-}
-
-btm::Set::pointer btm::Match::GetSet(int i)
-{
-    return sets[i-1];
 }
 
 void btm::Match::SwapPlayer(int player1,
