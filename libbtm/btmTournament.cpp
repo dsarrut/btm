@@ -180,6 +180,12 @@ btm::Player::pointer btm::Tournament::FindPlayerById(int id)
             exit(0);
 }
 
+void btm::Tournament::SetPlayers(btm::Player::vector p)
+{
+    players = p;
+    DD("TODO: emit signal players changed");
+}
+
 void btm::Tournament::on_round_score_changed()
 {
     ComputePlayersStatus();

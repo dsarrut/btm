@@ -41,7 +41,7 @@ MainWindow::~MainWindow()
 //----------------------------------------------------------------------------
 void MainWindow::on_pushButton_rnd_players_clicked()
 {
-    if (tournament->players.size() != 0) {
+    if (tournament->GetPlayers().size() != 0) {
         auto reply = QMessageBox::question(this, "Question",
                                            "Cela va effacer tout le tournoi actuel. Souhaitez vous continuer ?",
                                            QMessageBox::Yes|QMessageBox::No);
@@ -50,7 +50,7 @@ void MainWindow::on_pushButton_rnd_players_clicked()
     btm::Player::vector players;
     btm::GenerateRandomPlayers(players, 31);
     tournament = btm::Tournament::New();
-    tournament->players = players;
+    tournament->SetPlayers(players);
     StartNewTournament();
 }
 //----------------------------------------------------------------------------
@@ -64,12 +64,6 @@ void MainWindow::UpdateDisplayPlayersStatus()
     UpdateButtons();
 }
 //----------------------------------------------------------------------------
-
-
-void MainWindow::on_tablePlayers_cellChanged(int row, int column)
-{
-    //players_table->cellChanged(row, column);
-}
 
 
 void MainWindow::on_tablePlayers_itemClicked(QTableWidgetItem *item)
@@ -87,7 +81,7 @@ void MainWindow::on_buttonSave_clicked()
 
 void MainWindow::on_buttonLoad_clicked()
 {
-    if (tournament->players.size() != 0) {
+    if (tournament->GetPlayers().size() != 0) {
         auto reply = QMessageBox::question(this, "Question",
                                            "Cela va effacer tout le tournoi actuel. Souhaitez vous continuer ?",
                                            QMessageBox::Yes|QMessageBox::No);
@@ -130,11 +124,12 @@ void MainWindow::InitRemoteDisplayDialog()
 
 void MainWindow::on_buttonAddPlayer_clicked()
 {
-    auto p = btm::Player::New();
-    p->name = "pas de nom encore";
-    tournament->players.push_back(p);
+    DD("TODO add player");
+    //auto p = btm::Player::New();
+    //p->name = "pas de nom encore";
+    //tournament->players.push_back(p);
     //players_table->AddPlayer(p);
-    UpdateDisplayPlayersStatus();
+    //UpdateDisplayPlayersStatus();
 }
 
 void MainWindow::on_menuRemoteDisplayTriggered()
@@ -270,7 +265,7 @@ void MainWindow::on_buttonSaveTournament_clicked()
 
 void MainWindow::on_buttonLoadTournament_clicked()
 {
-    if (tournament->players.size() != 0) {
+    if (tournament->GetPlayers().size() != 0) {
         auto reply = QMessageBox::question(this, "Question",
                                            "Cela va effacer tout le tournoi actuel. Souhaitez vous continuer ?",
                                            QMessageBox::Yes|QMessageBox::No);

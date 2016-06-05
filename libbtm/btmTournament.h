@@ -38,11 +38,16 @@ public:
     void LoadFromFile(std::string filename);
     btm::Player::pointer FindPlayerById(int id);
 
-    btm::Player::vector players;
+    btm::Player::vector GetPlayers() const { return players; }
+    void SetPlayers(btm::Player::vector p);
+
     btm::Round::vector rounds;
 
 public slots:
     void on_round_score_changed();
+
+protected:
+    btm::Player::vector players;
 
 signals:
     void currentRoundHasChanged(btm::Round::pointer);

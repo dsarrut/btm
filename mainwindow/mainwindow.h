@@ -37,7 +37,6 @@ public:
 
 private slots:
     void on_pushButton_rnd_players_clicked();
-    void on_tablePlayers_cellChanged(int row, int column);
     void UpdateDisplayPlayersStatus();
     void on_tablePlayers_itemClicked(QTableWidgetItem *item);
     void on_buttonSave_clicked();
