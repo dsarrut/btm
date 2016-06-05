@@ -17,8 +17,10 @@ void btm::QPlayersTable2::SetTournament(btm::Tournament::pointer t)
     DD("TODO: remove previous rows");
     // Add new list of players
     auto players = tournament->GetPlayers();
+    setRowCount(players.size());
     for(auto p:players)
         InsertPlayer(p);
+    resizeColumnsToContents();
 }
 // ----------------------------------------------------------------------------
 

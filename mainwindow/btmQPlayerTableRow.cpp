@@ -1,59 +1,32 @@
 #include "btmQPlayerTableRow.h"
 #include "btmQPlayersTable2.h"
-#include "btmQTableWidgetItemWithPlayer.h"
+#include "btmQPlayersTableItem.h"
 
 // ----------------------------------------------------------------------------
 btm::QPlayerTableRow::QPlayerTableRow(btm::QPlayersTable2 * t,
                                       btm::Player::pointer p,
-                                      int row)
+                                      int r)
 {
     player = p;
     table = t;
-    /*
-    items.resize(7);
-    InsertItem(row, 0, true);  // name
-    items[0]->checkable = true;
-    InsertItem(row, 1, false); // matches
-    InsertItem(row, 2, false); // victory
-    InsertItem(row, 3, false); // sets
-    InsertItem(row, 4, false); // points
-    InsertItem(row, 5, false); // loose
-    InsertItem(row, 6, false); // wait
-    */
+    row = r;
+    table->setColumnCount(6);
+    InsertItem(0, "name");
+    InsertItem(1, "matches");
+    InsertItem(2, "sets");
+    InsertItem(3, "points");
+    InsertItem(4, "loose");
+    InsertItem(5, "wait");
 }
 // ----------------------------------------------------------------------------
 
 
 // ----------------------------------------------------------------------------
-void btm::QPlayerTableRow::InsertItem(int row, int col, bool editable)
+void btm::QPlayerTableRow::InsertItem(int col, std::string type)
 {
-    /*
-    QTableWidgetItemWithPlayer * item = new QTableWidgetItemWithPlayer(player);
-    if (!editable)
-        item->setFlags(item->flags() & ~Qt::ItemIsEditable);
-    table->setItem(row, col, item);
-    items[col] = item;
-    */
-}
-// ----------------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------
-void btm::QPlayerTableRow::Update()
-{
-    /*
-    items[0]->setText(QString::fromStdString(player->name));
-    if (player->participate)
-        items[0]->setCheckState(Qt::CheckState::Checked);
-    else
-        items[0]->setCheckState(Qt::CheckState::Unchecked);
-    items[1]->setData(Qt::DisplayRole, player->nb_of_matches);
-    items[2]->setData(Qt::DisplayRole, player->nb_of_win_matches);
-    items[3]->setData(Qt::DisplayRole, player->nb_of_win_sets);
-    items[4]->setData(Qt::DisplayRole, player->nb_of_points);
-    items[5]->setData(Qt::DisplayRole, player->nb_of_lost_matches);
-    items[6]->setData(Qt::DisplayRole, player->nb_of_wait_rounds);
-*/
+    auto item = QPlayersTableItem::New(player, row, col, type);
+    table->setItem(row, col, item.get());
+    items.push_back(item);
 }
 // ----------------------------------------------------------------------------
 

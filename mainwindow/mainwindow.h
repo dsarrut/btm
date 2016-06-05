@@ -7,7 +7,7 @@
 //#include <btmQPlayersTable.h>
 #include "btmQPlayersTable2.h"
 
-#include <btmQTableWidgetItemWithPlayer.h>
+#include <btmQPlayersTableItem.h>
 #include "btmQRoundWidget2.h"
 #include "btmQRemoteDisplayDialog.h"
 

@@ -3,7 +3,7 @@
 
 #include <btmPlayer.h>
 #include <QTableWidgetItem>
-#include "btmQTableWidgetItemWithPlayer.h"
+#include "btmQPlayersTableItem.h"
 
 namespace btm {
 
@@ -14,23 +14,24 @@ class QPlayerTableRow
 {
 
 public:
+    // Constructor
     QPlayerTableRow(btm::QPlayersTable2 * t,
                     btm::Player::pointer p,
                     int row);
 
+    // Types and pointer
     typedef std::shared_ptr<QPlayerTableRow> pointer;
     typedef std::vector<pointer> vector;
     static pointer New(btm::QPlayersTable2 * t,
                        btm::Player::pointer p,
                        int row);
 
-    void InsertItem(int row, int col, bool editable);
-    void Update();
-
 protected:
     btm::Player::pointer player;
     btm::QPlayersTable2* table;
-    std::vector<QTableWidgetItemWithPlayer*> items;
+    int row;
+    std::vector<QPlayersTableItem::pointer> items;
+    void InsertItem(int col, std::string type);
 
 };
 // ----------------------------------------------------------------------------

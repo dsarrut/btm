@@ -30,20 +30,22 @@ void btm::QPlayersTable::AddPlayer(btm::Player::pointer p)
 
 void btm::QPlayersTable::UpdateTable()
 {
-    table->blockSignals(true);
-    for(auto r:row_items) r->Update();
-    table->resizeColumnsToContents();
-    table->blockSignals(false);
+    //table->blockSignals(true);
+    //for(auto r:row_items) r->Update();
+    //table->resizeColumnsToContents();
+    //table->blockSignals(false);
 }
 
 void btm::QPlayersTable::cellChanged(int row, int column)
 {
+    /*
     if (column == 0) {
         auto item = table->item(row, column);
         auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
         a->Update();
         table->resizeColumnsToContents();
     }
+    */
 }
 
 

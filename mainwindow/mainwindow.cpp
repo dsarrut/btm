@@ -7,7 +7,7 @@
 #include <QDialog>
 #include <QInputDialog>
 
-#include "btmQTableWidgetItemWithPlayer.h"
+#include "btmQPlayersTableItem.h"
 
 //----------------------------------------------------------------------------
 MainWindow::MainWindow(QWidget *parent) :
@@ -68,8 +68,8 @@ void MainWindow::UpdateDisplayPlayersStatus()
 
 void MainWindow::on_tablePlayers_itemClicked(QTableWidgetItem *item)
 {
-    auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
-    a->itemClicked();
+    //auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
+    //a->itemClicked();
 }
 
 void MainWindow::on_buttonSave_clicked()
@@ -101,11 +101,13 @@ void MainWindow::StartNewTournament()
     DD("Start T");
 
     //ui->players_table
+    ui->playersTable->SetTournament(tournament);
 
     //players_table->SetPlayers(tournament->players);
-    UpdateDisplayPlayersStatus();
+    //UpdateDisplayPlayersStatus();
     //QObject::connect(tournament.get(), SIGNAL(scoreHasChanged()),
     //                 players_table, SLOT(UpdateTable()));
+
     if (tournament->rounds.size() != 0) {
         DD(tournament->rounds.size());
         currentRound = tournament->rounds.back();
