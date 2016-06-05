@@ -35,6 +35,6 @@ bool btm::QTableWidgetItemWithPlayer::
 operator <(const QTableWidgetItemWithPlayer &other) const
 {
     DD("sort < here");
-    return text() < other.text());
+    return (text() < other.text());
 }
 // ----------------------------------------------------------------------------

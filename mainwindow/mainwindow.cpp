@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    players_table = new btm::QPlayersTable(ui->tablePlayers);
+    //players_table = new btm::QPlayersTable(ui->tablePlayers);
     tournament = btm::Tournament::New();
     //ui->menuBar->addAction(ui->actionRemoteDisplay);
     QObject::connect(ui->actionRemoteDisplay, SIGNAL(triggered(bool)),
@@ -60,7 +60,7 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 void MainWindow::UpdateDisplayPlayersStatus()
 {
     tournament->ComputePlayersStatus();
-    players_table->UpdateTable();
+    //players_table->UpdateTable();
     UpdateButtons();
 }
 //----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ void MainWindow::UpdateDisplayPlayersStatus()
 
 void MainWindow::on_tablePlayers_cellChanged(int row, int column)
 {
-    players_table->cellChanged(row, column);
+    //players_table->cellChanged(row, column);
 }
 
 
@@ -104,10 +104,14 @@ void MainWindow::on_buttonLoad_clicked()
 
 void MainWindow::StartNewTournament()
 {
-    players_table->SetPlayers(tournament->players);
+    DD("Start T");
+
+    //ui->players_table
+
+    //players_table->SetPlayers(tournament->players);
     UpdateDisplayPlayersStatus();
-    QObject::connect(tournament.get(), SIGNAL(scoreHasChanged()),
-                     players_table, SLOT(UpdateTable()));
+    //QObject::connect(tournament.get(), SIGNAL(scoreHasChanged()),
+    //                 players_table, SLOT(UpdateTable()));
     if (tournament->rounds.size() != 0) {
         DD(tournament->rounds.size());
         currentRound = tournament->rounds.back();
@@ -129,7 +133,7 @@ void MainWindow::on_buttonAddPlayer_clicked()
     auto p = btm::Player::New();
     p->name = "pas de nom encore";
     tournament->players.push_back(p);
-    players_table->AddPlayer(p);
+    //players_table->AddPlayer(p);
     UpdateDisplayPlayersStatus();
 }
 

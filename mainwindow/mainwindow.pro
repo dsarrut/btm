@@ -14,7 +14,7 @@ TEMPLATE = app
 #QMAKE_LFLAGS += -static-libgcc -static-libstdc++ -Wl,--enable-auto-image-base -Wl,--add-stdcall-alias -Wl,--enable-auto-import
 
 INCLUDEPATH += ../libbtm
-LIBS += -L../libbtm/release/   -L../libbtm/debug/ -llibbtm
+LIBS += -L../libbtm/release/   -L../libbtm/debug/  -L../libbtm -llibbtm
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     btmQPlayerWidget.cpp \
     btmQRemoteDisplayDialog.cpp \
     btmQRoundWidget2.cpp \
-    btmQMatchWidget2.cpp
+    btmQMatchWidget2.cpp \
+    btmQPlayersTable2.cpp
 
 HEADERS  += mainwindow.h \
     btmQPlayersTable.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     btmQPlayerWidget.h \
     btmQRemoteDisplayDialog.h \
     btmQRoundWidget2.h \
-    btmQMatchWidget2.h
+    btmQMatchWidget2.h \
+    btmQPlayersTable2.h
     btm_global.h
 
 FORMS    += mainwindow.ui \

@@ -4,7 +4,9 @@
 #include <QMainWindow>
 #include <QTableWidget>
 #include "btmTournament.h"
-#include <btmQPlayersTable.h>
+//#include <btmQPlayersTable.h>
+#include "btmQPlayersTable2.h"
+
 #include <btmQTableWidgetItemWithPlayer.h>
 #include "btmQRoundWidget2.h"
 #include "btmQRemoteDisplayDialog.h"
@@ -24,7 +26,7 @@ public:
     void StartNewTournament();
 
     btm::Tournament::pointer tournament;
-    btm::QPlayersTable * players_table;
+    //btm::QPlayersTable * players_table;
     QRemoteDisplayDialog * mRemoteDisplayDialog;
     btm::Round::pointer currentRound;
     int current_nb_of_points_to_win;
