@@ -19,6 +19,8 @@ public:
     typedef std::vector<pointer> vector;
     static pointer New() { return std::make_shared<Player>(); }
 
+    std::string GetName() const { return name; }
+
     int id;
     std::string name;
     int nb_of_wait_rounds;

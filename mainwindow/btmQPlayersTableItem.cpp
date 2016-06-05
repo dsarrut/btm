@@ -9,7 +9,12 @@ QPlayersTableItem(btm::Player::pointer p,
 {
     player = p;
     type = t;
-    setText("toto");
+    if (type == "name") setText(QString::fromStdString(player->GetName()));
+    if (type == "matches") setData(Qt::DisplayRole, player->nb_of_matches);
+    if (type == "sets") setData(Qt::DisplayRole, player->nb_of_win_sets);
+    if (type == "points") setData(Qt::DisplayRole, player->nb_of_points);
+    if (type == "loose") setData(Qt::DisplayRole, player->nb_of_lost_matches);
+    if (type == "wait") setData(Qt::DisplayRole, player->nb_of_wait_rounds);
 }
 // ----------------------------------------------------------------------------
 
