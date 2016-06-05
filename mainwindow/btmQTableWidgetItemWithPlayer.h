@@ -16,6 +16,8 @@ public:
     void Update();
     void itemClicked();
 
+    bool operator <(const QTableWidgetItemWithPlayer &other) const;
+
     bool checkable;
     btm::Player::pointer player;
 
