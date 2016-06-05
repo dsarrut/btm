@@ -11,7 +11,6 @@ TEMPLATE = lib
 #CONFIG += staticlib
 
 SOURCES += \
-    btmDD.cpp \
     btmMatch.cpp \
     btmPlayer.cpp \
     btmRound.cpp \

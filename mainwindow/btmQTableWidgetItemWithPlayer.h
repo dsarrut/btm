@@ -7,6 +7,7 @@
 
 namespace btm {
 
+// ----------------------------------------------------------------------------
 class QTableWidgetItemWithPlayer : public QTableWidgetItem
 {
 
@@ -19,6 +20,7 @@ public:
     btm::Player::pointer player;
 
 };
+// ----------------------------------------------------------------------------
 
 } // end namespace
 

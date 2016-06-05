@@ -8,6 +8,7 @@
 
 namespace btm {
 
+// ----------------------------------------------------------------------------
 class QPlayersTable : public QObject
 {
     Q_OBJECT
@@ -25,8 +26,8 @@ public:
 
 public slots:
     void UpdateTable();
-
 };
+// ----------------------------------------------------------------------------
 
 } // end namespace
 

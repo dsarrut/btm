@@ -7,6 +7,8 @@
 #include "btmQTableWidgetItemWithPlayer.h"
 
 namespace btm {
+
+// ----------------------------------------------------------------------------
 class QPlayerTableRow
 {
 
@@ -25,6 +27,7 @@ public:
     std::vector<QTableWidgetItemWithPlayer*> items;
 
 };
+// ----------------------------------------------------------------------------
 
 } // end namespace
 #endif // QPLAYERTableRow_H

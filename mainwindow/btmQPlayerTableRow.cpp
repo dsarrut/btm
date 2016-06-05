@@ -1,7 +1,7 @@
 #include "btmQPlayerTableRow.h"
-
 #include "btmQTableWidgetItemWithPlayer.h"
 
+// ----------------------------------------------------------------------------
 btm::QPlayerTableRow::QPlayerTableRow(btm::Player::pointer p,
                                       QTableWidget * t,
                                       int row)
@@ -18,7 +18,10 @@ btm::QPlayerTableRow::QPlayerTableRow(btm::Player::pointer p,
     InsertItem(row, 5, false); // loose
     InsertItem(row, 6, false); // wait
 }
+// ----------------------------------------------------------------------------
 
+
+// ----------------------------------------------------------------------------
 void btm::QPlayerTableRow::InsertItem(int row, int col, bool editable)
 {
     QTableWidgetItemWithPlayer * item = new QTableWidgetItemWithPlayer(player);
@@ -27,7 +30,10 @@ void btm::QPlayerTableRow::InsertItem(int row, int col, bool editable)
     table->setItem(row, col, item);
     items[col] = item;
 }
+// ----------------------------------------------------------------------------
 
+
+// ----------------------------------------------------------------------------
 void btm::QPlayerTableRow::Update()
 {
     items[0]->setText(QString::fromStdString(player->name));
@@ -42,10 +48,14 @@ void btm::QPlayerTableRow::Update()
     items[5]->setData(Qt::DisplayRole, player->nb_of_lost_matches);
     items[6]->setData(Qt::DisplayRole, player->nb_of_wait_rounds);
 }
+// ----------------------------------------------------------------------------
 
+
+// ----------------------------------------------------------------------------
 btm::QPlayerTableRow::pointer btm::QPlayerTableRow::New(btm::Player::pointer p,
                                                         QTableWidget *t,
                                                         int r)
 {
     return std::make_shared<QPlayerTableRow>(p, t, r);
 }
+// ----------------------------------------------------------------------------
