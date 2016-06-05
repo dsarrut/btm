@@ -19,11 +19,13 @@ void btm::QPlayersTable::SetPlayers(btm::Player::vector pv)
 
 void btm::QPlayersTable::AddPlayer(btm::Player::pointer p)
 {
+    /*
     players.push_back(p);
     table->setRowCount(players.size());
     int r = players.size()-1;
     btm::QPlayerTableRow::pointer row = btm::QPlayerTableRow::New(p, table, r);
     row_items.push_back(row);
+    */
 }
 
 void btm::QPlayersTable::UpdateTable()

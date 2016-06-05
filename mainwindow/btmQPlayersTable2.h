@@ -3,6 +3,7 @@
 
 #include <QTableWidget>
 #include "btmTournament.h"
+#include "btmQPlayerTableRow.h"
 
 namespace btm {
 
@@ -16,6 +17,7 @@ public:
 
 protected:
     btm::Tournament::pointer tournament;
+    btm::QPlayerTableRow::vector rows;
     void InsertPlayer(btm::Player::pointer p);
 
 };

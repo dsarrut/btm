@@ -26,6 +26,9 @@ void btm::QPlayersTable2::SetTournament(btm::Tournament::pointer t)
 // ----------------------------------------------------------------------------
 void btm::QPlayersTable2::InsertPlayer(btm::Player::pointer p)
 {
-
+    int row = rows.size();
+    DD(row);
+    auto r = btm::QPlayerTableRow::New(this, p, row);
+    rows.push_back(r);
 }
 // ----------------------------------------------------------------------------
