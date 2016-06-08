@@ -32,10 +32,8 @@ public:
     void UpdateWinSets(int diff);
     void UpdateWinMatches(int diff);
 
-
     void UpdateScores(std::shared_ptr<btm::Match> m);
     void ResetStatus();
-
 
     int id;
     std::string name;
@@ -65,7 +63,7 @@ public:
 
 signals:
     void playerNameChanged();
-    void playerScoresChanged();
+    void playerScoreChanged();
 
 };
 

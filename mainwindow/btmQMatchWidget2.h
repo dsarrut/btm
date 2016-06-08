@@ -22,10 +22,11 @@ public:
     void ConnectPlayerSelection(QObject *o);
     void ResetSelection();
 
+
 public slots:
     void on_players_changed();
-    void on_scores_changed();
     void on_status_changed();
+    void on_scores_changed();
 
 protected:
     btm::Match::pointer match;

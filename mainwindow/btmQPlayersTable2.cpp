@@ -34,3 +34,5 @@ void btm::QPlayersTable2::InsertPlayer(btm::Player::pointer p)
     rows.push_back(r);
 }
 // ----------------------------------------------------------------------------
+
+

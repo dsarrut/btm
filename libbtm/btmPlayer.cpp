@@ -16,9 +16,28 @@ void btm::Player::SetName(std::string s)
     emit playerNameChanged();
 }
 
+void btm::Player::UpdateWinPoints(int diff)
+{
+    nb_of_points += diff;
+    emit playerScoreChanged();
+}
+
+void btm::Player::UpdateWinSets(int diff)
+{
+    nb_of_win_sets += diff;
+    emit playerScoreChanged();
+}
+
+void btm::Player::UpdateWinMatches(int diff)
+{
+    nb_of_win_matches += diff;
+    //nb_of_lost_matches -= diff;
+    emit playerScoreChanged();
+}
+
 void btm::Player::UpdateScores(btm::Match::pointer match)
 {
-
+    DD("UpdateScores TO REMOVE ?");
 }
 
 std::string btm::Player::ToString() const

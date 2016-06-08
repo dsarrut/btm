@@ -36,6 +36,7 @@ btm::QPlayerTableRow::pointer btm::QPlayerTableRow::New(QPlayersTable2 *table,
                                                         btm::Player::pointer player,
                                                         int row)
 {
-  return std::make_shared<QPlayerTableRow>(table, player, row);
+    return std::make_shared<QPlayerTableRow>(table, player, row);
 }
 // ----------------------------------------------------------------------------
+

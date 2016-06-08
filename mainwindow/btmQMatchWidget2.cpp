@@ -22,6 +22,7 @@ QMatchWidget2::~QMatchWidget2()
 
 void QMatchWidget2::SetMatch(btm::Match::pointer m)
 {
+    DD("setmatch");
     // Disconnet previous signals
     if (match != NULL) {
         QObject::disconnect(match.get(), 0, this, 0);
@@ -43,6 +44,7 @@ void QMatchWidget2::SetScore(int team, int set, const QString &v)
     bool ok;
     int value = v.toInt(&ok);
     if (ok) match->SetScore(team, set, value);
+    //UpdateSetsUI();
 }
 
 void QMatchWidget2::SetSwapPlayerMode(bool b)
@@ -89,15 +91,18 @@ void QMatchWidget2::on_players_changed()
 
 void QMatchWidget2::on_scores_changed()
 {
-    ui->lineTeam1Set1->setText(QString("%1").arg(match->GetSet(0)->GetTeam1Points()));
-    ui->lineTeam2Set1->setText(QString("%1").arg(match->GetSet(0)->GetTeam2Points()));
-    ui->lineTeam1Set2->setText(QString("%1").arg(match->GetSet(1)->GetTeam1Points()));
-    ui->lineTeam2Set2->setText(QString("%1").arg(match->GetSet(1)->GetTeam2Points()));
-    ui->lineTeam1Set3->setText(QString("%1").arg(match->GetSet(2)->GetTeam1Points()));
-    ui->lineTeam2Set3->setText(QString("%1").arg(match->GetSet(2)->GetTeam2Points()));
+    DD("Update sets gui");
+    ui->lineTeam1Set1->setText(QString("%1").arg(match->GetSet(1)->GetTeam1Points()));
+    ui->lineTeam2Set1->setText(QString("%1").arg(match->GetSet(1)->GetTeam2Points()));
+    ui->lineTeam1Set2->setText(QString("%1").arg(match->GetSet(2)->GetTeam1Points()));
+    ui->lineTeam2Set2->setText(QString("%1").arg(match->GetSet(2)->GetTeam2Points()));
+    ui->lineTeam1Set3->setText(QString("%1").arg(match->GetSet(3)->GetTeam1Points()));
+    ui->lineTeam2Set3->setText(QString("%1").arg(match->GetSet(3)->GetTeam2Points()));
 
     // Second set
-    if (match->GetSet(0)->GetWinner() == 0) {
+    DD("on scores changed");
+
+    if (match->GetSet(1)->GetWinner() == 0) {
         ui->lineTeam1Set2->setEnabled(false);
         ui->lineTeam2Set2->setEnabled(false);
     }
@@ -107,9 +112,11 @@ void QMatchWidget2::on_scores_changed()
     }
 
     // Third set
-    if (match->GetSet(0)->GetWinner() != 0 and
-            match->GetSet(1)->GetWinner() != 0 and
-            match->GetSet(0)->GetWinner() != match->GetSet(1)->GetWinner()) {
+    DD("on scores changed");
+
+    if (match->GetSet(1)->GetWinner() != 0 and
+            match->GetSet(2)->GetWinner() != 0 and
+            match->GetSet(1)->GetWinner() != match->GetSet(2)->GetWinner()) {
         ui->lineTeam1Set3->setEnabled(true);
         ui->lineTeam2Set3->setEnabled(true);
     }
@@ -117,6 +124,7 @@ void QMatchWidget2::on_scores_changed()
         ui->lineTeam1Set3->setEnabled(false);
         ui->lineTeam2Set3->setEnabled(false);
     }
+    DD("end");
 }
 
 void QMatchWidget2::on_status_changed()

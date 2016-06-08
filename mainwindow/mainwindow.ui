@@ -80,7 +80,7 @@
           <item>
            <widget class="QPushButton" name="pushButton_rnd_players">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Hasard</string>
@@ -156,7 +156,14 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="btm::QPlayersTable2" name="playersTable"/>
+           <widget class="btm::QPlayersTable2" name="playersTable">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="sortingEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer_3">
@@ -311,7 +318,7 @@
      <x>0</x>
      <y>0</y>
      <width>1069</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="defaultUp">

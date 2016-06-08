@@ -32,7 +32,7 @@ public:
 
 public slots:
     void on_player_name_changed();
-    void on_player_scores_changed();
+    void on_player_score_changed();
 
 protected:
     //bool checkable;

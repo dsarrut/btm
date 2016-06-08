@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QString s = QString("Score à atteindre: %1")
             .arg(current_nb_of_points_to_win);
     ui->actionScore->setText(s);
-    rnd_allowed = false;
+    rnd_allowed = true; // FIXME to change when release
 }
 //----------------------------------------------------------------------------
 
@@ -59,6 +59,7 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 //----------------------------------------------------------------------------
 void MainWindow::UpdateDisplayPlayersStatus()
 {
+    DD("UpdateDisplayPlayersStatus");
     tournament->ComputePlayersStatus();
     //players_table->UpdateTable();
     UpdateButtons();
@@ -107,7 +108,7 @@ void MainWindow::StartNewTournament()
     //UpdateDisplayPlayersStatus();
     //QObject::connect(tournament.get(), SIGNAL(scoreHasChanged()),
     //                 players_table, SLOT(UpdateTable()));
-
+    DD(tournament->rounds.size());
     if (tournament->rounds.size() != 0) {
         DD(tournament->rounds.size());
         currentRound = tournament->rounds.back();
@@ -156,10 +157,12 @@ void MainWindow::on_buttonNewRound_clicked()
         }
         else return;
     }
+    DD("here");
     if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(currentRound);
     QObject::connect(currentRound.get(), SIGNAL(roundStatusHasChanged()),
                      this, SLOT(UpdateDisplayPlayersStatus()));
     on_currentRound_changed();
+    DD("end on new");
 }
 
 
@@ -193,10 +196,16 @@ void MainWindow::on_buttonRoundForward_clicked()
 
 void MainWindow::on_currentRound_changed()
 {
+    DD("on_currentRound_changed");
     ui->roundWidget2->SetRound(currentRound);
+    DD("on_currentRound_changed");
+
     ui->roundWidget2->SetSwapPlayerMode(false);
+    DD("on_currentRound_changed");
     ui->labelRound->setText(QString("Tour n°%1").arg(currentRound->round_nb));
+    DD("on_currentRound_changed");
     UpdateButtons();
+    DD("end");
 }
 
 void MainWindow::UpdateButtons()

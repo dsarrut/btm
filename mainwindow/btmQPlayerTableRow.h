@@ -26,6 +26,9 @@ public:
                        btm::Player::pointer p,
                        int row);
 
+public slots:
+    void on_player_score_changed();
+
 protected:
     btm::Player::pointer player;
     btm::QPlayersTable2* table;

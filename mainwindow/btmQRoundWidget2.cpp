@@ -23,8 +23,10 @@ QRoundWidget2::~QRoundWidget2()
 
 void QRoundWidget2::SetRound(btm::Round::pointer r)
 {
+    DD("ui set round");
     round = r;
     auto nb = round->matches.size();
+    DD(nb);
     // remove old widget
     for(auto w:matchWidgets) {
         delete w;
@@ -35,6 +37,7 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     matchWidgets.clear();
 
     // Add the widget if some are needed
+    DD("here");
     int row=0;
     int col=0;
     if (!waitingWidget) {
@@ -54,11 +57,15 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     }
 
     // Install widget
+    DD("llll");
     for(unsigned int i=0; i<nb; i++) {
+        DD(i);
         matchWidgets[i]->SetMatch(round->matches[i]);
     }
+    DD("kkkk");
     waitingWidget->SetPlayers(round->waiting_players);
     waitingWidget->SetRound(round);
+    DD("end");
 }
 
 void QRoundWidget2::SetNumberOfColumns(int i)

@@ -27,9 +27,9 @@ QPlayersTableItem(btm::Player::pointer p,
         on_player_name_changed();
     }
     else {
-        QObject::connect(p.get(), SIGNAL(playerScoresChanged()),
-                         this, SLOT(on_player_scores_changed()));
-        on_player_scores_changed();
+        QObject::connect(p.get(), SIGNAL(playerScoreChanged()),
+                         this, SLOT(on_player_score_changed()));
+        on_player_score_changed();
     }
 
 }
@@ -72,9 +72,14 @@ void btm::QPlayersTableItem::on_player_name_changed()
 {
     setText(QString::fromStdString(player->GetName()));
 }
+// ----------------------------------------------------------------------------
 
-void btm::QPlayersTableItem::on_player_scores_changed()
+
+// ----------------------------------------------------------------------------
+void btm::QPlayersTableItem::on_player_score_changed()
 {
-    DD("todo on_player_scores_changed");
+    if (type == "matches") setData(Qt::DisplayRole, player->nb_of_matches);
+    if (type == "points") setData(Qt::DisplayRole, player->nb_of_points);
+
 }
 // ----------------------------------------------------------------------------

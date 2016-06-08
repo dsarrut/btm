@@ -72,7 +72,9 @@ void btm::Match::GenerateRandomScore(std::mt19937 & rng)
 void btm::Match::SetScore(int team, int theSet, int points)
 {
     DD("set score");
-    std::cout << team << " " << theSet << " " << points;
+    std::cout << team << " " << theSet << " " << points << std::endl;
+    DD(match_nb);
+
     // current state
     btm::Set::pointer set = GetSet(theSet);
     auto old_points = set->GetTeamPoints(team);
@@ -80,6 +82,7 @@ void btm::Match::SetScore(int team, int theSet, int points)
     auto old_match_winner = GetWinner();
     btm::Player::pointer p1, p2, p3, p4;
     auto other_team = (team == 1 ? 2:1);
+    DD(other_team);
     if (team == 1) {
         p1 = players[0];
         p2 = players[1];
@@ -94,13 +97,20 @@ void btm::Match::SetScore(int team, int theSet, int points)
     }
 
     // points
+    DD("points");
     set->SetScore(team, points);
+    DD("a");
     p1->UpdateWinPoints(points-old_points);
+    DD("b");
     p2->UpdateWinPoints(points-old_points);
 
     // sets
+    DD("sets");
     auto set_winner = set->GetWinner();
-    if (old_set_winner == set_winner) return;
+    if (old_set_winner == set_winner) {
+        emit matchScoreHasChanged();
+        return;
+    }
 
     if (set_winner == team) {
         p1->UpdateWinSets(1);
@@ -118,8 +128,10 @@ void btm::Match::SetScore(int team, int theSet, int points)
         p3->UpdateWinSets(-1);
         p4->UpdateWinSets(-1);
     }
+    emit matchScoreHasChanged();
 
     // match
+    DD("match");
     auto match_winner = GetStatus();
     if (match_winner == old_match_winner) return;
 
@@ -139,7 +151,7 @@ void btm::Match::SetScore(int team, int theSet, int points)
         p3->UpdateWinMatches(-1);
         p4->UpdateWinMatches(-1);
     }
-    matchStatusHasChanged();
+    emit matchStatusHasChanged();
 }
 
 int btm::Match::GetWinner()
@@ -166,10 +178,10 @@ void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
     if (i>4) return;
     if (players[i-1] != p) {
         players[i-1] = p;
-        int team=2;
+        /*   int team=2;
         if (i == 1 or i == 2) team = 1;
         for(auto s=1; s<=3; s++)
-            SetScore(team, s, GetSet(s)->GetTeamPoints(team));
+            SetScore(team, s, GetSet(s)->GetTeamPoints(team));*/
     }
 }
 
@@ -180,6 +192,10 @@ btm::Player::pointer btm::Match::GetPlayer(int i)
 
 btm::Set::pointer btm::Match::GetSet(int i)
 {
+    if (i == 0) {
+        DD("error set must be 1-3");
+        exit(0);
+    }
     return sets[i-1];
 }
 
