@@ -2,21 +2,49 @@
 #include "btmRound.h"
 #include "btmTournament.h"
 
-btm::Match::Match(std::shared_ptr<btm::Round> r, int n)
+btm::Match::Match(std::shared_ptr<btm::Round> r, int n,
+                  btm::Player::pointer p1,
+                  btm::Player::pointer p2,
+                  btm::Player::pointer p3,
+                  btm::Player::pointer p4)
 {
     round = r;
     for(auto i=0; i<3; i++)
         sets.push_back(btm::Set::New(round->GetNumberOfPointsToWin()));
     match_nb = n;
+
+    players[0] = p1;
+    players[1] = p2;
+    players[2] = p3;
+    players[3] = p4;
+    for(auto p:players) p->AddMatch(pointer(this));
+
+    // TO CHECK ?
     QObject::connect(this, SIGNAL(matchStatusHasChanged()),
                      r.get(), SLOT(on_match_status_changed()));
     QObject::connect(this, SIGNAL(matchScoreHasChanged()),
                      r.get(), SLOT(on_match_score_changed()));
 }
 
-btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r, int n)
+btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r, int n,
+                                    btm::Player::pointer p1,
+                                    btm::Player::pointer p2,
+                                    btm::Player::pointer p3,
+                                    btm::Player::pointer p4)
 {
-    return std::make_shared<Match>(r, n);
+    return std::make_shared<Match>(r, n, p1, p2, p3, p4);
+}
+
+int btm::Match::GetNumberOfPoints(int team)
+{
+    DD("GetNumberof points");
+    int points = 0;
+    DD(team);
+    DD(sets.size());
+    for(auto s:sets)
+        points += s->GetTeamPoints(team);
+    DD(points);
+    return points;
 }
 
 std::string btm::Match::ToString()
@@ -75,83 +103,18 @@ void btm::Match::SetScore(int team, int theSet, int points)
     std::cout << team << " " << theSet << " " << points << std::endl;
     DD(match_nb);
 
-    // current state
-    btm::Set::pointer set = GetSet(theSet);
-    auto old_points = set->GetTeamPoints(team);
-    auto old_set_winner = set->GetWinner();
-    auto old_match_winner = GetWinner();
-    btm::Player::pointer p1, p2, p3, p4;
-    auto other_team = (team == 1 ? 2:1);
-    DD(other_team);
-    if (team == 1) {
-        p1 = players[0];
-        p2 = players[1];
-        p3 = players[2];
-        p4 = players[3];
-    }
-    else {
-        p1 = players[2];
-        p2 = players[3];
-        p3 = players[0];
-        p4 = players[1];
-    }
+    GetSet(theSet)->SetScore(team, points);
 
-    // points
-    DD("points");
-    set->SetScore(team, points);
-    DD("a");
-    p1->UpdateWinPoints(points-old_points);
-    DD("b");
-    p2->UpdateWinPoints(points-old_points);
+    for(auto p:players)
+        p->ComputeScores();
 
-    // sets
-    DD("sets");
-    auto set_winner = set->GetWinner();
-    if (old_set_winner == set_winner) {
-        emit matchScoreHasChanged();
-        return;
-    }
-
-    if (set_winner == team) {
-        p1->UpdateWinSets(1);
-        p2->UpdateWinSets(1);
-    }
-    if (set_winner == other_team) {
-        p3->UpdateWinSets(1);
-        p4->UpdateWinSets(1);
-    }
-    if (old_set_winner == team) {
-        p1->UpdateWinSets(-1);
-        p2->UpdateWinSets(-1);
-    }
-    if (old_set_winner == other_team) {
-        p3->UpdateWinSets(-1);
-        p4->UpdateWinSets(-1);
-    }
     emit matchScoreHasChanged();
 
-    // match
-    DD("match");
-    auto match_winner = GetStatus();
-    if (match_winner == old_match_winner) return;
+    // BELOW OLD
+    return;
 
-    if (match_winner == team) {
-        p1->UpdateWinMatches(1);
-        p2->UpdateWinMatches(1);
-    }
-    if (match_winner == other_team) {
-        p3->UpdateWinMatches(1);
-        p4->UpdateWinMatches(1);
-    }
-    if (old_match_winner == team) {
-        p1->UpdateWinMatches(-1);
-        p2->UpdateWinMatches(-1);
-    }
-    if (old_match_winner == other_team) {
-        p3->UpdateWinMatches(-1);
-        p4->UpdateWinMatches(-1);
-    }
-    emit matchStatusHasChanged();
+
+    //emit matchStatusHasChanged();
 }
 
 int btm::Match::GetWinner()
@@ -172,22 +135,34 @@ btm::Status btm::Match::GetStatus()
     return Playing;
 }
 
+/*
 void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
 {
-    if (i==0) return;
-    if (i>4) return;
+    if (i==0 or i>4) {
+        DD("ERROR set Player");
+        DD(i);
+    }
     if (players[i-1] != p) {
         players[i-1] = p;
-        /*   int team=2;
+        p->AddMatch(pointer(this));
+          int team=2;
         if (i == 1 or i == 2) team = 1;
         for(auto s=1; s<=3; s++)
-            SetScore(team, s, GetSet(s)->GetTeamPoints(team));*/
+            SetScore(team, s, GetSet(s)->GetTeamPoints(team));
     }
 }
+*/
 
 btm::Player::pointer btm::Match::GetPlayer(int i)
 {
     return players[i-1];
+}
+
+int btm::Match::GetPlayerTeam(btm::Player::pointer p)
+{
+    int team = 1;
+    if (p == players[2] or p == players[3]) team = 2;
+    return team;
 }
 
 btm::Set::pointer btm::Match::GetSet(int i)
@@ -203,9 +178,11 @@ void btm::Match::SwapPlayer(int player1,
                             btm::Match::pointer m2,
                             int player2)
 {
-    auto temp = GetPlayer(player1);
+    DD("todo swap player");
+    /*auto temp = GetPlayer(player1);
     SetPlayer(player1, m2->GetPlayer(player2));
     m2->SetPlayer(player2, temp);
+    */
 }
 
 void btm::Match::FindPlayer(btm::Player::pointer p, int &ip)

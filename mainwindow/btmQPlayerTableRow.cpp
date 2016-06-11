@@ -10,13 +10,14 @@ btm::QPlayerTableRow::QPlayerTableRow(btm::QPlayersTable2 * t,
     player = p;
     table = t;
     row = r;
-    table->setColumnCount(6);
+    table->setColumnCount(7);
     InsertItem(0, "name");
     InsertItem(1, "matches");
-    InsertItem(2, "sets");
-    InsertItem(3, "points");
-    InsertItem(4, "loose");
-    InsertItem(5, "wait");
+    InsertItem(2, "win");
+    InsertItem(3, "sets");
+    InsertItem(4, "points");
+    InsertItem(5, "loose");
+    InsertItem(6, "wait");
 }
 // ----------------------------------------------------------------------------
 

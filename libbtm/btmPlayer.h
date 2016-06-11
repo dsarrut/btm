@@ -14,13 +14,17 @@ namespace btm {
 
 class Match;
 
-class Player: public QObject
+class Player:
+        public QObject,
+        public std::enable_shared_from_this<Player>
 {
     Q_OBJECT
 
 public:
+    // Constructor
     Player();
 
+    // pointer and New
     typedef std::shared_ptr<Player> pointer;
     typedef std::vector<pointer> vector;
     static pointer New() { return std::make_shared<Player>(); }
@@ -28,11 +32,12 @@ public:
     std::string GetName() const { return name; }
     void SetName(std::string s);
 
-    void UpdateWinPoints(int diff);
-    void UpdateWinSets(int diff);
-    void UpdateWinMatches(int diff);
+    void AddMatch(std::shared_ptr<btm::Match> m);
+    void ComputeScores();
 
-    void UpdateScores(std::shared_ptr<btm::Match> m);
+
+
+    // OLD
     void ResetStatus();
 
     int id;
@@ -64,6 +69,9 @@ public:
 signals:
     void playerNameChanged();
     void playerScoreChanged();
+
+protected:
+    std::vector<std::shared_ptr<btm::Match>> matches;
 
 };
 

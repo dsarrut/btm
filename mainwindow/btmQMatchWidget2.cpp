@@ -22,7 +22,7 @@ QMatchWidget2::~QMatchWidget2()
 
 void QMatchWidget2::SetMatch(btm::Match::pointer m)
 {
-    DD("setmatch");
+    DD("QMatchWidget2::SetMatch");
     // Disconnet previous signals
     if (match != NULL) {
         QObject::disconnect(match.get(), 0, this, 0);
@@ -32,8 +32,8 @@ void QMatchWidget2::SetMatch(btm::Match::pointer m)
                      this, SLOT(on_players_changed()));
     QObject::connect(match.get(), SIGNAL(matchScoreHasChanged()),
                      this, SLOT(on_scores_changed()));
-    QObject::connect(match.get(), SIGNAL(matchStatusHasChanged()),
-                     this, SLOT(on_status_changed()));
+    //QObject::connect(match.get(), SIGNAL(matchStatusHasChanged()),
+   //                  this, SLOT(on_status_changed()));
     on_players_changed();
     on_scores_changed();
     on_status_changed();
@@ -125,6 +125,7 @@ void QMatchWidget2::on_scores_changed()
         ui->lineTeam2Set3->setEnabled(false);
     }
     DD("end");
+    on_status_changed();
 }
 
 void QMatchWidget2::on_status_changed()

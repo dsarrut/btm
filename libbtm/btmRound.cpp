@@ -68,11 +68,14 @@ void btm::Round::Load(std::istream & is)
     }
     // matchs
     matches.clear();
+    DD("todo load match");
+    /*
     for(int i=0; i<nb_m; i++) {
         btm::Match::pointer match = btm::Match::New(shared_from_this(), i+1);
         match->Load(is);
         matches.push_back(match);
     }
+    */
     on_match_status_changed();
 }
 
@@ -89,6 +92,8 @@ btm::Status btm::Round::GetStatus()
 void btm::Round::SwapPlayers(btm::Player::pointer p1,
                              btm::Player::pointer p2)
 {
+    DD("todo");
+    /*
     btm::Match::pointer m1;
     btm::Match::pointer m2;
     int ip1, ip2;
@@ -111,6 +116,7 @@ void btm::Round::SwapPlayers(btm::Player::pointer p1,
     }
     emit waitingPlayersHaveChanged();
     emit roundScoreHasChanged();
+    */
 }
 
 void btm::Round::FindPlayer(btm::Player::pointer p,

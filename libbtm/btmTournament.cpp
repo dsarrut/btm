@@ -42,6 +42,8 @@ void btm::Tournament::ComputeWaitingPlayers(btm::Round::pointer r,
     r->waiting_players.clear();
     for(auto i=0; i<n; i++) {
         r->waiting_players.push_back(temp.back());
+        temp.back()->nb_of_wait_rounds++;
+        DD(temp.back()->nb_of_wait_rounds);
         temp.pop_back();
     }
     players = temp;
@@ -50,6 +52,8 @@ void btm::Tournament::ComputeWaitingPlayers(btm::Round::pointer r,
 void btm::Tournament::PairRandom(btm::Round::pointer r,
                                  btm::Player::vector & players)
 {
+    DD("TODO");
+    /*
     auto temp = players;
     for(unsigned int i=0; i<temp.size(); i+=4) {
         auto m = btm::Match::New(r, i);
@@ -62,7 +66,7 @@ void btm::Tournament::PairRandom(btm::Round::pointer r,
                          r.get(), SLOT(on_match_status_changed()));
         QObject::connect(m.get(), SIGNAL(matchScoreHasChanged()),
                          r.get(), SLOT(on_match_score_changed()));
-    }
+    }*/
 }
 
 void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
@@ -77,11 +81,8 @@ void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
     });
     int nb=1;
     for(unsigned int i=0; i<temp.size(); i+=4) {
-        auto m = btm::Match::New(r, nb);
-        m->SetPlayer(1, temp[i]);
-        m->SetPlayer(2, temp[i+2]); // first with third
-        m->SetPlayer(3, temp[i+1]);
-        m->SetPlayer(4, temp[i+3]);
+        auto m = btm::Match::New(r, nb, temp[i], temp[i+2],
+                temp[i+1], temp[i+3]);
         r->matches.push_back(m);
         ++nb;
     }
@@ -157,15 +158,15 @@ void btm::Tournament::LoadFromFile(std::string filename)
 {
     std::ifstream is(filename);
     LoadPlayers(is);
-     int nb;
+    int nb;
     is >> nb; // nb of rounds
     rounds.clear();
     for(int i=0; i<nb; i++) {
-       auto r = btm::Round::New(shared_from_this());
-       r->Load(is);
-       rounds.push_back(r);
-       QObject::connect(r.get(), SIGNAL(roundScoreHasChanged()),
-                        this, SLOT(on_round_score_changed()));
+        auto r = btm::Round::New(shared_from_this());
+        r->Load(is);
+        rounds.push_back(r);
+        QObject::connect(r.get(), SIGNAL(roundScoreHasChanged()),
+                         this, SLOT(on_round_score_changed()));
     }
     is.close();
 

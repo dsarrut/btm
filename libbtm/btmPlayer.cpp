@@ -16,29 +16,31 @@ void btm::Player::SetName(std::string s)
     emit playerNameChanged();
 }
 
-void btm::Player::UpdateWinPoints(int diff)
+void btm::Player::AddMatch(std::shared_ptr<btm::Match> m)
 {
-    nb_of_points += diff;
+    matches.push_back(m);
+}
+
+void btm::Player::ComputeScores()
+{
+    DD("compute scores");
+    DD(name);
+    nb_of_points = 0;
+    nb_of_win_matches = 0;
+    nb_of_matches = matches.size();
+    DD(matches.size());
+    for(auto m:matches) {
+        int team = m->GetPlayerTeam(shared_from_this());
+        nb_of_points += m->GetNumberOfPoints(team);
+        if (m->GetWinner() == team) nb_of_win_matches++;
+        for(auto i=1; i<=3; i++)
+            if (m->GetSet(i)->GetWinner() == team) nb_of_win_sets++;
+    }
+    DD(nb_of_points);
+    DD("end computescores");
     emit playerScoreChanged();
 }
 
-void btm::Player::UpdateWinSets(int diff)
-{
-    nb_of_win_sets += diff;
-    emit playerScoreChanged();
-}
-
-void btm::Player::UpdateWinMatches(int diff)
-{
-    nb_of_win_matches += diff;
-    //nb_of_lost_matches -= diff;
-    emit playerScoreChanged();
-}
-
-void btm::Player::UpdateScores(btm::Match::pointer match)
-{
-    DD("UpdateScores TO REMOVE ?");
-}
 
 std::string btm::Player::ToString() const
 {

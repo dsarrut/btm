@@ -17,12 +17,22 @@ class Match : public QObject
 public:
 
     // Constructor
-    Match(std::shared_ptr<btm::Round> r, int n);
+    Match(std::shared_ptr<btm::Round> r, int n,
+          btm::Player::pointer p1,
+          btm::Player::pointer p2,
+          btm::Player::pointer p3,
+          btm::Player::pointer p4);
 
     // Types
     typedef std::shared_ptr<Match> pointer;
     typedef std::vector<pointer> vector;
-    static pointer New(std::shared_ptr<Round> r, int n);
+    static pointer New(std::shared_ptr<Round> r, int n,
+                       Player::pointer p1,
+                       Player::pointer p2,
+                       Player::pointer p3,
+                       Player::pointer p4);
+
+    int GetNumberOfPoints(int team);
 
     void ComputePlayersStatus();
     void GenerateRandomScore(std::mt19937 &rng);
@@ -32,6 +42,7 @@ public:
 
     // Player in [1-4]
     btm::Player::pointer GetPlayer(int i);
+    int GetPlayerTeam(btm::Player::pointer p);
 
     // Set in [1-3]
     btm::Set::pointer GetSet(int i);
@@ -40,7 +51,7 @@ public:
 
     std::string ToString();
     void SetScore(int team, int theSet, int points);
-    void SetPlayer(unsigned int i, btm::Player::pointer p);
+    //void SetPlayer(unsigned int i, btm::Player::pointer p);
     void SwapPlayer(int player1,
                     btm::Match::pointer m2,
                     int player2);

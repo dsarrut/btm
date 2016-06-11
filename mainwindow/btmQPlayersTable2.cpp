@@ -1,4 +1,5 @@
 #include "btmQPlayersTable2.h"
+#include <QLabel>
 
 // ----------------------------------------------------------------------------
 btm::QPlayersTable2::QPlayersTable2(QWidget * parent)
@@ -20,6 +21,15 @@ void btm::QPlayersTable2::SetTournament(btm::Tournament::pointer t)
     setRowCount(players.size());
     for(auto p:players)
         InsertPlayer(p);
+    QStringList horzHeaders;
+    horzHeaders << tr("Joueurs")
+                << tr("Matchs")
+                << tr("Victoires")
+                << tr("Sets")
+                << tr("Points")
+                << tr("Défaites")
+                << tr("Attentes");
+    setHorizontalHeaderLabels(horzHeaders);
     resizeColumnsToContents();
 }
 // ----------------------------------------------------------------------------

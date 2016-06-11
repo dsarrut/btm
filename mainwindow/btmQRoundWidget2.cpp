@@ -23,6 +23,7 @@ QRoundWidget2::~QRoundWidget2()
 
 void QRoundWidget2::SetRound(btm::Round::pointer r)
 {
+    DDF();
     DD("ui set round");
     round = r;
     auto nb = round->matches.size();
@@ -57,7 +58,8 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     }
 
     // Install widget
-    DD("llll");
+    DD("install widget match");
+    DD(nb);
     for(unsigned int i=0; i<nb; i++) {
         DD(i);
         matchWidgets[i]->SetMatch(round->matches[i]);

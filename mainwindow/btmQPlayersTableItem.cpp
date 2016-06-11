@@ -9,11 +9,14 @@ QPlayersTableItem(btm::Player::pointer p,
 {
     player = p;
     type = t;
+    /*
     if (type == "matches") setData(Qt::DisplayRole, player->nb_of_matches);
+    if (type == "win") setData(Qt::DisplayRole, player->nb_of_win_matches);
     if (type == "sets") setData(Qt::DisplayRole, player->nb_of_win_sets);
     if (type == "points") setData(Qt::DisplayRole, player->nb_of_points);
     if (type == "loose") setData(Qt::DisplayRole, player->nb_of_lost_matches);
     if (type == "wait") setData(Qt::DisplayRole, player->nb_of_wait_rounds);
+*/
 
     // Connection
     // name -> playerNamedChanged()
@@ -78,8 +81,13 @@ void btm::QPlayersTableItem::on_player_name_changed()
 // ----------------------------------------------------------------------------
 void btm::QPlayersTableItem::on_player_score_changed()
 {
+    DDF();
+    DD(type);
     if (type == "matches") setData(Qt::DisplayRole, player->nb_of_matches);
+    if (type == "win") setData(Qt::DisplayRole, player->nb_of_win_matches);
     if (type == "points") setData(Qt::DisplayRole, player->nb_of_points);
-
+    if (type == "sets") setData(Qt::DisplayRole, player->nb_of_win_sets);
+    if (type == "loose") setData(Qt::DisplayRole, player->nb_of_lost_matches);
+    if (type == "wait") setData(Qt::DisplayRole, player->nb_of_wait_rounds);
 }
 // ----------------------------------------------------------------------------
