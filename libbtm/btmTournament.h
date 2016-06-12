@@ -39,6 +39,7 @@ public:
     btm::Player::pointer FindPlayerById(int id);
 
     const btm::Player::vector & GetPlayers() const { return players; }
+    btm::Player::pointer GetPlayer(int i) const { return players[i]; }
     void SetPlayers(btm::Player::vector p);
 
     btm::Round::vector rounds;

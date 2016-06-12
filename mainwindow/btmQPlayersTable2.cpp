@@ -1,4 +1,5 @@
 #include "btmQPlayersTable2.h"
+#include <QHeaderView>
 
 // ----------------------------------------------------------------------------
 btm::QPlayersTable2::QPlayersTable2(QTableView *view):
@@ -8,6 +9,10 @@ btm::QPlayersTable2::QPlayersTable2(QTableView *view):
     proxyModel->setSourceModel(this);
     view->setModel(proxyModel);
     view->setSortingEnabled(true);
+    //view->verticalHeader()->show();
+    view->setAlternatingRowColors(true);
+    view->horizontalHeader()->setStretchLastSection(true);
+    //view->verticalHeader()->s
 }
 // ----------------------------------------------------------------------------
 
@@ -22,7 +27,6 @@ void btm::QPlayersTable2::SetTournament(btm::Tournament::pointer t)
     // Add new list of players
     auto & players = tournament->GetPlayers();
     insertRows(0,players.size());
-    ;DD("here")
 }
 // ----------------------------------------------------------------------------
 
@@ -99,12 +103,11 @@ bool btm::QPlayersTable2::setData(const QModelIndex &index,
                                   const QVariant &value,
                                   int role)
 {
-    DDF();
+    // only column "name" could be edited
     if (index.isValid() && role == Qt::EditRole) {
         int row = index.row();
         DD(row);
-        auto & players = tournament->GetPlayers();
-        auto player = players[row];
+        auto player = tournament->GetPlayer(row);
         player->SetName(value.toString().toStdString());
         emit dataChanged(index, index);
     }
@@ -114,11 +117,27 @@ bool btm::QPlayersTable2::setData(const QModelIndex &index,
 
 
 // ----------------------------------------------------------------------------
-/*void btm::QPlayersTable2::sort(int column, Qt::SortOrder order)
+QVariant btm::QPlayersTable2::headerData(int section,
+                                         Qt::Orientation orientation,
+                                         int role) const
 {
-    DDF();
-    QAbstractTableModel::sort(column, order);
-}*/
-// ----------------------------------------------------------------------------
+    DD(section);
+    if (role != Qt::DisplayRole)
+        return QVariant();
 
+    if (orientation == Qt::Horizontal) {
+        switch (section) {
+        case 0: return tr("Nom");
+        case 1: return tr("Matchs");
+        case 2: return tr("Victoires");
+        case 3: return tr("Sets");
+        case 4: return tr("Points");
+        case 5: return tr("Défaites");
+        case 6: return tr("Attentes");
+        default: return "Unknown!";
+        }
+    }
+    return QVariant();
+}
+// ----------------------------------------------------------------------------
 
