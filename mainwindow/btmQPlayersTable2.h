@@ -2,10 +2,10 @@
 #define QPLAYERSTABLE2_H
 
 #include <QAbstractTableModel>
-#include <QSortFilterProxyModel>
+#include <QTableView>
 
 #include "btmTournament.h"
-#include "btmQPlayerTableRow.h"
+#include "btmQPlayersTableSortFilter.h"
 
 namespace btm {
 

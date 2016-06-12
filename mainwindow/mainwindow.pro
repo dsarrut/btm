@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     btmQRoundWidget2.cpp \
     btmQMatchWidget2.cpp \
     btmQPlayersTable2.cpp \
-    btmQPlayersTableItem.cpp
+    btmQPlayersTableItem.cpp \
+    btmQPlayersTableSortFilter.cpp
 
 HEADERS  += mainwindow.h \
     btmQPlayersTable.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     btmQRoundWidget2.h \
     btmQMatchWidget2.h \
     btmQPlayersTable2.h \
-    btmQPlayersTableItem.h
+    btmQPlayersTableItem.h \
+    btmQPlayersTableSortFilter.h
     btm_global.h
 
 FORMS    += mainwindow.ui \

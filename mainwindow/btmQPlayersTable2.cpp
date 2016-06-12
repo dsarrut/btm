@@ -4,9 +4,10 @@
 btm::QPlayersTable2::QPlayersTable2(QTableView *view):
     QAbstractTableModel(view)
 {
-    QSortFilterProxyModel * proxyModel = new QSortFilterProxyModel(this);
-    proxyModel->setSourceModel( this );
+    auto proxyModel = new QPlayersTableSortFilter(this);
+    proxyModel->setSourceModel(this);
     view->setModel(proxyModel);
+    view->setSortingEnabled(true);
 }
 // ----------------------------------------------------------------------------
 
@@ -21,6 +22,7 @@ void btm::QPlayersTable2::SetTournament(btm::Tournament::pointer t)
     // Add new list of players
     auto & players = tournament->GetPlayers();
     insertRows(0,players.size());
+    ;DD("here")
 }
 // ----------------------------------------------------------------------------
 
@@ -55,8 +57,8 @@ QVariant btm::QPlayersTable2::data(const QModelIndex &index, int role) const
         if (col == 0) return QString::fromStdString(player->GetName());
         if (col == 1) return player->nb_of_matches;
         if (col == 2) return player->nb_of_win_matches;
-        if (col == 3) return player->nb_of_points;
-        if (col == 4) return player->nb_of_win_sets;
+        if (col == 3) return player->nb_of_win_sets;
+        if (col == 4) return player->nb_of_points;
         if (col == 5) return player->nb_of_lost_matches;
         if (col == 6) return player->nb_of_wait_rounds;
         return QString("Row%1, Column%2")
