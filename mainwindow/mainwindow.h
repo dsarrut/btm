@@ -54,11 +54,11 @@ private slots:
     void on_actionScore_triggered();
     void on_buttonCancelRound_clicked();
     void on_actionRandom_triggered();
-
     void on_actionAbout_triggered();
 
 private:
     Ui::MainWindow *ui;
+    btm::QPlayersTable2 * tablePlayersModel;
 };
 
 #endif // MAINWINDOW_H

@@ -6,6 +6,7 @@
 #include <QBoxLayout>
 #include <QDialog>
 #include <QInputDialog>
+#include <QSortFilterProxyModel>
 
 #include "btmQPlayersTableItem.h"
 
@@ -17,6 +18,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     //players_table = new btm::QPlayersTable(ui->tablePlayers);
     tournament = btm::Tournament::New();
+
+    tablePlayersModel = new btm::QPlayersTable2(parent);
+    //QSortFilterProxyModel * proxyModel = new QSortFilterProxyModel(this);
+    //proxyModel->setSourceModel( tablePlayersModel );
+    //ui->tablePlayersView->setModel(proxyModel);
+    ui->tablePlayersView->setModel(tablePlayersModel);
+
+
     //ui->menuBar->addAction(ui->actionRemoteDisplay);
     QObject::connect(ui->actionRemoteDisplay, SIGNAL(triggered(bool)),
                      this, SLOT(on_menuRemoteDisplayTriggered()));
@@ -102,7 +111,8 @@ void MainWindow::StartNewTournament()
     DD("Start T");
 
     //ui->players_table
-    ui->playersTable->SetTournament(tournament);
+    //ui->playersTable->SetTournament(tournament);
+    tablePlayersModel->SetTournament(tournament);
 
     //players_table->SetPlayers(tournament->players);
     //UpdateDisplayPlayersStatus();

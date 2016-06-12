@@ -48,8 +48,6 @@ void btm::Player::ComputeScores()
                 and m->GetSet(1)->GetWinner() != 0
                 and m->GetSet(3)->GetWinner() == team) nb_of_win_sets++;
     }
-    DD(nb_of_points);
-    DD("end computescores");
     emit playerScoreChanged();
 }
 // -----------------------------------------------------------------------------

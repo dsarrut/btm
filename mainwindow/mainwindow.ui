@@ -156,10 +156,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="btm::QPlayersTable2" name="playersTable">
-            <property name="editTriggers">
-             <set>QAbstractItemView::NoEditTriggers</set>
-            </property>
+           <widget class="QTableView" name="tablePlayersView">
             <property name="sortingEnabled">
              <bool>true</bool>
             </property>
@@ -389,11 +386,6 @@
    <extends>QFrame</extends>
    <header>btmQRoundWidget2.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>btm::QPlayersTable2</class>
-   <extends>QTableWidget</extends>
-   <header>btmQPlayersTable2.h</header>
   </customwidget>
  </customwidgets>
  <resources>

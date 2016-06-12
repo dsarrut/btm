@@ -38,7 +38,7 @@ public:
     void LoadFromFile(std::string filename);
     btm::Player::pointer FindPlayerById(int id);
 
-    btm::Player::vector GetPlayers() const { return players; }
+    const btm::Player::vector & GetPlayers() const { return players; }
     void SetPlayers(btm::Player::vector p);
 
     btm::Round::vector rounds;

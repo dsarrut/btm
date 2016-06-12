@@ -10,7 +10,7 @@ btm::QPlayerTableRow::QPlayerTableRow(btm::QPlayersTable2 * t,
     player = p;
     table = t;
     row = r;
-    table->setColumnCount(7);
+    //table->setColumnCount(7);
     InsertItem(0, "name");
     InsertItem(1, "matches");
     InsertItem(2, "win");
@@ -26,7 +26,7 @@ btm::QPlayerTableRow::QPlayerTableRow(btm::QPlayersTable2 * t,
 void btm::QPlayerTableRow::InsertItem(int col, std::string type)
 {
     auto item = QPlayersTableItem::New(player, row, col, type);
-    table->setItem(row, col, item.get());
+    //table->setItem(row, col, item.get());
     items.push_back(item);
 }
 // ----------------------------------------------------------------------------
