@@ -9,10 +9,9 @@ btm::QPlayersTable2::QPlayersTable2(QTableView *view):
     proxyModel->setSourceModel(this);
     view->setModel(proxyModel);
     view->setSortingEnabled(true);
-    //view->verticalHeader()->show();
     view->setAlternatingRowColors(true);
     view->horizontalHeader()->setStretchLastSection(true);
-    //view->verticalHeader()->s
+    view->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 // ----------------------------------------------------------------------------
 
