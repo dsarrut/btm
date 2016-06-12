@@ -1,14 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QMenuBar>
 #include <QBoxLayout>
 #include <QDialog>
 #include <QInputDialog>
-#include <QSortFilterProxyModel>
 
-#include "btmQPlayersTableItem.h"
+#include "btmQPlayersTable2.h"
 
 //----------------------------------------------------------------------------
 MainWindow::MainWindow(QWidget *parent) :
@@ -16,15 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //players_table = new btm::QPlayersTable(ui->tablePlayers);
     tournament = btm::Tournament::New();
 
-    tablePlayersModel = new btm::QPlayersTable2(parent);
-    //QSortFilterProxyModel * proxyModel = new QSortFilterProxyModel(this);
-    //proxyModel->setSourceModel( tablePlayersModel );
-    //ui->tablePlayersView->setModel(proxyModel);
-    ui->tablePlayersView->setModel(tablePlayersModel);
-
+    // Table with the list of players
+    tablePlayersModel = new btm::QPlayersTable2(ui->tablePlayersView);
 
     //ui->menuBar->addAction(ui->actionRemoteDisplay);
     QObject::connect(ui->actionRemoteDisplay, SIGNAL(triggered(bool)),

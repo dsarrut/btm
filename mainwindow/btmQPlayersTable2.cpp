@@ -1,12 +1,12 @@
 #include "btmQPlayersTable2.h"
-#include <QLabel>
 
 // ----------------------------------------------------------------------------
-btm::QPlayersTable2::QPlayersTable2(QWidget * parent)
-    :QAbstractTableModel(parent)
+btm::QPlayersTable2::QPlayersTable2(QTableView *view):
+    QAbstractTableModel(view)
 {
-    //QObject::connect(this, SIGNAL(itemChanged(QTableWidgetItem*)),
-    //                 this, SLOT(onItemChanged(QTableWidgetItem*)));
+    QSortFilterProxyModel * proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel( this );
+    view->setModel(proxyModel);
 }
 // ----------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ void btm::QPlayersTable2::SetTournament(btm::Tournament::pointer t)
 
     // Add new list of players
     auto & players = tournament->GetPlayers();
-    insertRows(1,players.size());
+    insertRows(0,players.size());
 }
 // ----------------------------------------------------------------------------
 
@@ -112,11 +112,11 @@ bool btm::QPlayersTable2::setData(const QModelIndex &index,
 
 
 // ----------------------------------------------------------------------------
-void btm::QPlayersTable2::sort(int column, Qt::SortOrder order)
+/*void btm::QPlayersTable2::sort(int column, Qt::SortOrder order)
 {
     DDF();
     QAbstractTableModel::sort(column, order);
-}
+}*/
 // ----------------------------------------------------------------------------
 
 
