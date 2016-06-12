@@ -2,6 +2,7 @@
 #include "btmRound.h"
 #include "btmTournament.h"
 
+// -----------------------------------------------------------------------------
 btm::Match::Match(std::shared_ptr<btm::Round> r, int n,
                   btm::Player::pointer p1,
                   btm::Player::pointer p2,
@@ -25,7 +26,10 @@ btm::Match::Match(std::shared_ptr<btm::Round> r, int n,
     QObject::connect(this, SIGNAL(matchScoreHasChanged()),
                      r.get(), SLOT(on_match_score_changed()));
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r, int n,
                                     btm::Player::pointer p1,
                                     btm::Player::pointer p2,
@@ -34,7 +38,10 @@ btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r, int n,
 {
     return std::make_shared<Match>(r, n, p1, p2, p3, p4);
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 int btm::Match::GetNumberOfPoints(int team)
 {
     DD("GetNumberof points");
@@ -46,7 +53,10 @@ int btm::Match::GetNumberOfPoints(int team)
     DD(points);
     return points;
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 std::string btm::Match::ToString()
 {
     std::stringstream ss;
@@ -57,7 +67,10 @@ std::string btm::Match::ToString()
                                  << " --> " << GetWinner();
     return ss.str();
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Match::ComputePlayersStatus()
 {
     int score = GetWinner();
@@ -82,7 +95,10 @@ void btm::Match::ComputePlayersStatus()
         sets[i]->UpdatePlayerStats(2,players[3]);
     }
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Match::GenerateRandomScore(std::mt19937 & rng)
 {
     sets[0]->GenerateRandomScore(rng);
@@ -93,30 +109,35 @@ void btm::Match::GenerateRandomScore(std::mt19937 & rng)
         sets[2]->SetScore(1,0);
         sets[2]->SetScore(2,0);
     }
+    // Update players stats
+    for(auto p:players) p->ComputeScores();
     emit matchScoreHasChanged();
     emit matchStatusHasChanged();
 }
+// -----------------------------------------------------------------------------
 
-void btm::Match::SetScore(int team, int theSet, int points)
+
+// -----------------------------------------------------------------------------
+void btm::Match::SetScore(int team, int theSet, unsigned int points)
 {
-    DD("set score");
-    std::cout << team << " " << theSet << " " << points << std::endl;
-    DD(match_nb);
+    // Check the score changes, do nothing if it is the same
+    if (GetSet(theSet)->GetTeamPoints(team) == points)
+        return;
 
+    // Change the score of the set
     GetSet(theSet)->SetScore(team, points);
 
+    // Update player score
     for(auto p:players)
         p->ComputeScores();
 
+    // Say world it has changed
     emit matchScoreHasChanged();
-
-    // BELOW OLD
-    return;
-
-
-    //emit matchStatusHasChanged();
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 int btm::Match::GetWinner()
 {
     if (sets[0]->GetWinner() == 0) return 0;
@@ -125,7 +146,10 @@ int btm::Match::GetWinner()
     if (sets[1]->GetWinner() == 0) return 0;
     return sets[2]->GetWinner();
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 btm::Status btm::Match::GetStatus()
 {
     if (GetWinner() != 0) return Terminated;
@@ -134,6 +158,8 @@ btm::Status btm::Match::GetStatus()
             sets[2]->GetStatus() == Init) return Init;
     return Playing;
 }
+// -----------------------------------------------------------------------------
+
 
 /*
 void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
@@ -153,18 +179,25 @@ void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
 }
 */
 
+// -----------------------------------------------------------------------------
 btm::Player::pointer btm::Match::GetPlayer(int i)
 {
     return players[i-1];
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 int btm::Match::GetPlayerTeam(btm::Player::pointer p)
 {
     int team = 1;
     if (p == players[2] or p == players[3]) team = 2;
     return team;
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 btm::Set::pointer btm::Match::GetSet(int i)
 {
     if (i == 0) {
@@ -173,7 +206,10 @@ btm::Set::pointer btm::Match::GetSet(int i)
     }
     return sets[i-1];
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Match::SwapPlayer(int player1,
                             btm::Match::pointer m2,
                             int player2)
@@ -184,7 +220,10 @@ void btm::Match::SwapPlayer(int player1,
     m2->SetPlayer(player2, temp);
     */
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Match::FindPlayer(btm::Player::pointer p, int &ip)
 {
     ip = 0;
@@ -193,7 +232,10 @@ void btm::Match::FindPlayer(btm::Player::pointer p, int &ip)
     if (p == players[2]) ip = 3;
     if (p == players[3]) ip = 4;
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Match::Save(std::ostream &os)
 {
     for(auto p:players) os << p->id << " ";
@@ -201,7 +243,10 @@ void btm::Match::Save(std::ostream &os)
     os << sets.size() << std::endl;
     for(auto s:sets) s->Save(os);
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Match::Load(std::istream &is)
 {
     for(unsigned int i=0; i<players.size(); i++) {
@@ -215,7 +260,10 @@ void btm::Match::Load(std::istream &is)
     is >> nb_sets;
     for(auto s:sets) s->Load(is);
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 std::string btm::Match::ToString() const
 {
     std::stringstream ss;
@@ -225,3 +273,4 @@ std::string btm::Match::ToString() const
         ss << s << " ";
     return ss.str();
 }
+// -----------------------------------------------------------------------------

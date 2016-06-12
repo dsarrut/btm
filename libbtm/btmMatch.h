@@ -50,7 +50,7 @@ public:
     unsigned int GetMatchNb() const { return match_nb; }
 
     std::string ToString();
-    void SetScore(int team, int theSet, int points);
+    void SetScore(int team, int theSet, unsigned int points);
     //void SetPlayer(unsigned int i, btm::Player::pointer p);
     void SwapPlayer(int player1,
                     btm::Match::pointer m2,
