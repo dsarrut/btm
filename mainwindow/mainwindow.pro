@@ -18,27 +18,21 @@ LIBS += -L../libbtm/release/   -L../libbtm/debug/  -L../libbtm -llibbtm
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    btmQPlayersTable.cpp \
-    btmQPlayerTableRow.cpp \
     btmQWaitingPlayersWidget.cpp \
     btmQPlayerWidget.cpp \
     btmQRemoteDisplayDialog.cpp \
     btmQRoundWidget2.cpp \
     btmQMatchWidget2.cpp \
     btmQPlayersTable2.cpp \
-    btmQPlayersTableItem.cpp \
     btmQPlayersTableSortFilter.cpp
 
 HEADERS  += mainwindow.h \
-    btmQPlayersTable.h \
-    btmQPlayerTableRow.h \
     btmQWaitingPlayersWidget.h \
     btmQPlayerWidget.h \
     btmQRemoteDisplayDialog.h \
     btmQRoundWidget2.h \
     btmQMatchWidget2.h \
     btmQPlayersTable2.h \
-    btmQPlayersTableItem.h \
     btmQPlayersTableSortFilter.h
     btm_global.h
 

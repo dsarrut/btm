@@ -31,7 +31,7 @@ void btm::QPlayersTable2::SetTournament(btm::Tournament::pointer t)
 
 
 // ----------------------------------------------------------------------------
-int btm::QPlayersTable2::rowCount(const QModelIndex &parent) const
+int btm::QPlayersTable2::rowCount(const QModelIndex &) const
 {
     if (!tournament) return 0;
     auto players = tournament->GetPlayers();
@@ -41,7 +41,7 @@ int btm::QPlayersTable2::rowCount(const QModelIndex &parent) const
 
 
 // ----------------------------------------------------------------------------
-int btm::QPlayersTable2::columnCount(const QModelIndex &parent) const
+int btm::QPlayersTable2::columnCount(const QModelIndex &) const
 {
     return 7;
 }
@@ -75,9 +75,8 @@ QVariant btm::QPlayersTable2::data(const QModelIndex &index, int role) const
 
 // ----------------------------------------------------------------------------
 bool btm::QPlayersTable2::insertRows(int row, int count,
-                                     const QModelIndex &parent)
+                                     const QModelIndex &)
 {
-    DDF();
     beginInsertRows(QModelIndex(), row, row+count-1);
     endInsertRows();
     return true;
@@ -105,7 +104,6 @@ bool btm::QPlayersTable2::setData(const QModelIndex &index,
     // only column "name" could be edited
     if (index.isValid() && role == Qt::EditRole) {
         int row = index.row();
-        DD(row);
         auto player = tournament->GetPlayer(row);
         player->SetName(value.toString().toStdString());
         emit dataChanged(index, index);
@@ -120,7 +118,6 @@ QVariant btm::QPlayersTable2::headerData(int section,
                                          Qt::Orientation orientation,
                                          int role) const
 {
-    DD(section);
     if (role != Qt::DisplayRole)
         return QVariant();
 
