@@ -4,10 +4,7 @@
 #include <QMainWindow>
 #include <QTableWidget>
 #include "btmTournament.h"
-//#include <btmQPlayersTable.h>
 #include "btmQPlayersTable2.h"
-
-#include <btmQPlayersTableItem.h>
 #include "btmQRoundWidget2.h"
 #include "btmQRemoteDisplayDialog.h"
 
@@ -26,7 +23,6 @@ public:
     void StartNewTournament();
 
     btm::Tournament::pointer tournament;
-    //btm::QPlayersTable * players_table;
     QRemoteDisplayDialog * mRemoteDisplayDialog;
     btm::Round::pointer currentRound;
     int current_nb_of_points_to_win;
@@ -55,6 +51,8 @@ private slots:
     void on_buttonCancelRound_clicked();
     void on_actionRandom_triggered();
     void on_actionAbout_triggered();
+
+    void on_lineEdit_textChanged(const QString &arg1);
 
 private:
     Ui::MainWindow *ui;

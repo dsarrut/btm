@@ -16,11 +16,14 @@ public:
     QPlayersTable2(QTableView * view);
 
     void SetTournament(btm::Tournament::pointer t);
+    void SetFilter(const QString & arg);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const ;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     bool insertRows(int row, int count,
+                    const QModelIndex &parent = QModelIndex());
+    bool removeRows(int row, int count,
                     const QModelIndex &parent = QModelIndex());
     Qt::ItemFlags flags(const QModelIndex &index) const;
     bool setData(const QModelIndex &index,
@@ -30,8 +33,7 @@ public:
 
 protected:
     btm::Tournament::pointer tournament;
-    //btm::QPlayerTableRow::vector rows;
-
+    QPlayersTableSortFilter * proxyModel;
 
 };
 // ----------------------------------------------------------------------------

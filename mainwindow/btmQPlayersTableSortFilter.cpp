@@ -5,6 +5,16 @@ QPlayersTableSortFilter::QPlayersTableSortFilter(QObject *parent):
     QSortFilterProxyModel(parent)
 {
     setFilterCaseSensitivity(Qt::CaseInsensitive);
+    setDynamicSortFilter(true);
+}
+// ----------------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------------------
+void QPlayersTableSortFilter::SetFilter(const QString &arg)
+{
+    filter = arg;
+    invalidateFilter();
 }
 // ----------------------------------------------------------------------------
 
@@ -36,3 +46,28 @@ bool QPlayersTableSortFilter::lessThan(const QModelIndex & left,
     else return false;
 }
 // ----------------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------------------
+bool QPlayersTableSortFilter::filterAcceptsRow(int sourceRow,
+                                               const QModelIndex &sourceParent) const
+{
+    QModelIndex index0 = sourceModel()->index(sourceRow, 0, sourceParent);
+    QString s = sourceModel()->data(index0).toString();
+    return (s.contains(filter, Qt::CaseInsensitive));
+}
+// ----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+

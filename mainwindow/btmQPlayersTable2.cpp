@@ -5,7 +5,7 @@
 btm::QPlayersTable2::QPlayersTable2(QTableView *view):
     QAbstractTableModel(view)
 {
-    auto proxyModel = new QPlayersTableSortFilter(this);
+    proxyModel = new QPlayersTableSortFilter(this);
     proxyModel->setSourceModel(this);
     view->setModel(proxyModel);
     view->setSortingEnabled(true);
@@ -19,13 +19,26 @@ btm::QPlayersTable2::QPlayersTable2(QTableView *view):
 // ----------------------------------------------------------------------------
 void btm::QPlayersTable2::SetTournament(btm::Tournament::pointer t)
 {
+    int n=0;
+    if (tournament) {
+        n = tournament->GetPlayers().size();
+    }
     tournament = t;
     // remove previous rows
     DD("TODO: QPlayersTable2::SetTournament remove previous rows");
+    removeRows(0, n);
 
     // Add new list of players
     auto & players = tournament->GetPlayers();
     insertRows(0,players.size());
+}
+// ----------------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------------------
+void btm::QPlayersTable2::SetFilter(const QString &arg)
+{
+    proxyModel->SetFilter(arg);
 }
 // ----------------------------------------------------------------------------
 
@@ -85,6 +98,17 @@ bool btm::QPlayersTable2::insertRows(int row, int count,
 
 
 // ----------------------------------------------------------------------------
+bool btm::QPlayersTable2::removeRows(int row, int count,
+                                     const QModelIndex &)
+{
+    beginRemoveRows(QModelIndex(), row, row+count-1);
+    endRemoveRows();
+    return true;
+}
+// ----------------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------------------
 Qt::ItemFlags btm::QPlayersTable2::flags(const QModelIndex &index) const
 {
     // only name first column is editable
@@ -132,6 +156,10 @@ QVariant btm::QPlayersTable2::headerData(int section,
         case 6: return tr("Attentes");
         default: return "Unknown!";
         }
+    }
+    else {
+        auto & player = tournament->GetPlayers()[section];
+        return player->GetId();
     }
     return QVariant();
 }

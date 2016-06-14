@@ -361,3 +361,11 @@ void MainWindow::on_actionAbout_triggered()
     t = QString("<a href=\"%1\">%1</a>").arg(t);
     QMessageBox::about(this, "Badminton Tournament Management", t);
 }
+
+void MainWindow::on_lineEdit_textChanged(const QString &arg1)
+{
+    DD(arg1.toStdString());
+    if (tablePlayersModel) {
+        tablePlayersModel->SetFilter(arg1);
+    }
+}
