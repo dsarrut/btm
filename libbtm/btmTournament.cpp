@@ -4,11 +4,15 @@
 #include <ctime>
 #include <fstream>
 
+//----------------------------------------------------------------------------
 btm::Tournament::Tournament()
 {
     std::srand(std::time(0));
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 btm::Round::pointer btm::Tournament::StartNewRound(int set_score_max)
 {
     btm::Tournament::pointer t(this);
@@ -27,7 +31,10 @@ btm::Round::pointer btm::Tournament::StartNewRound(int set_score_max)
     emit currentRoundHasChanged(r);
     return r;
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::ComputeWaitingPlayers(btm::Round::pointer r,
                                             btm::Player::vector & players)
 {
@@ -48,7 +55,10 @@ void btm::Tournament::ComputeWaitingPlayers(btm::Round::pointer r,
     }
     players = temp;
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::PairRandom(btm::Round::pointer r,
                                  btm::Player::vector & players)
 {
@@ -68,7 +78,10 @@ void btm::Tournament::PairRandom(btm::Round::pointer r,
                          r.get(), SLOT(on_match_score_changed()));
     }*/
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
                                       btm::Player::vector & players)
 {
@@ -87,21 +100,30 @@ void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
         ++nb;
     }
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::GenerateRandomScores(btm::Round::pointer r)
 {
     std::mt19937 rng(std::time(0));
     std::uniform_int_distribution<int> gen(1, 2);
     for(auto & m:r->matches) m->GenerateRandomScore(rng);
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::ComputePlayersStatus()
 {
     for(auto p:players) p->ResetStatus();
     for(auto r:rounds) r->ComputePlayersStatus();
     emit scoreHasChanged();
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 std::string btm::Tournament::GetPlayersStatus()
 {
     std::stringstream ss;
@@ -110,42 +132,58 @@ std::string btm::Tournament::GetPlayersStatus()
     }
     return ss.str();
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::SavePlayersToFile(std::string filename)
 {
     std::ofstream os(filename);
     SavePlayers(os);
     os.close();
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::LoadPlayersFromFile(std::string filename)
 {
     std::ifstream is(filename);
     LoadPlayers(is);
     is.close();
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::SavePlayers(std::ostream &os)
 {
-    os << players.size() << std::endl;
+    //os << players.size() << std::endl;
     for(auto p:players) {
         p->Save(os);
         os << std::endl;
     }
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::LoadPlayers(std::istream & is)
 {
     players.clear();
-    int n;
-    is >> n;
-    for(int i=0; i<n; i++) {
+    int n=1;
+    while (is) {
         btm::Player::pointer p = btm::Player::New();
         p->Load(is);
-        players.push_back(p);
+        p->SetId(n);
+        if (is and p->GetName() != "") players.push_back(p);
+        ++n;
     }
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::SaveToFile(std::string filename)
 {
     std::ofstream os(filename);
@@ -153,7 +191,10 @@ void btm::Tournament::SaveToFile(std::string filename)
     os << rounds.size() << std::endl;
     for(auto r:rounds) r->Save(os);
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::LoadFromFile(std::string filename)
 {
     std::ifstream is(filename);
@@ -171,23 +212,33 @@ void btm::Tournament::LoadFromFile(std::string filename)
     is.close();
 
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 btm::Player::pointer btm::Tournament::FindPlayerById(int id)
 {
     for(auto p:players) {
         if (p->id == id) return p;
     }
-    DD("error player id ")
-            exit(0);
+    DD("error player id ");
+    exit(0);
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::SetPlayers(btm::Player::vector p)
 {
     players = p;
     DD("TODO: emit signal players changed");
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void btm::Tournament::on_round_score_changed()
 {
     ComputePlayersStatus();
 }
+//----------------------------------------------------------------------------

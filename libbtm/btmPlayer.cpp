@@ -92,27 +92,21 @@ void btm::Player::ResetStatus()
 // -----------------------------------------------------------------------------
 void btm::Player::Save(std::ostream &os)
 {
-    os << id << " ( " << name << " ) " << std::endl;
+    os << name << std::endl;
 }
 // -----------------------------------------------------------------------------
 
 
 // -----------------------------------------------------------------------------
+bool BothAreSpaces(char lhs, char rhs) { return (lhs == rhs) && (lhs == ' '); }
 void btm::Player::Load(std::istream &is)
 {
-    is >> id;
-    std::string n;
-    is >> n;
-    if (n != "(") {
-        DD("error reading player name");
-        exit(0);
-    }
-    name ="";
-    do {
-        is >> n;
-        if (n != ")")
-            name = name +" "+n;
-    } while (n !=")");
+    std::getline(is, name);
+    // remove double spaces
+    std::string::iterator new_end =
+            std::unique(name.begin(),
+                        name.end(), BothAreSpaces);
+    name.erase(new_end, name.end());
 }
 // -----------------------------------------------------------------------------
 

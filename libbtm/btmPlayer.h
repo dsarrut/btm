@@ -35,6 +35,7 @@ public:
     void AddMatch(std::shared_ptr<btm::Match> m);
     void ComputeScores();
 
+    void SetId(int i) { id = i; }
     int GetId() const { return id; }
 
     // OLD
