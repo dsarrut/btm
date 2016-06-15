@@ -369,3 +369,12 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
         tablePlayersModel->SetFilter(arg1);
     }
 }
+
+void MainWindow::on_checkBox_stateChanged(int arg1)
+{
+    DD(arg1);
+    if (tournament) {
+        auto players = tournament->GetPlayers();
+
+    }
+}

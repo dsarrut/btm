@@ -37,6 +37,8 @@ public:
 
     void SetId(int i) { id = i; }
     int GetId() const { return id; }
+    void SetParticipateFlag(bool b) { participate = b; }
+    bool GetParticipateFlag() const { return participate; }
 
     // OLD
     void ResetStatus();

@@ -54,6 +54,8 @@ private slots:
 
     void on_lineEdit_textChanged(const QString &arg1);
 
+    void on_checkBox_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     btm::QPlayersTable2 * tablePlayersModel;

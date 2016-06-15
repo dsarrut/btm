@@ -75,12 +75,20 @@ QVariant btm::QPlayersTable2::data(const QModelIndex &index, int role) const
         if (col == 4) return player->nb_of_points;
         if (col == 5) return player->nb_of_lost_matches;
         if (col == 6) return player->nb_of_wait_rounds;
+        //if (col == 7) return true;
         return QString("Row%1, Column%2")
                 .arg(index.row() + 1)
                 .arg(index.column() +1);
     }
     if (role == Qt::EditRole) {
         return QString::fromStdString(player->GetName());
+    }
+    if (role == Qt::CheckStateRole) {
+        if (col == 0) {
+            if (player->GetParticipateFlag()) return 2;
+            else return 0;
+        }
+        else return QVariant();
     }
     return QVariant();
 }
@@ -115,7 +123,8 @@ Qt::ItemFlags btm::QPlayersTable2::flags(const QModelIndex &index) const
     // only name first column is editable
     int col = index.column();
     if (col == 0)
-        return (QAbstractTableModel::flags(index) | Qt::ItemIsEditable);
+        return (QAbstractTableModel::flags(index)
+                | Qt::ItemIsEditable | Qt::ItemIsUserCheckable);
     return  QAbstractTableModel::flags(index);
 }
 // ----------------------------------------------------------------------------
@@ -126,11 +135,17 @@ bool btm::QPlayersTable2::setData(const QModelIndex &index,
                                   const QVariant &value,
                                   int role)
 {
+    int row = index.row();
+    auto player = tournament->GetPlayer(row);
     // only column "name" could be edited
-    if (index.isValid() && role == Qt::EditRole) {
-        int row = index.row();
-        auto player = tournament->GetPlayer(row);
+    if (index.isValid() and role == Qt::EditRole) {
         player->SetName(value.toString().toStdString());
+        emit dataChanged(index, index);
+    }
+    if (index.isValid() and role == Qt::CheckStateRole) {
+        // Toggle check
+        auto b = !player->GetParticipateFlag();
+        player->SetParticipateFlag(b);
         emit dataChanged(index, index);
     }
     return false;
