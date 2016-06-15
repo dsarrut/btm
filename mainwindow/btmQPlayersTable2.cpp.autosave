@@ -67,7 +67,7 @@ QVariant btm::QPlayersTable2::data(const QModelIndex &index, int role) const
     int col = index.column();
     auto & players = tournament->GetPlayers();
     auto & player = players[row];
-    if (role == Qt::DisplayRole) {
+    if (role == Qt::DisplayRole) {        
         if (col == 0) return QString::fromStdString(player->GetName());
         if (col == 1) return player->nb_of_matches;
         if (col == 2) return player->nb_of_win_matches;

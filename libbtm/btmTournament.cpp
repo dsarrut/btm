@@ -158,7 +158,6 @@ void btm::Tournament::LoadPlayersFromFile(std::string filename)
 //----------------------------------------------------------------------------
 void btm::Tournament::SavePlayers(std::ostream &os)
 {
-    //os << players.size() << std::endl;
     for(auto p:players) {
         p->Save(os);
         os << std::endl;
