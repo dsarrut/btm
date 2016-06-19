@@ -2,18 +2,25 @@
 #include "btmTournament.h"
 #include <algorithm>
 
+// -----------------------------------------------------------------------------
 btm::Round::Round(std::shared_ptr<Tournament> t, int n)
 {
     currentStatus = Init;
     tournament = t;
     nb_points_to_win = n;
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 btm::Round::pointer btm::Round::New(btm::Tournament::pointer t, int n)
 {
     return std::make_shared<Round>(t, n);
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 std::string btm::Round::ToString()
 {
     std::stringstream ss;
@@ -26,8 +33,10 @@ std::string btm::Round::ToString()
         ss << "Waiting players : " << p << std::endl;
     return ss.str();
 }
+// -----------------------------------------------------------------------------
 
 
+// -----------------------------------------------------------------------------
 void btm::Round::ComputePlayersStatus()
 {
     for(auto m:matches) {
@@ -37,7 +46,10 @@ void btm::Round::ComputePlayersStatus()
         p->nb_of_wait_rounds++;
     }
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Round::Save(std::ostream & os)
 {
     os << round_nb << " "
@@ -49,7 +61,10 @@ void btm::Round::Save(std::ostream & os)
     for(auto m:matches) m->Save(os);
     os << std::endl;
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Round::Load(std::istream & is)
 {
     int nb_w;
@@ -78,27 +93,52 @@ void btm::Round::Load(std::istream & is)
     */
     on_match_status_changed();
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Round::on_match_score_changed()
 {
     emit roundScoreHasChanged();
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 btm::Status btm::Round::GetStatus()
 {
     return currentStatus;
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Round::SwapPlayers(btm::Player::pointer p1,
                              btm::Player::pointer p2)
 {
-    DD("todo");
-    /*
+    std::cout.flush();
+    DDF();
+    DD(p1->GetName());
+    DD(p2->GetName());
+    std::cout.flush();
+
+    // Find the matches of the players
     btm::Match::pointer m1;
     btm::Match::pointer m2;
     int ip1, ip2;
     FindPlayer(p1, m1, ip1);
     FindPlayer(p2, m2, ip2);
+    DD(ip1);
+    DD(ip2);
+
+    //p1->SwapMatch(m1,m2);
+    m1->SwapPlayer(p1,ip1,m2,p2,ip2);
+    //m2->ChangePlayer(p2,p1);
+    //p2->SwapMatch(m2,m1);
+    //m2->SwapPlayer(p2,p1);
+
+/*
+
     if (ip1 and ip2) {
         m1->SwapPlayer(ip1, m2, ip2);
         emit roundScoreHasChanged();
@@ -118,13 +158,16 @@ void btm::Round::SwapPlayers(btm::Player::pointer p1,
     emit roundScoreHasChanged();
     */
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Round::FindPlayer(btm::Player::pointer p,
                             btm::Match::pointer &m,
                             int &ip)
 {
     ip = 0;
-    for(auto match:matches) {
+    for(auto & match:matches) {
         match->FindPlayer(p, ip);
         if (ip) {
             m = match;
@@ -132,7 +175,10 @@ void btm::Round::FindPlayer(btm::Player::pointer p,
         }
     }
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void btm::Round::on_match_status_changed()
 {
     btm::Status status = Init;
@@ -150,3 +196,4 @@ void btm::Round::on_match_status_changed()
         emit roundStatusHasChanged();
     }
 }
+// -----------------------------------------------------------------------------

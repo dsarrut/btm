@@ -44,13 +44,9 @@ btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r, int n,
 // -----------------------------------------------------------------------------
 int btm::Match::GetNumberOfPoints(int team)
 {
-    DD("GetNumberof points");
     int points = 0;
-    DD(team);
-    DD(sets.size());
     for(auto s:sets)
         points += s->GetTeamPoints(team);
-    DD(points);
     return points;
 }
 // -----------------------------------------------------------------------------
@@ -161,23 +157,28 @@ btm::Status btm::Match::GetStatus()
 // -----------------------------------------------------------------------------
 
 
-/*
+// -----------------------------------------------------------------------------
 void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
 {
-    if (i==0 or i>4) {
+    DD(i);
+    if (i<1 or i>4) {
         DD("ERROR set Player");
         DD(i);
+        exit(0);
     }
     if (players[i-1] != p) {
         players[i-1] = p;
+        /*
         p->AddMatch(pointer(this));
           int team=2;
         if (i == 1 or i == 2) team = 1;
         for(auto s=1; s<=3; s++)
             SetScore(team, s, GetSet(s)->GetTeamPoints(team));
+            */
     }
 }
-*/
+// -----------------------------------------------------------------------------
+
 
 // -----------------------------------------------------------------------------
 btm::Player::pointer btm::Match::GetPlayer(int i)
@@ -210,15 +211,36 @@ btm::Set::pointer btm::Match::GetSet(int i)
 
 
 // -----------------------------------------------------------------------------
-void btm::Match::SwapPlayer(int player1,
+void btm::Match::SwapPlayer(btm::Player::pointer p1,
+                            int ip1,
                             btm::Match::pointer m2,
-                            int player2)
+                            btm::Player::pointer p2,
+                            int ip2)
 {
-    DD("todo swap player");
-    /*auto temp = GetPlayer(player1);
-    SetPlayer(player1, m2->GetPlayer(player2));
-    m2->SetPlayer(player2, temp);
-    */
+    DD("swap player");
+    DD(p1->GetName());
+    DD(p2->GetName());
+    //ChangePlayer(p1,p2);
+    //m2->ChangePlayer(p2,p1);
+    SetPlayer(ip1,p2);
+    m2->SetPlayer(ip2,p1);
+    p1->ChangeMatch(shared_from_this(), m2);
+    p2->ChangeMatch(m2, shared_from_this());
+    emit matchChanged();
+    DD("end");
+}
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
+void btm::Match::ChangePlayer(btm::Player::pointer p1,
+                              btm::Player::pointer p2)
+{
+    DDF();
+    int i;
+    FindPlayer(p1, i);
+    DD(i);
+    players[i] = p2;
 }
 // -----------------------------------------------------------------------------
 
@@ -227,10 +249,10 @@ void btm::Match::SwapPlayer(int player1,
 void btm::Match::FindPlayer(btm::Player::pointer p, int &ip)
 {
     ip = 0;
-    if (p == players[0]) ip = 1;
-    if (p == players[1]) ip = 2;
-    if (p == players[2]) ip = 3;
-    if (p == players[3]) ip = 4;
+    if (p->GetId() == players[0]->GetId()) { ip = 1; return; }
+    if (p->GetId() == players[1]->GetId()) { ip = 2; return; }
+    if (p->GetId() == players[2]->GetId()) { ip = 3; return; }
+    if (p->GetId() == players[3]->GetId()) { ip = 4; return; }
 }
 // -----------------------------------------------------------------------------
 

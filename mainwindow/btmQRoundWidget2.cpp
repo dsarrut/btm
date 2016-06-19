@@ -23,11 +23,8 @@ QRoundWidget2::~QRoundWidget2()
 
 void QRoundWidget2::SetRound(btm::Round::pointer r)
 {
-    DDF();
-    DD("ui set round");
     round = r;
     auto nb = round->matches.size();
-    DD(nb);
     // remove old widget
     for(auto w:matchWidgets) {
         delete w;
@@ -38,7 +35,6 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     matchWidgets.clear();
 
     // Add the widget if some are needed
-    DD("here");
     int row=0;
     int col=0;
     if (!waitingWidget) {
@@ -58,16 +54,12 @@ void QRoundWidget2::SetRound(btm::Round::pointer r)
     }
 
     // Install widget
-    DD("install widget match");
-    DD(nb);
     for(unsigned int i=0; i<nb; i++) {
         DD(i);
         matchWidgets[i]->SetMatch(round->matches[i]);
     }
-    DD("kkkk");
     waitingWidget->SetPlayers(round->waiting_players);
     waitingWidget->SetRound(round);
-    DD("end");
 }
 
 void QRoundWidget2::SetNumberOfColumns(int i)
@@ -89,6 +81,7 @@ bool QRoundWidget2::GetSwapPlayerMode() const
 
 void QRoundWidget2::on_player_selected(btm::Player::pointer p, bool b)
 {
+    DDF();
     // Update list of selected players
     if (b) selectedPlayers.push_back(p);
     else {
@@ -97,7 +90,9 @@ void QRoundWidget2::on_player_selected(btm::Player::pointer p, bool b)
     }
     // check if 2
     if (selectedPlayers.size() == 2) {
+        DD("2");
         round->SwapPlayers(selectedPlayers[0], selectedPlayers[1]);
+
         selectedPlayers.clear();
         for(auto w:matchWidgets) w->ResetSelection();
         waitingWidget->ResetSelection();

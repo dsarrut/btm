@@ -68,8 +68,9 @@ void QPlayerWidget::Update()
 void QPlayerWidget::ChangePlayer(btm::Player::pointer p1,
                                  btm::Player::pointer p2)
 {
-    if (player == p1) { SetPlayer(p2); return; }
-    if (player == p2) SetPlayer(p1);
+    DDF();
+   // if (player == p1) { SetPlayer(p2); return; }
+   // if (player == p2) SetPlayer(p1);
 }
 // ----------------------------------------------------------------------------
 
@@ -77,6 +78,7 @@ void QPlayerWidget::ChangePlayer(btm::Player::pointer p1,
 // ----------------------------------------------------------------------------
 void QPlayerWidget::on_radioButton_toggled(bool checked)
 {
+    DDF();
     emit selectedToggled(player, checked);
 }
 // ----------------------------------------------------------------------------

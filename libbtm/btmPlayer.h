@@ -39,6 +39,8 @@ public:
     int GetId() const { return id; }
     void SetParticipateFlag(bool b);
     bool GetParticipateFlag() const { return participate; }
+    void ChangeMatch(std::shared_ptr<btm::Match> m1,
+                     std::shared_ptr<btm::Match> m2);
 
     // OLD
     void ResetStatus();

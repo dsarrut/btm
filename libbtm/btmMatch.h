@@ -10,7 +10,8 @@ namespace btm {
 
 class Round;
 
-class Match : public QObject
+class Match : public QObject,
+        public std::enable_shared_from_this<Match>
 {
     Q_OBJECT
 
@@ -51,10 +52,10 @@ public:
 
     std::string ToString();
     void SetScore(int team, int theSet, unsigned int points);
-    //void SetPlayer(unsigned int i, btm::Player::pointer p);
-    void SwapPlayer(int player1,
-                    btm::Match::pointer m2,
-                    int player2);
+    void SetPlayer(unsigned int i, btm::Player::pointer p);
+    void SwapPlayer(Player::pointer p1, int ip1, pointer m2,
+                    Player::pointer p2, int ip2);
+    void ChangePlayer(btm::Player::pointer p1, btm::Player::pointer p2);
     void FindPlayer(btm::Player::pointer p, int & ip);
     void Save(std::ostream & os);
     void Load(std::istream & is);

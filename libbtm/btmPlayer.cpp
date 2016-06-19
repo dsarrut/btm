@@ -37,7 +37,7 @@ void btm::Player::ComputeScores()
     nb_of_win_matches = 0;
     nb_of_matches = matches.size();
     nb_of_win_sets = 0;
-    for(auto m:matches) {
+    for(auto & m:matches) {
         int team = m->GetPlayerTeam(shared_from_this());
         nb_of_points += m->GetNumberOfPoints(team);
         if (m->GetWinner() == team) nb_of_win_matches++;
@@ -58,6 +58,22 @@ void btm::Player::SetParticipateFlag(bool b)
 {
     participate = b;
     emit playerParticipateFlagChanged(shared_from_this());
+}
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
+void btm::Player::ChangeMatch(std::shared_ptr<btm::Match> m1,
+                              std::shared_ptr<btm::Match> m2)
+{
+    DDF();
+    for(auto & m:matches) {
+        if (m == m1) {
+            DD("m");
+            m = m2;
+            continue;
+        }
+    }
 }
 // -----------------------------------------------------------------------------
 
