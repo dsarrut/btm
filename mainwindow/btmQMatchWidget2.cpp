@@ -53,7 +53,6 @@ void QMatchWidget2::SetSwapPlayerMode(bool b)
     ui->widgetPlayer2->EnableSelectMode(b);
     ui->widgetPlayer3->EnableSelectMode(b);
     ui->widgetPlayer4->EnableSelectMode(b);
-
     on_scores_changed();
 }
 
@@ -91,7 +90,6 @@ void QMatchWidget2::on_players_changed()
 
 void QMatchWidget2::on_scores_changed()
 {
-    DD("Update sets gui");
     ui->lineTeam1Set1->setText(QString("%1").arg(match->GetSet(1)->GetTeam1Points()));
     ui->lineTeam2Set1->setText(QString("%1").arg(match->GetSet(1)->GetTeam2Points()));
     ui->lineTeam1Set2->setText(QString("%1").arg(match->GetSet(2)->GetTeam1Points()));
@@ -100,8 +98,6 @@ void QMatchWidget2::on_scores_changed()
     ui->lineTeam2Set3->setText(QString("%1").arg(match->GetSet(3)->GetTeam2Points()));
 
     // Second set
-    DD("on scores changed");
-
     if (match->GetSet(1)->GetWinner() == 0) {
         ui->lineTeam1Set2->setEnabled(false);
         ui->lineTeam2Set2->setEnabled(false);
@@ -112,8 +108,6 @@ void QMatchWidget2::on_scores_changed()
     }
 
     // Third set
-    DD("on scores changed");
-
     if (match->GetSet(1)->GetWinner() != 0 and
             match->GetSet(2)->GetWinner() != 0 and
             match->GetSet(1)->GetWinner() != match->GetSet(2)->GetWinner()) {
@@ -124,7 +118,6 @@ void QMatchWidget2::on_scores_changed()
         ui->lineTeam1Set3->setEnabled(false);
         ui->lineTeam2Set3->setEnabled(false);
     }
-    DD("end");
     on_status_changed();
 }
 
