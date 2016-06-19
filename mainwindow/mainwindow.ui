@@ -73,13 +73,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonAddPlayer">
-            <property name="text">
-             <string>Ajouter un joueur</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -91,6 +84,13 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="buttonAddPlayer">
+            <property name="text">
+             <string>Ajouter un joueur</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="buttonLoad">
@@ -142,10 +142,29 @@
             <property name="text">
              <string/>
             </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
             <property name="tristate">
              <bool>false</bool>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item>
            <widget class="QLabel" name="label">

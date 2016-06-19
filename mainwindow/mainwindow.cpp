@@ -153,6 +153,13 @@ void MainWindow::on_menuRemoteDisplayTriggered()
 void MainWindow::on_buttonNewRound_clicked()
 {
     if (!tournament) return;
+
+    if (tournament->GetPlayers().size() < 4) return;
+    int n=0;
+    for(auto p:tournament->GetPlayers())
+        if (p->GetParticipateFlag()) ++n;
+    if (n<4) return;
+
     if (tournament->rounds.size() == 0)
         currentRound = tournament->StartNewRound(current_nb_of_points_to_win);
     else {
@@ -364,7 +371,6 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_lineEdit_textChanged(const QString &arg1)
 {
-    DD(arg1.toStdString());
     if (tablePlayersModel) {
         tablePlayersModel->SetFilter(arg1);
     }
