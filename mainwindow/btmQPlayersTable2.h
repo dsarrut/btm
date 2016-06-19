@@ -12,6 +12,8 @@ namespace btm {
 // ----------------------------------------------------------------------------
 class QPlayersTable2 : public QAbstractTableModel
 {
+    Q_OBJECT
+
 public:
     QPlayersTable2(QTableView * view);
 
@@ -30,6 +32,9 @@ public:
                  const QVariant &value, int role);
     QVariant headerData(int section, Qt::Orientation orientation,
                         int role = Qt::DisplayRole) const;
+
+public slots:
+    void on_playerParticipateFlag_changed(btm::Player::pointer p);
 
 protected:
     btm::Tournament::pointer tournament;

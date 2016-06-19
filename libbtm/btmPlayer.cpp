@@ -54,6 +54,15 @@ void btm::Player::ComputeScores()
 
 
 // -----------------------------------------------------------------------------
+void btm::Player::SetParticipateFlag(bool b)
+{
+    participate = b;
+    emit playerParticipateFlagChanged(shared_from_this());
+}
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
 std::string btm::Player::ToString() const
 {
     std::stringstream ss;

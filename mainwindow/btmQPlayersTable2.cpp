@@ -29,6 +29,13 @@ void btm::QPlayersTable2::SetTournament(btm::Tournament::pointer t)
     // Add new list of players
     auto & players = tournament->GetPlayers();
     insertRows(0,players.size());
+
+    for(auto p:players) {
+        connect(p.get(),
+                SIGNAL(playerParticipateFlagChanged(btm::Player::pointer)),
+                this,
+                SLOT(on_playerParticipateFlag_changed(btm::Player::pointer)));
+    }
 }
 // ----------------------------------------------------------------------------
 
@@ -142,8 +149,8 @@ bool btm::QPlayersTable2::setData(const QModelIndex &index,
         player->SetName(value.toString().toStdString());
         emit dataChanged(index, index);
     }
+    // Toggle check (player participate or not)
     if (index.isValid() and role == Qt::CheckStateRole) {
-        // Toggle check
         auto b = !player->GetParticipateFlag();
         player->SetParticipateFlag(b);
         emit dataChanged(index, index);
@@ -178,6 +185,15 @@ QVariant btm::QPlayersTable2::headerData(int section,
         return player->GetId();
     }
     return QVariant();
+}
+// ----------------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------------------
+void btm::QPlayersTable2::on_playerParticipateFlag_changed(btm::Player::pointer p)
+{
+    QModelIndex index = createIndex(p->GetId(), 0);
+    emit dataChanged(index, index);
 }
 // ----------------------------------------------------------------------------
 

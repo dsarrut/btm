@@ -372,9 +372,13 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
 
 void MainWindow::on_checkBox_stateChanged(int arg1)
 {
-    DD(arg1);
     if (tournament) {
         auto players = tournament->GetPlayers();
-
+        if (arg1 == 0) {
+            for(auto p:players) p->SetParticipateFlag(false);
+        }
+        if (arg1 == 2) {
+            for(auto p:players) p->SetParticipateFlag(true);
+        }
     }
 }

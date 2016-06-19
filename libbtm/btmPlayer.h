@@ -37,7 +37,7 @@ public:
 
     void SetId(int i) { id = i; }
     int GetId() const { return id; }
-    void SetParticipateFlag(bool b) { participate = b; }
+    void SetParticipateFlag(bool b);
     bool GetParticipateFlag() const { return participate; }
 
     // OLD
@@ -72,6 +72,7 @@ public:
 signals:
     void playerNameChanged();
     void playerScoreChanged();
+    void playerParticipateFlagChanged(btm::Player::pointer);
 
 protected:
     std::vector<std::shared_ptr<btm::Match>> matches;
