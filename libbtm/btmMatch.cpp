@@ -160,7 +160,6 @@ btm::Status btm::Match::GetStatus()
 // -----------------------------------------------------------------------------
 void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
 {
-    DD(i);
     if (i<1 or i>4) {
         DD("ERROR set Player");
         DD(i);
@@ -168,13 +167,10 @@ void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
     }
     if (players[i-1] != p) {
         players[i-1] = p;
-        /*
-        p->AddMatch(pointer(this));
-          int team=2;
-        if (i == 1 or i == 2) team = 1;
-        for(auto s=1; s<=3; s++)
-            SetScore(team, s, GetSet(s)->GetTeamPoints(team));
-            */
+        DD("emit");
+        emit matchPlayersHaveChanged();
+        emit matchScoreHasChanged();
+        DD("fin emit");
     }
 }
 // -----------------------------------------------------------------------------
@@ -220,14 +216,24 @@ void btm::Match::SwapPlayer(btm::Player::pointer p1,
     DD("swap player");
     DD(p1->GetName());
     DD(p2->GetName());
-    //ChangePlayer(p1,p2);
-    //m2->ChangePlayer(p2,p1);
+    DD(p1->GetMatches()[0]->GetMatchNb());
+    DD(p2->GetMatches()[0]->GetMatchNb());
+    //return; //FIXME
+    auto m1 = shared_from_this();
+    if (m1 != m2) {
+        //p1->ChangeMatch(m1, m2);
+        //p2->ChangeMatch(m2, m1);
+        DD(p1->GetMatches()[0]->GetMatchNb());
+        DD(p2->GetMatches()[0]->GetMatchNb());
+    }
     SetPlayer(ip1,p2);
     m2->SetPlayer(ip2,p1);
-    p1->ChangeMatch(shared_from_this(), m2);
-    p2->ChangeMatch(m2, shared_from_this());
-    emit matchChanged();
-    DD("end");
+    //DD("emit");
+    //std::cout.flush();
+    // Both match change !
+    //emit matchPlayersHaveChanged();
+    //std::cout.flush();
+    //DD("after emit");
 }
 // -----------------------------------------------------------------------------
 

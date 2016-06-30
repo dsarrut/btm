@@ -54,6 +54,14 @@ void btm::Player::ComputeScores()
 
 
 // -----------------------------------------------------------------------------
+std::vector<std::shared_ptr<btm::Match> > & btm::Player::GetMatches()
+{
+    return matches;
+}
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
 void btm::Player::SetParticipateFlag(bool b)
 {
     participate = b;
@@ -66,14 +74,14 @@ void btm::Player::SetParticipateFlag(bool b)
 void btm::Player::ChangeMatch(std::shared_ptr<btm::Match> m1,
                               std::shared_ptr<btm::Match> m2)
 {
-    DDF();
-    for(auto & m:matches) {
-        if (m == m1) {
-            DD("m");
-            m = m2;
-            continue;
+    if (m1 == m2) return;
+    for(unsigned int i=0; i<matches.size(); i++) { //& m:matches) {
+        if (matches[i]->GetMatchNb() == m1->GetMatchNb()) {
+            matches[i] = m2;
+            return;
         }
     }
+    exit(0);
 }
 // -----------------------------------------------------------------------------
 

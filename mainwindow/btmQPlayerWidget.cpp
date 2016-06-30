@@ -51,7 +51,8 @@ void QPlayerWidget::ResetSelection()
 // ----------------------------------------------------------------------------
 void QPlayerWidget::Update()
 {
-    ui->label->setText(QString::fromStdString(player->name));
+    DD(player->GetName());
+    ui->label->setText(QString::fromStdString(player->GetName()));
     if (selectMode) {
         ui->radioButton->setVisible(true);
         ui->radioButton->setText(" ");

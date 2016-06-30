@@ -25,15 +25,17 @@ void QMatchWidget2::SetMatch(btm::Match::pointer m)
     DD("QMatchWidget2::SetMatch");
     // Disconnet previous signals
     if (match != NULL) {
-        QObject::disconnect(match.get(), 0, this, 0);
+        DD("disconnect");
+        //QObject::disconnect(match.get(), 0, this, 0);
     }
     match = m;
-    QObject::connect(match.get(), SIGNAL(matchPlayersHaveChanged()),
+    DD(match->GetMatchNb());
+    QObject::connect(m.get(),
+                     SIGNAL(matchPlayersHaveChanged()),
                      this, SLOT(on_players_changed()));
-    QObject::connect(match.get(), SIGNAL(matchScoreHasChanged()),
+    QObject::connect(m.get(),
+                     SIGNAL(matchScoreHasChanged()),
                      this, SLOT(on_scores_changed()));
-    //QObject::connect(match.get(), SIGNAL(matchStatusHasChanged()),
-   //                  this, SLOT(on_status_changed()));
     on_players_changed();
     on_scores_changed();
     on_status_changed();
@@ -82,10 +84,13 @@ void QMatchWidget2::ResetSelection()
 
 void QMatchWidget2::on_players_changed()
 {
+    DDF();
+    DD("ici");
     ui->widgetPlayer1->SetPlayer(match->GetPlayer(1));
     ui->widgetPlayer2->SetPlayer(match->GetPlayer(2));
     ui->widgetPlayer3->SetPlayer(match->GetPlayer(3));
     ui->widgetPlayer4->SetPlayer(match->GetPlayer(4));
+    DD("fin on_players_changed");
 }
 
 void QMatchWidget2::on_scores_changed()
