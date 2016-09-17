@@ -80,6 +80,12 @@ void QPlayerWidget::ChangePlayer(btm::Player::pointer p1,
 void QPlayerWidget::on_radioButton_toggled(bool checked)
 {
     DDF();
+    if (checked) {
+        ui->label->setStyleSheet("QLabel { font-weight: bold;  color : blue; }");
+    }
+    else {
+        ui->label->setStyleSheet("QLabel { font-weight: normal; color : black; }");
+    }
     emit selectedToggled(player, checked);
 }
 // ----------------------------------------------------------------------------

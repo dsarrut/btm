@@ -45,8 +45,17 @@ btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r, int n,
 int btm::Match::GetNumberOfPoints(int team)
 {
     int points = 0;
-    for(auto s:sets)
-        points += s->GetTeamPoints(team);
+    // Only count points if match is terminated
+    if (GetWinner() == 0) return points;
+    points += GetSet(1)->GetTeamPoints(team);
+    points += GetSet(2)->GetTeamPoints(team);
+    DD(points);
+    // Only count third set if two first have different winners
+    DD(GetSet(1)->GetWinner());
+    DD(GetSet(2)->GetWinner());
+    if (GetSet(1)->GetWinner() != GetSet(2)->GetWinner())
+        points += GetSet(3)->GetTeamPoints(team);
+    DD(points);
     return points;
 }
 // -----------------------------------------------------------------------------
@@ -122,6 +131,11 @@ void btm::Match::SetScore(int team, int theSet, unsigned int points)
 
     // Change the score of the set
     GetSet(theSet)->SetScore(team, points);
+
+    if (GetSet(1)->GetWinner() == GetSet(2)->GetWinner()) {
+        SetScore(1, 3, 0);
+        SetScore(2, 3, 0);
+    }
 
     // Update player score
     for(auto p:players)
@@ -221,13 +235,16 @@ void btm::Match::SwapPlayer(btm::Player::pointer p1,
     //return; //FIXME
     auto m1 = shared_from_this();
     if (m1 != m2) {
-        //p1->ChangeMatch(m1, m2);
-        //p2->ChangeMatch(m2, m1);
+        p1->ChangeMatch(m1, m2);
+        p2->ChangeMatch(m2, m1);
         DD(p1->GetMatches()[0]->GetMatchNb());
         DD(p2->GetMatches()[0]->GetMatchNb());
     }
     SetPlayer(ip1,p2);
     m2->SetPlayer(ip2,p1);
+
+    DD(p1->GetMatches()[0]->GetMatchNb());
+    DD(p2->GetMatches()[0]->GetMatchNb());
     //DD("emit");
     //std::cout.flush();
     // Both match change !

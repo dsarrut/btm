@@ -79,7 +79,11 @@ QVariant btm::QPlayersTable2::data(const QModelIndex &index, int role) const
         if (col == 1) return player->nb_of_matches;
         if (col == 2) return player->nb_of_win_matches;
         if (col == 3) return player->nb_of_win_sets;
-        if (col == 4) return player->nb_of_points;
+        if (col == 4)  {
+            DD(player);
+            DD(player->nb_of_points);
+            return player->nb_of_points;
+        }
         if (col == 5) return player->nb_of_lost_matches;
         if (col == 6) return player->nb_of_wait_rounds;
         //if (col == 7) return true;

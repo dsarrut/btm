@@ -33,6 +33,8 @@ void btm::Player::AddMatch(std::shared_ptr<btm::Match> m)
 // -----------------------------------------------------------------------------
 void btm::Player::ComputeScores()
 {
+    DD("ComputeScores");
+    DD(name);
     nb_of_points = 0;
     nb_of_win_matches = 0;
     nb_of_matches = matches.size();
@@ -40,14 +42,18 @@ void btm::Player::ComputeScores()
     for(auto & m:matches) {
         int team = m->GetPlayerTeam(shared_from_this());
         nb_of_points += m->GetNumberOfPoints(team);
+        DD(nb_of_points);
         if (m->GetWinner() == team) nb_of_win_matches++;
         if (m->GetSet(1)->GetWinner() == team) nb_of_win_sets++;
         if (m->GetSet(2)->GetWinner() == team) nb_of_win_sets++;
         // The third set only counts if needed
-        if (m->GetSet(1)->GetWinner() != m->GetSet(1)->GetWinner()
+        if ((m->GetSet(1)->GetWinner() != m->GetSet(2)->GetWinner())
                 and m->GetSet(1)->GetWinner() != 0
-                and m->GetSet(3)->GetWinner() == team) nb_of_win_sets++;
+                and (m->GetSet(3)->GetWinner() == team)) {
+            nb_of_win_sets++;
+        }
     }
+    DD(nb_of_points);
     emit playerScoreChanged();
 }
 // -----------------------------------------------------------------------------
@@ -74,14 +80,20 @@ void btm::Player::SetParticipateFlag(bool b)
 void btm::Player::ChangeMatch(std::shared_ptr<btm::Match> m1,
                               std::shared_ptr<btm::Match> m2)
 {
-    if (m1 == m2) return;
+    DDF();
+    if (m1->GetMatchNb() == m2->GetMatchNb()) return;
+    DD("loop");
     for(unsigned int i=0; i<matches.size(); i++) { //& m:matches) {
-        if (matches[i]->GetMatchNb() == m1->GetMatchNb()) {
+        /*if (matches[i]->GetMatchNb() == m1->GetMatchNb()) {
+            DD(i);
+            DD(matches[i]->GetMatchNb());
             matches[i] = m2;
+            DD(m2->GetMatchNb());
+            DD(matches[i]->GetMatchNb());
             return;
-        }
+        }*/
     }
-    exit(0);
+    //exit(0);
 }
 // -----------------------------------------------------------------------------
 
