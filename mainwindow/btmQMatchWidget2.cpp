@@ -1,6 +1,7 @@
 #include "btmQMatchWidget2.h"
 #include "ui_btmQMatchWidget2.h"
 
+// -----------------------------------------------------------------------------
 QMatchWidget2::QMatchWidget2(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::QMatchWidget2)
@@ -14,22 +15,27 @@ QMatchWidget2::QMatchWidget2(QWidget *parent) :
     pixWin = QPixmap(":/icons/icons/face-smile-big-2.png");
     pixLoose = QPixmap(":/icons/icons/face-crying-2.png");
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 QMatchWidget2::~QMatchWidget2()
 {
     delete ui;
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::SetMatch(btm::Match::pointer m)
 {
-    DD("QMatchWidget2::SetMatch");
+    DDF();
     // Disconnet previous signals
     if (match != NULL) {
         DD("disconnect");
         //QObject::disconnect(match.get(), 0, this, 0);
     }
     match = m;
-    DD(match->GetMatchNb());
     QObject::connect(m.get(),
                      SIGNAL(matchPlayersHaveChanged()),
                      this, SLOT(on_players_changed()));
@@ -40,7 +46,10 @@ void QMatchWidget2::SetMatch(btm::Match::pointer m)
     on_scores_changed();
     on_status_changed();
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::SetScore(int team, int set, const QString &v)
 {
     bool ok;
@@ -48,7 +57,10 @@ void QMatchWidget2::SetScore(int team, int set, const QString &v)
     if (ok) match->SetScore(team, set, value);
     //UpdateSetsUI();
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::SetSwapPlayerMode(bool b)
 {
     ui->widgetPlayer1->EnableSelectMode(b);
@@ -57,7 +69,10 @@ void QMatchWidget2::SetSwapPlayerMode(bool b)
     ui->widgetPlayer4->EnableSelectMode(b);
     on_scores_changed();
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::ConnectPlayerSelection(QObject *o)
 {
     QObject::connect(ui->widgetPlayer1,
@@ -73,7 +88,10 @@ void QMatchWidget2::ConnectPlayerSelection(QObject *o)
                      SIGNAL(selectedToggled(btm::Player::pointer,bool)),
                      o, SLOT(on_player_selected(btm::Player::pointer,bool)));
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::ResetSelection()
 {
     ui->widgetPlayer1->ResetSelection();
@@ -81,18 +99,21 @@ void QMatchWidget2::ResetSelection()
     ui->widgetPlayer3->ResetSelection();
     ui->widgetPlayer4->ResetSelection();
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::on_players_changed()
 {
-    DDF();
-    DD("ici");
     ui->widgetPlayer1->SetPlayer(match->GetPlayer(1));
     ui->widgetPlayer2->SetPlayer(match->GetPlayer(2));
     ui->widgetPlayer3->SetPlayer(match->GetPlayer(3));
     ui->widgetPlayer4->SetPlayer(match->GetPlayer(4));
-    DD("fin on_players_changed");
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::on_scores_changed()
 {
     ui->lineTeam1Set1->setText(QString("%1").arg(match->GetSet(1)->GetTeam1Points()));
@@ -125,7 +146,10 @@ void QMatchWidget2::on_scores_changed()
     }
     on_status_changed();
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::on_status_changed()
 {
     if (match->GetWinner() == 1) {
@@ -159,33 +183,52 @@ void QMatchWidget2::on_status_changed()
     ui->groupBox->setTitle(QString("Match n°%1 \t\t %2")
                            .arg(match->GetMatchNb()).arg(status));
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::on_lineTeam1Set1_textChanged(const QString &arg1)
 {
     SetScore(1,1,arg1);
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::on_lineTeam1Set2_textChanged(const QString &arg1)
 {
     SetScore(1,2,arg1);
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::on_lineTeam1Set3_textChanged(const QString &arg1)
 {
     SetScore(1,3,arg1);
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::on_lineTeam2Set1_textChanged(const QString &arg1)
 {
     SetScore(2,1,arg1);
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::on_lineTeam2Set2_textChanged(const QString &arg1)
 {
     SetScore(2,2,arg1);
 }
+// -----------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------------
 void QMatchWidget2::on_lineTeam2Set3_textChanged(const QString &arg1)
 {
     SetScore(2,3,arg1);
 }
+// -----------------------------------------------------------------------------

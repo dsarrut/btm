@@ -33,8 +33,6 @@ void btm::Player::AddMatch(std::shared_ptr<btm::Match> m)
 // -----------------------------------------------------------------------------
 void btm::Player::ComputeScores()
 {
-    DD("ComputeScores");
-    DD(name);
     nb_of_points = 0;
     nb_of_win_matches = 0;
     nb_of_matches = matches.size();
@@ -42,7 +40,6 @@ void btm::Player::ComputeScores()
     for(auto & m:matches) {
         int team = m->GetPlayerTeam(shared_from_this());
         nb_of_points += m->GetNumberOfPoints(team);
-        DD(nb_of_points);
         if (m->GetWinner() == team) nb_of_win_matches++;
         if (m->GetSet(1)->GetWinner() == team) nb_of_win_sets++;
         if (m->GetSet(2)->GetWinner() == team) nb_of_win_sets++;
@@ -53,7 +50,6 @@ void btm::Player::ComputeScores()
             nb_of_win_sets++;
         }
     }
-    DD(nb_of_points);
     emit playerScoreChanged();
 }
 // -----------------------------------------------------------------------------

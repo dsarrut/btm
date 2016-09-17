@@ -116,47 +116,38 @@ btm::Status btm::Round::GetStatus()
 void btm::Round::SwapPlayers(btm::Player::pointer p1,
                              btm::Player::pointer p2)
 {
-    std::cout.flush();
-    DDF();
-    DD(p1->GetName());
-    DD(p2->GetName());
-    std::cout.flush();
-
     // Find the matches of the players
     btm::Match::pointer m1;
     btm::Match::pointer m2;
     int ip1, ip2;
     FindPlayer(p1, m1, ip1);
     FindPlayer(p2, m2, ip2);
-    DD(ip1);
-    DD(ip2);
 
-    //p1->SwapMatch(m1,m2);
+    if (ip1 == 0 and ip2 == 0) return; // do nothing
+
+    if (ip1 == 0) { // waiting list
+        for(unsigned int i=0; i<waiting_players.size(); i++) {
+            if (waiting_players[i]->id == p1->id) {
+                waiting_players[i] = p2;
+                m2->SetPlayer(ip2, p1);
+                emit waitingPlayersHaveChanged();
+                return;
+            }
+        }
+    }
+    if (ip2 == 0) { // waiting list
+        for(unsigned int i=0; i<waiting_players.size(); i++) {
+            if (waiting_players[i]->id == p2->id) {
+                waiting_players[i] = p1;
+                m1->SetPlayer(ip1, p2);
+                emit waitingPlayersHaveChanged();
+                return;
+            }
+        }
+    }
+
+    // Swap players for the 2 matches
     m1->SwapPlayer(p1,ip1,m2,p2,ip2);
-    //m2->ChangePlayer(p2,p1);
-    //p2->SwapMatch(m2,m1);
-    //m2->SwapPlayer(p2,p1);
-
-/*
-
-    if (ip1 and ip2) {
-        m1->SwapPlayer(ip1, m2, ip2);
-        emit roundScoreHasChanged();
-        return;
-    }
-    if (ip1) {
-        auto i = std::find(waiting_players.begin(), waiting_players.end(), p2);
-        m1->SetPlayer(ip1, *i);
-        *i = p1;
-    }
-    else {
-        auto i = std::find(waiting_players.begin(), waiting_players.end(), p1);
-        m2->SetPlayer(ip2, *i);
-        *i = p2;
-    }
-    emit waitingPlayersHaveChanged();
-    emit roundScoreHasChanged();
-    */
 }
 // -----------------------------------------------------------------------------
 

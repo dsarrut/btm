@@ -49,13 +49,9 @@ int btm::Match::GetNumberOfPoints(int team)
     if (GetWinner() == 0) return points;
     points += GetSet(1)->GetTeamPoints(team);
     points += GetSet(2)->GetTeamPoints(team);
-    DD(points);
     // Only count third set if two first have different winners
-    DD(GetSet(1)->GetWinner());
-    DD(GetSet(2)->GetWinner());
     if (GetSet(1)->GetWinner() != GetSet(2)->GetWinner())
         points += GetSet(3)->GetTeamPoints(team);
-    DD(points);
     return points;
 }
 // -----------------------------------------------------------------------------
@@ -181,10 +177,8 @@ void btm::Match::SetPlayer(unsigned int i, btm::Player::pointer p)
     }
     if (players[i-1] != p) {
         players[i-1] = p;
-        DD("emit");
         emit matchPlayersHaveChanged();
         emit matchScoreHasChanged();
-        DD("fin emit");
     }
 }
 // -----------------------------------------------------------------------------
@@ -227,30 +221,13 @@ void btm::Match::SwapPlayer(btm::Player::pointer p1,
                             btm::Player::pointer p2,
                             int ip2)
 {
-    DD("swap player");
-    DD(p1->GetName());
-    DD(p2->GetName());
-    DD(p1->GetMatches()[0]->GetMatchNb());
-    DD(p2->GetMatches()[0]->GetMatchNb());
-    //return; //FIXME
     auto m1 = shared_from_this();
     if (m1 != m2) {
         p1->ChangeMatch(m1, m2);
         p2->ChangeMatch(m2, m1);
-        DD(p1->GetMatches()[0]->GetMatchNb());
-        DD(p2->GetMatches()[0]->GetMatchNb());
     }
     SetPlayer(ip1,p2);
     m2->SetPlayer(ip2,p1);
-
-    DD(p1->GetMatches()[0]->GetMatchNb());
-    DD(p2->GetMatches()[0]->GetMatchNb());
-    //DD("emit");
-    //std::cout.flush();
-    // Both match change !
-    //emit matchPlayersHaveChanged();
-    //std::cout.flush();
-    //DD("after emit");
 }
 // -----------------------------------------------------------------------------
 
@@ -259,10 +236,8 @@ void btm::Match::SwapPlayer(btm::Player::pointer p1,
 void btm::Match::ChangePlayer(btm::Player::pointer p1,
                               btm::Player::pointer p2)
 {
-    DDF();
     int i;
     FindPlayer(p1, i);
-    DD(i);
     players[i] = p2;
 }
 // -----------------------------------------------------------------------------

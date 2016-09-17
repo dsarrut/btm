@@ -51,7 +51,6 @@ void QPlayerWidget::ResetSelection()
 // ----------------------------------------------------------------------------
 void QPlayerWidget::Update()
 {
-    DD(player->GetName());
     ui->label->setText(QString::fromStdString(player->GetName()));
     if (selectMode) {
         ui->radioButton->setVisible(true);
@@ -70,8 +69,8 @@ void QPlayerWidget::ChangePlayer(btm::Player::pointer p1,
                                  btm::Player::pointer p2)
 {
     DDF();
-   // if (player == p1) { SetPlayer(p2); return; }
-   // if (player == p2) SetPlayer(p1);
+    // if (player == p1) { SetPlayer(p2); return; }
+    // if (player == p2) SetPlayer(p1);
 }
 // ----------------------------------------------------------------------------
 
@@ -79,7 +78,6 @@ void QPlayerWidget::ChangePlayer(btm::Player::pointer p1,
 // ----------------------------------------------------------------------------
 void QPlayerWidget::on_radioButton_toggled(bool checked)
 {
-    DDF();
     if (checked) {
         ui->label->setStyleSheet("QLabel { font-weight: bold;  color : blue; }");
     }
