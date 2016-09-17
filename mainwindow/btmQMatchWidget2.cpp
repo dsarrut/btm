@@ -29,7 +29,6 @@ QMatchWidget2::~QMatchWidget2()
 // -----------------------------------------------------------------------------
 void QMatchWidget2::SetMatch(btm::Match::pointer m)
 {
-    DDF();
     // Disconnet previous signals
     if (match != NULL) {
         DD("disconnect");
@@ -55,7 +54,6 @@ void QMatchWidget2::SetScore(int team, int set, const QString &v)
     bool ok;
     int value = v.toInt(&ok);
     if (ok) match->SetScore(team, set, value);
-    //UpdateSetsUI();
 }
 // -----------------------------------------------------------------------------
 

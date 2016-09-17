@@ -21,7 +21,6 @@ public:
     void ResetSelection();
     void Update();
     btm::Player::pointer GetPlayer() { return player; }
-    void ChangePlayer(btm::Player::pointer p1, btm::Player::pointer p2);
 
 protected:
     btm::Player::pointer player;

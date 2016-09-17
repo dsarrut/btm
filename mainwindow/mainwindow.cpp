@@ -63,27 +63,32 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 //----------------------------------------------------------------------------
 void MainWindow::UpdateDisplayPlayersStatus()
 {
-    DD("UpdateDisplayPlayersStatus");
     tournament->ComputePlayersStatus();
-    //players_table->UpdateTable();
     UpdateButtons();
 }
 //----------------------------------------------------------------------------
 
 
+//----------------------------------------------------------------------------
 void MainWindow::on_tablePlayers_itemClicked(QTableWidgetItem *item)
 {
     //auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
     //a->itemClicked();
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonSave_clicked()
 {
     auto fileName = QFileDialog::getSaveFileName(this,
                                                  tr("Sauvegarde joueurs"));
     tournament->SavePlayersToFile(fileName.toStdString());
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonLoad_clicked()
 {
     if (tournament->GetPlayers().size() != 0) {
@@ -100,22 +105,14 @@ void MainWindow::on_buttonLoad_clicked()
         StartNewTournament();
     }
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::StartNewTournament()
 {
-    DD("Start T");
-
-    //ui->players_table
-    //ui->playersTable->SetTournament(tournament);
     tablePlayersModel->SetTournament(tournament);
-
-    //players_table->SetPlayers(tournament->players);
-    //UpdateDisplayPlayersStatus();
-    //QObject::connect(tournament.get(), SIGNAL(scoreHasChanged()),
-    //                 players_table, SLOT(UpdateTable()));
-    DD(tournament->rounds.size());
     if (tournament->rounds.size() != 0) {
-        DD(tournament->rounds.size());
         currentRound = tournament->rounds.back();
         if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(currentRound);
         QObject::connect(currentRound.get(), SIGNAL(roundStatusHasChanged()),
@@ -123,13 +120,18 @@ void MainWindow::StartNewTournament()
         on_currentRound_changed();
     }
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::InitRemoteDisplayDialog()
 {
     mRemoteDisplayDialog = new QRemoteDisplayDialog(this);
 }
+//----------------------------------------------------------------------------
 
 
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonAddPlayer_clicked()
 {
     DD("TODO add player");
@@ -139,7 +141,10 @@ void MainWindow::on_buttonAddPlayer_clicked()
     //players_table->AddPlayer(p);
     //UpdateDisplayPlayersStatus();
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_menuRemoteDisplayTriggered()
 {
     if (mRemoteDisplayDialog == NULL) InitRemoteDisplayDialog();
@@ -149,11 +154,13 @@ void MainWindow::on_menuRemoteDisplayTriggered()
     if (tournament->rounds.size() == 0) return;
     mRemoteDisplayDialog->SetRound(tournament->rounds.back());
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonNewRound_clicked()
 {
     if (!tournament) return;
-
     if (tournament->GetPlayers().size() < 4) return;
     int n=0;
     for(auto p:tournament->GetPlayers())
@@ -169,15 +176,15 @@ void MainWindow::on_buttonNewRound_clicked()
         }
         else return;
     }
-    DD("here");
     if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(currentRound);
     QObject::connect(currentRound.get(), SIGNAL(roundStatusHasChanged()),
                      this, SLOT(UpdateDisplayPlayersStatus()));
     on_currentRound_changed();
-    DD("end on new");
 }
+//----------------------------------------------------------------------------
 
 
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonRndScore_clicked()
 {
     std::mt19937 rng(std::time(0));
@@ -187,7 +194,10 @@ void MainWindow::on_buttonRndScore_clicked()
     for(auto & m:round->matches)
         m->GenerateRandomScore(rng);
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonRoundBack_clicked()
 {
     if (!currentRound) return;
@@ -196,7 +206,10 @@ void MainWindow::on_buttonRoundBack_clicked()
     currentRound = tournament->rounds[i-2];
     on_currentRound_changed();
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonRoundForward_clicked()
 {
     if (!currentRound) return;
@@ -205,21 +218,21 @@ void MainWindow::on_buttonRoundForward_clicked()
     currentRound = tournament->rounds[i];
     on_currentRound_changed();
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_currentRound_changed()
 {
-    DD("on_currentRound_changed");
     ui->roundWidget2->SetRound(currentRound);
-    DD("on_currentRound_changed");
-
     ui->roundWidget2->SetSwapPlayerMode(false);
-    DD("on_currentRound_changed");
     ui->labelRound->setText(QString("Tour n°%1").arg(currentRound->round_nb));
-    DD("on_currentRound_changed");
     UpdateButtons();
-    DD("end");
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::UpdateButtons()
 {
     if (!currentRound) {
@@ -269,14 +282,20 @@ void MainWindow::UpdateButtons()
         ui->buttonCancelRound->setEnabled(true);
     else ui->buttonCancelRound->setEnabled(false);
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonModifyPlayers_clicked()
 {
     auto b = ui->roundWidget2->GetSwapPlayerMode();
     ui->roundWidget2->SetSwapPlayerMode(!b);
     UpdateButtons();
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonSaveTournament_clicked()
 {
     auto fileName = QFileDialog::getSaveFileName(this,
@@ -285,7 +304,10 @@ void MainWindow::on_buttonSaveTournament_clicked()
         tournament->SaveToFile(fileName.toStdString());
     }
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonLoadTournament_clicked()
 {
     if (tournament->GetPlayers().size() != 0) {
@@ -303,7 +325,10 @@ void MainWindow::on_buttonLoadTournament_clicked()
         StartNewTournament();
     }
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_actionScore_triggered()
 {
     if (tournament) {
@@ -320,7 +345,10 @@ void MainWindow::on_actionScore_triggered()
         }
     }
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_buttonCancelRound_clicked()
 {
     if (tournament->rounds.size() == 0) return;
@@ -346,7 +374,10 @@ void MainWindow::on_buttonCancelRound_clicked()
 
     on_currentRound_changed();
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_actionRandom_triggered()
 {
     rnd_allowed = !rnd_allowed;
@@ -361,21 +392,30 @@ void MainWindow::on_actionRandom_triggered()
         UpdateButtons();
     }
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_actionAbout_triggered()
 {
     QString t = "http://github.com/dsarrut/btm";
     t = QString("<a href=\"%1\">%1</a>").arg(t);
     QMessageBox::about(this, "Badminton Tournament Management", t);
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_lineEdit_textChanged(const QString &arg1)
 {
     if (tablePlayersModel) {
         tablePlayersModel->SetFilter(arg1);
     }
 }
+//----------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------
 void MainWindow::on_checkBox_stateChanged(int arg1)
 {
     if (tournament) {
@@ -388,3 +428,4 @@ void MainWindow::on_checkBox_stateChanged(int arg1)
         }
     }
 }
+//----------------------------------------------------------------------------
