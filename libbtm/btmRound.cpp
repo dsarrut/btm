@@ -67,6 +67,7 @@ void btm::Round::Save(std::ostream & os)
 // -----------------------------------------------------------------------------
 void btm::Round::Load(std::istream & is)
 {
+    DD("round LOad");
     int nb_w;
     int nb_m;
     is >> round_nb;
@@ -78,19 +79,18 @@ void btm::Round::Load(std::istream & is)
     for(int i=0; i<nb_w; i++) {
         int id;
         is >> id;
+        DD(id);
         auto player = tournament->FindPlayerById(id);
         waiting_players.push_back(player);
     }
     // matchs
     matches.clear();
-    DD("todo load match");
-    /*
+    DD(" load match");
     for(int i=0; i<nb_m; i++) {
         btm::Match::pointer match = btm::Match::New(shared_from_this(), i+1);
         match->Load(is);
         matches.push_back(match);
     }
-    */
     on_match_status_changed();
 }
 // -----------------------------------------------------------------------------

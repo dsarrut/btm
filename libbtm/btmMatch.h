@@ -23,6 +23,7 @@ public:
           btm::Player::pointer p2,
           btm::Player::pointer p3,
           btm::Player::pointer p4);
+    Match(std::shared_ptr<btm::Round> r, int n);
 
     // Types
     typedef std::shared_ptr<Match> pointer;
@@ -32,6 +33,9 @@ public:
                        Player::pointer p2,
                        Player::pointer p3,
                        Player::pointer p4);
+
+    static pointer New(std::shared_ptr<Round> r, int n);
+
 
     int GetNumberOfPoints(int team);
 

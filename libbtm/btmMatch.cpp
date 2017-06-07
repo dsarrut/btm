@@ -30,6 +30,23 @@ btm::Match::Match(std::shared_ptr<btm::Round> r, int n,
 
 
 // -----------------------------------------------------------------------------
+btm::Match::Match(std::shared_ptr<btm::Round> r, int n)
+{
+    round = r;
+    for(auto i=0; i<3; i++)
+        sets.push_back(btm::Set::New(round->GetNumberOfPointsToWin()));
+    match_nb = n;
+    // TO CHECK ?
+    QObject::connect(this, SIGNAL(matchStatusHasChanged()),
+                     r.get(), SLOT(on_match_status_changed()));
+    QObject::connect(this, SIGNAL(matchScoreHasChanged()),
+                     r.get(), SLOT(on_match_score_changed()));
+}
+// -----------------------------------------------------------------------------
+
+
+
+// -----------------------------------------------------------------------------
 btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r, int n,
                                     btm::Player::pointer p1,
                                     btm::Player::pointer p2,
@@ -37,6 +54,15 @@ btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r, int n,
                                     btm::Player::pointer p4)
 {
     return std::make_shared<Match>(r, n, p1, p2, p3, p4);
+}
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
+btm::Match::pointer btm::Match::New(std::shared_ptr<btm::Round> r,
+                                    int n)
+{
+    return std::make_shared<Match>(r, n);
 }
 // -----------------------------------------------------------------------------
 
@@ -275,10 +301,14 @@ void btm::Match::Load(std::istream &is)
         auto p = round->tournament->FindPlayerById(id);
         //SetPlayer(i,p);
         players[i] = p;
+        DD(p->GetId());
     }
+    for(auto p:players) p->AddMatch(pointer(this));
     int nb_sets;
     is >> nb_sets;
+    DD(nb_sets);
     for(auto s:sets) s->Load(is);
+    ComputePlayersStatus();
 }
 // -----------------------------------------------------------------------------
 

@@ -298,9 +298,10 @@ void MainWindow::on_buttonModifyPlayers_clicked()
 //----------------------------------------------------------------------------
 void MainWindow::on_buttonSaveTournament_clicked()
 {
-    auto fileName = QFileDialog::getSaveFileName(this,
-                                                 tr("Sauvegarder le tournoi actuel"));
-    if(!fileName.isEmpty()&& !fileName.isNull()){
+    auto fileName =
+            QFileDialog::getSaveFileName(this,
+                                         tr("Sauvegarder le tournoi actuel"));
+    if (!fileName.isEmpty() && !fileName.isNull()) {
         tournament->SaveToFile(fileName.toStdString());
     }
 }
@@ -319,7 +320,7 @@ void MainWindow::on_buttonLoadTournament_clicked()
 
     auto fileName = QFileDialog::getOpenFileName(this,
                                                  tr("Charger un tournoi"));
-    if(!fileName.isEmpty()&& !fileName.isNull()){
+    if (!fileName.isEmpty() && !fileName.isNull()){
         tournament = btm::Tournament::New();
         tournament->LoadFromFile(fileName.toStdString());
         StartNewTournament();

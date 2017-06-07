@@ -1,5 +1,6 @@
 #include "btmPlayer.h"
 #include "btmMatch.h"
+#include <regex>
 
 // -----------------------------------------------------------------------------
 btm::Player::Player()
@@ -76,9 +77,7 @@ void btm::Player::SetParticipateFlag(bool b)
 void btm::Player::ChangeMatch(std::shared_ptr<btm::Match> m1,
                               std::shared_ptr<btm::Match> m2)
 {
-    DDF();
     if (m1->GetMatchNb() == m2->GetMatchNb()) return;
-    DD("loop");
     for(unsigned int i=0; i<matches.size(); i++) { //& m:matches) {
         /*if (matches[i]->GetMatchNb() == m1->GetMatchNb()) {
             DD(i);
@@ -139,15 +138,11 @@ void btm::Player::Save(std::ostream &os)
 
 
 // -----------------------------------------------------------------------------
-bool BothAreSpaces(char lhs, char rhs) { return (lhs == rhs) && (lhs == ' '); }
 void btm::Player::Load(std::istream &is)
 {
     std::getline(is, name);
-    // remove double spaces
-    std::string::iterator new_end =
-            std::unique(name.begin(),
-                        name.end(), BothAreSpaces);
-    name.erase(new_end, name.end());
+    // remove spaces
+    name = std::regex_replace(name, std::regex("^ +| +$|( ) +"), "$1");
 }
 // -----------------------------------------------------------------------------
 
