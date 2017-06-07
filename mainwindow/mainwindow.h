@@ -34,7 +34,7 @@ public:
 private slots:
     void on_pushButton_rnd_players_clicked();
     void UpdateDisplayPlayersStatus();
-    void on_tablePlayers_itemClicked(QTableWidgetItem *item);
+    void onTablePlayersItemClicked(QTableWidgetItem *item);
     void on_buttonSave_clicked();
     void on_buttonLoad_clicked();
     void on_buttonAddPlayer_clicked();
@@ -43,7 +43,7 @@ private slots:
     void on_buttonRndScore_clicked();
     void on_buttonRoundBack_clicked();
     void on_buttonRoundForward_clicked();
-    void on_currentRound_changed();
+    void onCurrentRoundChanged();
     void on_buttonModifyPlayers_clicked();
     void on_buttonSaveTournament_clicked();
     void on_buttonLoadTournament_clicked();

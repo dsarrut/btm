@@ -151,7 +151,6 @@ void btm::Tournament::SavePlayersToFile(std::string filename)
 void btm::Tournament::LoadPlayersFromFile(std::string filename)
 {
     std::ifstream is(filename);
-    DD(filename);
     LoadPlayers(is);
     is.close();
 }
@@ -161,7 +160,6 @@ void btm::Tournament::LoadPlayersFromFile(std::string filename)
 //----------------------------------------------------------------------------
 void btm::Tournament::SavePlayers(std::ostream &os)
 {
-    DD("here");
     for(auto p:players) p->Save(os);
     os << std::endl;
 }
@@ -171,7 +169,6 @@ void btm::Tournament::SavePlayers(std::ostream &os)
 //----------------------------------------------------------------------------
 void btm::Tournament::LoadPlayers(std::istream & is)
 {
-    DD("LoadPlayer");
     players.clear();
     int i=0;
     bool cont = true;
@@ -181,7 +178,6 @@ void btm::Tournament::LoadPlayers(std::istream & is)
         p->SetId(i);
         if (!is or p->GetName() == "") cont = false;
         else players.push_back(p);
-        DD(i);
         ++i;
     }
 }
@@ -191,11 +187,8 @@ void btm::Tournament::LoadPlayers(std::istream & is)
 //----------------------------------------------------------------------------
 void btm::Tournament::SaveToFile(std::string filename)
 {
-    DD("SaveToFile");
     std::ofstream os(filename);
-    DD("before player save");
     SavePlayers(os);
-    DD(rounds.size());
     os << rounds.size() << std::endl;
     for(auto r:rounds) r->Save(os);
 }
@@ -205,15 +198,12 @@ void btm::Tournament::SaveToFile(std::string filename)
 //----------------------------------------------------------------------------
 void btm::Tournament::LoadFromFile(std::string filename)
 {
-    DD("LoadFromFile");
     std::ifstream is(filename);
     LoadPlayers(is);
     int nb;
     is >> nb; // nb of rounds
-    DD(nb);
     rounds.clear();
     for(int i=0; i<nb; i++) {
-        DD(i);
         auto r = btm::Round::New(shared_from_this());
         r->Load(is);
         rounds.push_back(r);
@@ -228,7 +218,6 @@ void btm::Tournament::LoadFromFile(std::string filename)
 //----------------------------------------------------------------------------
 btm::Player::pointer btm::Tournament::FindPlayerById(int id)
 {
-    DD(id);
     for(auto & p:players) {
         if (p->id == id) return p;
     }

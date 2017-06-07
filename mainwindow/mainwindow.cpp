@@ -30,6 +30,9 @@ MainWindow::MainWindow(QWidget *parent) :
             .arg(current_nb_of_points_to_win);
     ui->actionScore->setText(s);
     rnd_allowed = true; // FIXME to change when release
+
+    // FIXME later
+    ui->buttonCancelRound->setVisible(false);
 }
 //----------------------------------------------------------------------------
 
@@ -70,7 +73,7 @@ void MainWindow::UpdateDisplayPlayersStatus()
 
 
 //----------------------------------------------------------------------------
-void MainWindow::on_tablePlayers_itemClicked(QTableWidgetItem *item)
+void MainWindow::onTablePlayersItemClicked(QTableWidgetItem *item)
 {
     //auto a = static_cast<btm::QTableWidgetItemWithPlayer*>(item);
     //a->itemClicked();
@@ -117,7 +120,7 @@ void MainWindow::StartNewTournament()
         if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(currentRound);
         QObject::connect(currentRound.get(), SIGNAL(roundStatusHasChanged()),
                          this, SLOT(UpdateDisplayPlayersStatus()));
-        on_currentRound_changed();
+        onCurrentRoundChanged();
     }
 }
 //----------------------------------------------------------------------------
@@ -179,7 +182,7 @@ void MainWindow::on_buttonNewRound_clicked()
     if (mRemoteDisplayDialog) mRemoteDisplayDialog->SetRound(currentRound);
     QObject::connect(currentRound.get(), SIGNAL(roundStatusHasChanged()),
                      this, SLOT(UpdateDisplayPlayersStatus()));
-    on_currentRound_changed();
+    onCurrentRoundChanged();
 }
 //----------------------------------------------------------------------------
 
@@ -204,7 +207,7 @@ void MainWindow::on_buttonRoundBack_clicked()
     auto i = currentRound->round_nb;
     if (i==1) return;
     currentRound = tournament->rounds[i-2];
-    on_currentRound_changed();
+    onCurrentRoundChanged();
 }
 //----------------------------------------------------------------------------
 
@@ -216,13 +219,13 @@ void MainWindow::on_buttonRoundForward_clicked()
     auto i = currentRound->round_nb;
     if (i==tournament->rounds.size()) return;
     currentRound = tournament->rounds[i];
-    on_currentRound_changed();
+    onCurrentRoundChanged();
 }
 //----------------------------------------------------------------------------
 
 
 //----------------------------------------------------------------------------
-void MainWindow::on_currentRound_changed()
+void MainWindow::onCurrentRoundChanged()
 {
     ui->roundWidget2->SetRound(currentRound);
     ui->roundWidget2->SetSwapPlayerMode(false);
@@ -373,7 +376,7 @@ void MainWindow::on_buttonCancelRound_clicked()
     if (n > 1) currentRound = r[n-1];
     else currentRound = r[0];
 
-    on_currentRound_changed();
+    onCurrentRoundChanged();
 }
 //----------------------------------------------------------------------------
 

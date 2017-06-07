@@ -299,14 +299,11 @@ void btm::Match::Load(std::istream &is)
         int id;
         is >> id;
         auto p = round->tournament->FindPlayerById(id);
-        //SetPlayer(i,p);
         players[i] = p;
-        DD(p->GetId());
     }
     for(auto p:players) p->AddMatch(pointer(this));
     int nb_sets;
     is >> nb_sets;
-    DD(nb_sets);
     for(auto s:sets) s->Load(is);
     ComputePlayersStatus();
 }
