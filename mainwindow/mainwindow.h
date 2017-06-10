@@ -51,10 +51,9 @@ private slots:
     void on_buttonCancelRound_clicked();
     void on_actionRandom_triggered();
     void on_actionAbout_triggered();
-
     void on_lineEdit_textChanged(const QString &arg1);
-
     void on_checkBox_stateChanged(int arg1);
+    void on_pushButtonClearFilter_clicked();
 
 private:
     Ui::MainWindow *ui;

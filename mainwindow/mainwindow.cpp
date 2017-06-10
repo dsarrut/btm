@@ -137,12 +137,21 @@ void MainWindow::InitRemoteDisplayDialog()
 //----------------------------------------------------------------------------
 void MainWindow::on_buttonAddPlayer_clicked()
 {
-    DD("TODO add player");
-    //auto p = btm::Player::New();
-    //p->name = "pas de nom encore";
-    //tournament->players.push_back(p);
-    //players_table->AddPlayer(p);
-    //UpdateDisplayPlayersStatus();
+    auto p = btm::Player::New();
+    std::string s = "Comment s'appelle ce nouveau joueur ?";
+    p->name = s;
+    tournament->AddPlayer(p);
+    tablePlayersModel->SetTournament(tournament);
+    UpdateDisplayPlayersStatus();
+    int size = ui->tablePlayersView->model()->rowCount();
+    for (int i = 0; i < size; i++) {
+        auto cur = ui->tablePlayersView->model()->index(i, 0);
+        if (cur.data() == s.c_str()) {
+            ui->tablePlayersView->setCurrentIndex(cur);
+            ui->tablePlayersView->scrollTo(cur);
+            break;
+        }
+    }
 }
 //----------------------------------------------------------------------------
 
@@ -431,5 +440,14 @@ void MainWindow::on_checkBox_stateChanged(int arg1)
             for(auto p:players) p->SetParticipateFlag(true);
         }
     }
+}
+//----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------
+void MainWindow::on_pushButtonClearFilter_clicked()
+{
+    tablePlayersModel->SetFilter("");
+    ui->lineEdit->setText("");
 }
 //----------------------------------------------------------------------------

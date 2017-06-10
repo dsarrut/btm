@@ -229,6 +229,14 @@ btm::Player::pointer btm::Tournament::FindPlayerById(int id)
 
 
 //----------------------------------------------------------------------------
+void btm::Tournament::AddPlayer(btm::Player::pointer p)
+{
+    players.push_back(p);
+}
+//----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------
 void btm::Tournament::SetPlayers(btm::Player::vector p)
 {
     players = p;

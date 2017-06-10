@@ -104,7 +104,7 @@ QVariant btm::QPlayersTable2::data(const QModelIndex &index, int role) const
 
 // ----------------------------------------------------------------------------
 bool btm::QPlayersTable2::insertRows(int row, int count,
-                                     const QModelIndex &)
+                                     const QModelIndex & index)
 {
     beginInsertRows(QModelIndex(), row, row+count-1);
     endInsertRows();
@@ -129,9 +129,10 @@ Qt::ItemFlags btm::QPlayersTable2::flags(const QModelIndex &index) const
 {
     // only name first column is editable
     int col = index.column();
-    if (col == 0)
+    if (col == 0) {
         return (QAbstractTableModel::flags(index)
                 | Qt::ItemIsEditable | Qt::ItemIsUserCheckable);
+    }
     return  QAbstractTableModel::flags(index);
 }
 // ----------------------------------------------------------------------------
@@ -147,6 +148,7 @@ bool btm::QPlayersTable2::setData(const QModelIndex &index,
     // only column "name" could be edited
     if (index.isValid() and role == Qt::EditRole) {
         player->SetName(value.toString().toStdString());
+        SetFilter("");
         emit dataChanged(index, index);
     }
     // Toggle check (player participate or not)

@@ -37,6 +37,7 @@ public:
     void SaveToFile(std::string filename);
     void LoadFromFile(std::string filename);
     btm::Player::pointer FindPlayerById(int id);
+    void AddPlayer(btm::Player::pointer p);
 
     const btm::Player::vector & GetPlayers() const { return players; }
     btm::Player::pointer GetPlayer(int i) const { return players[i]; }
