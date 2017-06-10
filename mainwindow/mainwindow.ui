@@ -438,7 +438,7 @@
      <normalon>:/icons/icons/face-angry.png</normalon>:/icons/icons/document-preview.png</iconset>
    </property>
    <property name="text">
-    <string>RemoteDisplay</string>
+    <string>Affichage distant</string>
    </property>
   </action>
   <action name="actionScore">
