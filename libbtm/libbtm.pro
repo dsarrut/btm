@@ -8,7 +8,7 @@ QT       += core
 
 TARGET = libbtm
 TEMPLATE = lib
-#CONFIG += staticlib
+CONFIG += staticlib
 
 SOURCES += \
     btmMatch.cpp \
