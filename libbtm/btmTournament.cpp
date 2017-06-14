@@ -92,7 +92,18 @@ void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
               [](const btm::Player::pointer & a,
               const btm::Player::pointer & b) -> bool
     {
-        return a->nb_of_win_matches > b->nb_of_win_matches;
+        auto ia = a->nb_of_win_matches;
+        auto ib = b->nb_of_win_matches;
+        if (ia>ib) return true;
+        if (ia<ib) return false;
+        auto sa = a->nb_of_win_sets;
+        auto sb = b->nb_of_win_sets;
+        if (sa>sb) return true;
+        if (sa<sb) return false;
+        auto na = a->nb_of_points;
+        auto nb = b->nb_of_points;
+        return (na>nb);
+        // If equality ?
     });
     int nb=1;
     for(unsigned int i=0; i<temp.size(); i+=4) {
