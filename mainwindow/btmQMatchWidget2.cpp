@@ -37,13 +37,13 @@ void QMatchWidget2::SetMatch(btm::Match::pointer m)
     match = m;
     QObject::connect(m.get(),
                      SIGNAL(matchPlayersHaveChanged()),
-                     this, SLOT(on_players_changed()));
+                     this, SLOT(onPlayersChanged()));
     QObject::connect(m.get(),
                      SIGNAL(matchScoreHasChanged()),
-                     this, SLOT(on_scores_changed()));
-    on_players_changed();
-    on_scores_changed();
-    on_status_changed();
+                     this, SLOT(onScoresChanged()));
+    onPlayersChanged();
+    onScoresChanged();
+    onStatusChanged();
 }
 // -----------------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ void QMatchWidget2::SetSwapPlayerMode(bool b)
     ui->widgetPlayer2->EnableSelectMode(b);
     ui->widgetPlayer3->EnableSelectMode(b);
     ui->widgetPlayer4->EnableSelectMode(b);
-    on_scores_changed();
+    onScoresChanged();
 }
 // -----------------------------------------------------------------------------
 
@@ -101,7 +101,7 @@ void QMatchWidget2::ResetSelection()
 
 
 // -----------------------------------------------------------------------------
-void QMatchWidget2::on_players_changed()
+void QMatchWidget2::onPlayersChanged()
 {
     ui->widgetPlayer1->SetPlayer(match->GetPlayer(1));
     ui->widgetPlayer2->SetPlayer(match->GetPlayer(2));
@@ -112,7 +112,7 @@ void QMatchWidget2::on_players_changed()
 
 
 // -----------------------------------------------------------------------------
-void QMatchWidget2::on_scores_changed()
+void QMatchWidget2::onScoresChanged()
 {
     ui->lineTeam1Set1->setText(QString("%1").arg(match->GetSet(1)->GetTeam1Points()));
     ui->lineTeam2Set1->setText(QString("%1").arg(match->GetSet(1)->GetTeam2Points()));
@@ -142,13 +142,13 @@ void QMatchWidget2::on_scores_changed()
         ui->lineTeam1Set3->setEnabled(false);
         ui->lineTeam2Set3->setEnabled(false);
     }
-    on_status_changed();
+    onStatusChanged();
 }
 // -----------------------------------------------------------------------------
 
 
 // -----------------------------------------------------------------------------
-void QMatchWidget2::on_status_changed()
+void QMatchWidget2::onStatusChanged()
 {
     if (match->GetWinner() == 1) {
         ui->labelTeam1Status->setStyleSheet(style_winner);

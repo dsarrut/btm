@@ -104,7 +104,7 @@ QVariant btm::QPlayersTable2::data(const QModelIndex &index, int role) const
 
 // ----------------------------------------------------------------------------
 bool btm::QPlayersTable2::insertRows(int row, int count,
-                                     const QModelIndex & index)
+                                     const QModelIndex & )
 {
     beginInsertRows(QModelIndex(), row, row+count-1);
     endInsertRows();

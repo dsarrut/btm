@@ -52,7 +52,6 @@ void btm::Tournament::ComputeWaitingPlayers(btm::Round::pointer r,
     for(auto i=0; i<n; i++) {
         r->waiting_players.push_back(temp.back());
         temp.back()->nb_of_wait_rounds++;
-        DD(temp.back()->nb_of_wait_rounds);
         temp.pop_back();
     }
     players = temp;

@@ -96,6 +96,7 @@ void btm::Round::Load(std::istream & is)
 // -----------------------------------------------------------------------------
 void btm::Round::on_match_score_changed()
 {
+    on_match_status_changed();
     emit roundScoreHasChanged();
 }
 // -----------------------------------------------------------------------------

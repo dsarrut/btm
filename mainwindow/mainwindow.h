@@ -29,9 +29,9 @@ public:
     bool rnd_allowed;
 
     void InitRemoteDisplayDialog();
-    void UpdateButtons();
 
 private slots:
+    void UpdateButtons();
     void on_pushButton_rnd_players_clicked();
     void UpdateDisplayPlayersStatus();
     void onTablePlayersItemClicked(QTableWidgetItem *item);

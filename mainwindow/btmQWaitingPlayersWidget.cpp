@@ -10,9 +10,10 @@ QWaitingPlayersWidget::QWaitingPlayersWidget(QWidget *parent) :
     playerWidgets.push_back(ui->widgetPlayer1);
     playerWidgets.push_back(ui->widgetPlayer2);
     playerWidgets.push_back(ui->widgetPlayer3);
-    for(auto p:playerWidgets)
-        QObject::connect(p, SIGNAL(selectedToggled(QPlayerWidget*, bool)),
-                         parent, SLOT(playerSelectionToggled(QPlayerWidget*, bool)));
+   /* for(auto p:playerWidgets)
+        QObject::connect(p, SIGNAL(selectedToggled(p->GetPlayer(), bool)),
+                         parent, SLOT(playerSelectionToggled(p->GetPlayer(), bool)));
+                         */
 }
 
 QWaitingPlayersWidget::~QWaitingPlayersWidget()
@@ -39,7 +40,7 @@ void QWaitingPlayersWidget::SetRound(btm::Round::pointer r)
 {
     round = r;
     QObject::connect(round.get(), SIGNAL(waitingPlayersHaveChanged()),
-                     this, SLOT(on_waiting_players_changed()));
+                     this, SLOT(onWaitingPlayersChanged()));
 }
 
 void QWaitingPlayersWidget::ConnectPlayerSelection(QObject *o)
@@ -66,7 +67,7 @@ void QWaitingPlayersWidget::SetSwapPlayerMode(bool b)
         playerWidgets[i]->EnableSelectMode(b);
 }
 
-void QWaitingPlayersWidget::on_waiting_players_changed()
+void QWaitingPlayersWidget::onWaitingPlayersChanged()
 {
     SetPlayers(round->waiting_players);
 }

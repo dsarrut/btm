@@ -27,7 +27,7 @@ public:
     void SetSwapPlayerMode(bool b);
 
 public slots:
-    void on_waiting_players_changed();
+    void onWaitingPlayersChanged();
 
 protected:
     btm::Player::vector players;

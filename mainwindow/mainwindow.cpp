@@ -179,12 +179,21 @@ void MainWindow::on_buttonNewRound_clicked()
         if (p->GetParticipateFlag()) ++n;
     if (n<4) return;
 
-    if (tournament->rounds.size() == 0)
+    if (tournament->rounds.size() == 0) {
         currentRound = tournament->StartNewRound(current_nb_of_points_to_win);
+        QObject::connect(currentRound.get(),
+                         SIGNAL(roundScoreHasChanged()),
+                         this,
+                         SLOT(UpdateButtons()));
+    }
     else {
         auto r = tournament->rounds.back();
         if (r->GetStatus() == btm::Terminated) {
             currentRound = tournament->StartNewRound(current_nb_of_points_to_win);
+            QObject::connect(currentRound.get(),
+                             SIGNAL(roundScoreHasChanged()),
+                             this,
+                             SLOT(UpdateButtons()));
         }
         else return;
     }
