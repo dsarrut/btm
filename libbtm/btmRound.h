@@ -16,11 +16,11 @@ class Round : public QObject,
     Q_OBJECT
 
 public:
-    Round(std::shared_ptr<btm::Tournament> t, int s=11);
+    Round(std::shared_ptr<btm::Tournament> t, int s=1, int p=21);
 
     typedef std::shared_ptr<Round> pointer;
     typedef std::vector<pointer> vector;
-    static pointer New(std::shared_ptr<btm::Tournament> t, int s=11);
+    static pointer New(std::shared_ptr<btm::Tournament> t, int s=1, int p=21);
 
     std::string ToString();
     btm::Status GetStatus();
@@ -38,6 +38,7 @@ public:
     void Save(std::ostream &os);
     void Load(std::istream &is);
     int GetNumberOfPointsToWin() { return nb_points_to_win; }
+    int GetNumberOfSetsToWin() { return nb_sets_to_win; }
 
 public slots:
     void on_match_status_changed();
@@ -46,6 +47,7 @@ public slots:
 protected:
     btm::Status currentStatus;
     int nb_points_to_win;
+    int nb_sets_to_win;
 
 signals:
     void roundStatusHasChanged();

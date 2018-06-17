@@ -1,5 +1,6 @@
 #include "btmQMatchWidget2.h"
 #include "ui_btmQMatchWidget2.h"
+#include "btmRound.h"
 
 // -----------------------------------------------------------------------------
 QMatchWidget2::QMatchWidget2(QWidget *parent) :
@@ -51,9 +52,13 @@ void QMatchWidget2::SetMatch(btm::Match::pointer m)
 // -----------------------------------------------------------------------------
 void QMatchWidget2::SetScore(int team, int set, const QString &v)
 {
+    DD("Setscore");
+    DD(set);
+    DD(team);
     bool ok;
     int value = v.toInt(&ok);
     if (ok) match->SetScore(team, set, value);
+    DD("end setscore");
 }
 // -----------------------------------------------------------------------------
 
@@ -114,8 +119,23 @@ void QMatchWidget2::onPlayersChanged()
 // -----------------------------------------------------------------------------
 void QMatchWidget2::onScoresChanged()
 {
+    DD("onScoresChanged");
+
     ui->lineTeam1Set1->setText(QString("%1").arg(match->GetSet(1)->GetTeam1Points()));
     ui->lineTeam2Set1->setText(QString("%1").arg(match->GetSet(1)->GetTeam2Points()));
+
+    if (match->GetRound()->GetNumberOfSetsToWin() == 1) {
+        onStatusChanged();
+        ui->lineTeam1Set2->setVisible(false);
+        ui->lineTeam2Set2->setVisible(false);
+
+        ui->lineTeam1Set3->setVisible(false);
+        ui->lineTeam2Set3->setVisible(false);
+        onStatusChanged();
+         DD("fini");
+        return;
+    }
+
     ui->lineTeam1Set2->setText(QString("%1").arg(match->GetSet(2)->GetTeam1Points()));
     ui->lineTeam2Set2->setText(QString("%1").arg(match->GetSet(2)->GetTeam2Points()));
     ui->lineTeam1Set3->setText(QString("%1").arg(match->GetSet(3)->GetTeam1Points()));
@@ -150,6 +170,7 @@ void QMatchWidget2::onScoresChanged()
 // -----------------------------------------------------------------------------
 void QMatchWidget2::onStatusChanged()
 {
+    DD("onStatusChanged");
     if (match->GetWinner() == 1) {
         ui->labelTeam1Status->setStyleSheet(style_winner);
         ui->labelTeam2Status->setStyleSheet(style_looser);
@@ -180,6 +201,8 @@ void QMatchWidget2::onStatusChanged()
     if (match->GetStatus() == btm::Playing) status = "en cours";
     ui->groupBox->setTitle(QString("Match n°%1 \t\t %2")
                            .arg(match->GetMatchNb()).arg(status));
+    DD("onStatusChanged end");
+
 }
 // -----------------------------------------------------------------------------
 

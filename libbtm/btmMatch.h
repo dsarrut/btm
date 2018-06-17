@@ -72,6 +72,8 @@ public:
         return os;
     }
 
+    std::shared_ptr<btm::Round> GetRound() { return round; }
+
 signals:
     void matchPlayersHaveChanged();
     void matchScoreHasChanged();

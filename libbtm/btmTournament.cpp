@@ -15,10 +15,13 @@ btm::Tournament::Tournament()
 
 
 //----------------------------------------------------------------------------
-btm::Round::pointer btm::Tournament::StartNewRound(int set_score_max)
+btm::Round::pointer btm::Tournament::StartNewRound(int set_sets_max,
+                                                   int set_score_max)
 {
     btm::Tournament::pointer t(this);
-    auto r = btm::Round::New(t, set_score_max);
+    DD("here");
+    DD(set_sets_max);
+    auto r = btm::Round::New(t, set_sets_max, set_score_max);
     r->round_nb = rounds.size()+1;// to start at one
     btm::Player::vector temp;//= players; //copy
     for(auto p:players)

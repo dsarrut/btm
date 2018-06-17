@@ -3,19 +3,20 @@
 #include <algorithm>
 
 // -----------------------------------------------------------------------------
-btm::Round::Round(std::shared_ptr<Tournament> t, int n)
+btm::Round::Round(std::shared_ptr<Tournament> t, int s, int p)
 {
     currentStatus = Init;
     tournament = t;
-    nb_points_to_win = n;
+    nb_points_to_win = p;
+    nb_sets_to_win = s;
 }
 // -----------------------------------------------------------------------------
 
 
 // -----------------------------------------------------------------------------
-btm::Round::pointer btm::Round::New(btm::Tournament::pointer t, int n)
+btm::Round::pointer btm::Round::New(btm::Tournament::pointer t, int s, int p)
 {
-    return std::make_shared<Round>(t, n);
+    return std::make_shared<Round>(t, s, p);
 }
 // -----------------------------------------------------------------------------
 

@@ -26,6 +26,7 @@ public:
     QRemoteDisplayDialog * mRemoteDisplayDialog;
     btm::Round::pointer currentRound;
     int current_nb_of_points_to_win;
+    int current_nb_of_sets_to_win;
     bool rnd_allowed;
 
     void InitRemoteDisplayDialog();

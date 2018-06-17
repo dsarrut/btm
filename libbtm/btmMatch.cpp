@@ -10,7 +10,7 @@ btm::Match::Match(std::shared_ptr<btm::Round> r, int n,
                   btm::Player::pointer p4)
 {
     round = r;
-    for(auto i=0; i<3; i++)
+    for(auto i=0; i<round->GetNumberOfSetsToWin(); i++)
         sets.push_back(btm::Set::New(round->GetNumberOfPointsToWin()));
     match_nb = n;
 
@@ -33,7 +33,7 @@ btm::Match::Match(std::shared_ptr<btm::Round> r, int n,
 btm::Match::Match(std::shared_ptr<btm::Round> r, int n)
 {
     round = r;
-    for(auto i=0; i<3; i++)
+    for(auto i=0; i<round->GetNumberOfSetsToWin(); i++)
         sets.push_back(btm::Set::New(round->GetNumberOfPointsToWin()));
     match_nb = n;
     // TO CHECK ?
@@ -74,6 +74,9 @@ int btm::Match::GetNumberOfPoints(int team)
     // Only count points if match is terminated
     if (GetWinner() == 0) return points;
     points += GetSet(1)->GetTeamPoints(team);
+
+    if (round->GetNumberOfSetsToWin() == 1) return points;
+
     points += GetSet(2)->GetTeamPoints(team);
     // Only count third set if two first have different winners
     if (GetSet(1)->GetWinner() != GetSet(2)->GetWinner())
@@ -115,7 +118,7 @@ void btm::Match::ComputePlayersStatus()
         players[0]->nb_of_lost_matches++;
         players[1]->nb_of_lost_matches++;
     }
-    for(auto i=0; i<3; i++) {
+    for(auto i=0; i<round->GetNumberOfSetsToWin(); i++) {
         sets[i]->UpdatePlayerStats(1,players[0]);
         sets[i]->UpdatePlayerStats(1,players[1]);
         sets[i]->UpdatePlayerStats(2,players[2]);
@@ -129,12 +132,14 @@ void btm::Match::ComputePlayersStatus()
 void btm::Match::GenerateRandomScore(std::mt19937 & rng)
 {
     sets[0]->GenerateRandomScore(rng);
-    sets[1]->GenerateRandomScore(rng);
-    if (sets[0]->GetWinner() != sets[1]->GetWinner())
-        sets[2]->GenerateRandomScore(rng);
-    else {
-        sets[2]->SetScore(1,0);
-        sets[2]->SetScore(2,0);
+    if (round->GetNumberOfSetsToWin() != 1) {
+        sets[1]->GenerateRandomScore(rng);
+        if (sets[0]->GetWinner() != sets[1]->GetWinner())
+            sets[2]->GenerateRandomScore(rng);
+        else {
+            sets[2]->SetScore(1,0);
+            sets[2]->SetScore(2,0);
+        }
     }
     // Update players stats
     for(auto p:players) p->ComputeScores();
@@ -147,16 +152,23 @@ void btm::Match::GenerateRandomScore(std::mt19937 & rng)
 // -----------------------------------------------------------------------------
 void btm::Match::SetScore(int team, int theSet, unsigned int points)
 {
+    DD("setscore");
+    DD(team);
+    DD(theSet);
+    DD(points);
     // Check the score changes, do nothing if it is the same
     if (GetSet(theSet)->GetTeamPoints(team) == points)
         return;
 
     // Change the score of the set
     GetSet(theSet)->SetScore(team, points);
-
-    if (GetSet(1)->GetWinner() == GetSet(2)->GetWinner()) {
-        SetScore(1, 3, 0);
-        SetScore(2, 3, 0);
+    DD(theSet);
+    DD(round->GetNumberOfSetsToWin());
+    if (round->GetNumberOfSetsToWin() != 1) {
+        if (GetSet(1)->GetWinner() == GetSet(2)->GetWinner()) {
+            SetScore(1, 3, 0);
+            SetScore(2, 3, 0);
+        }
     }
 
     // Update player score
@@ -172,7 +184,13 @@ void btm::Match::SetScore(int team, int theSet, unsigned int points)
 // -----------------------------------------------------------------------------
 int btm::Match::GetWinner()
 {
+    DD("GetWinner");
     if (sets[0]->GetWinner() == 0) return 0;
+    DD(sets[0]->GetWinner());
+    if (round->GetNumberOfSetsToWin() == 1)
+        return sets[0]->GetWinner();
+    DD("here");
+
     if (sets[0]->GetWinner() == sets[1]->GetWinner())
         return sets[0]->GetWinner();
     if (sets[1]->GetWinner() == 0) return 0;
@@ -185,6 +203,12 @@ int btm::Match::GetWinner()
 btm::Status btm::Match::GetStatus()
 {
     if (GetWinner() != 0) return Terminated;
+
+    if (round->GetNumberOfSetsToWin() == 1) {
+        if (sets[0]->GetStatus() == Init) return Init;
+        return Playing;
+    }
+
     if (sets[0]->GetStatus() == Init and
             sets[1]->GetStatus() == Init and
             sets[2]->GetStatus() == Init) return Init;

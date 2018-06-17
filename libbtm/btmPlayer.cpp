@@ -1,5 +1,6 @@
 #include "btmPlayer.h"
 #include "btmMatch.h"
+#include "btmRound.h"
 #include <regex>
 #include <sstream>
 
@@ -35,6 +36,7 @@ void btm::Player::AddMatch(std::shared_ptr<btm::Match> m)
 // -----------------------------------------------------------------------------
 void btm::Player::ComputeScores()
 {
+    DD("Computescores");
     nb_of_points = 0;
     nb_of_win_matches = 0;
     nb_of_matches = matches.size();
@@ -44,14 +46,17 @@ void btm::Player::ComputeScores()
         nb_of_points += m->GetNumberOfPoints(team);
         if (m->GetWinner() == team) nb_of_win_matches++;
         if (m->GetSet(1)->GetWinner() == team) nb_of_win_sets++;
-        if (m->GetSet(2)->GetWinner() == team) nb_of_win_sets++;
-        // The third set only counts if needed
-        if ((m->GetSet(1)->GetWinner() != m->GetSet(2)->GetWinner())
-                and m->GetSet(1)->GetWinner() != 0
-                and (m->GetSet(3)->GetWinner() == team)) {
-            nb_of_win_sets++;
+        if (matches[0]->GetRound()->GetNumberOfSetsToWin() > 1) {
+            if (m->GetSet(2)->GetWinner() == team) nb_of_win_sets++;
+            // The third set only counts if needed
+            if ((m->GetSet(1)->GetWinner() != m->GetSet(2)->GetWinner())
+                    and m->GetSet(1)->GetWinner() != 0
+                    and (m->GetSet(3)->GetWinner() == team)) {
+                nb_of_win_sets++;
+            }
         }
     }
+    DD("end compute scores");
     emit playerScoreChanged();
 }
 // -----------------------------------------------------------------------------

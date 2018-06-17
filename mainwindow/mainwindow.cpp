@@ -25,7 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionRemoteDisplay, SIGNAL(triggered(bool)),
                      this, SLOT(on_menuRemoteDisplayTriggered()));
     mRemoteDisplayDialog = NULL;
-    current_nb_of_points_to_win = 11;
+    current_nb_of_points_to_win = 21;
+    current_nb_of_sets_to_win = 1;
     QString s = QString("Score à atteindre: %1")
             .arg(current_nb_of_points_to_win);
     ui->actionScore->setText(s);
@@ -180,7 +181,8 @@ void MainWindow::on_buttonNewRound_clicked()
     if (n<4) return;
 
     if (tournament->rounds.size() == 0) {
-        currentRound = tournament->StartNewRound(current_nb_of_points_to_win);
+        currentRound = tournament->StartNewRound(current_nb_of_sets_to_win,
+                                                 current_nb_of_points_to_win);
         QObject::connect(currentRound.get(),
                          SIGNAL(roundScoreHasChanged()),
                          this,
@@ -189,7 +191,8 @@ void MainWindow::on_buttonNewRound_clicked()
     else {
         auto r = tournament->rounds.back();
         if (r->GetStatus() == btm::Terminated) {
-            currentRound = tournament->StartNewRound(current_nb_of_points_to_win);
+            currentRound = tournament->StartNewRound(current_nb_of_sets_to_win,
+                                                     current_nb_of_points_to_win);
             QObject::connect(currentRound.get(),
                              SIGNAL(roundScoreHasChanged()),
                              this,
@@ -347,7 +350,6 @@ void MainWindow::on_buttonLoadTournament_clicked()
     if (!fileName.isEmpty() && !fileName.isNull()){
         tournament = btm::Tournament::New();
         tournament->LoadFromFile(fileName.toStdString());
-        DD("load");
         if (tournament->rounds.size() > 0) {
             currentRound = tournament->rounds[0];
         }
