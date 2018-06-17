@@ -137,21 +137,38 @@ void MainWindow::InitRemoteDisplayDialog()
 //----------------------------------------------------------------------------
 void MainWindow::on_buttonAddPlayer_clicked()
 {
+    DD("TODO add player");
     auto p = btm::Player::New();
-    std::string s = "Comment s'appelle ce nouveau joueur ?";
-    p->name = s;
+    p->name = "pas de nom encore";
+    DD(p);
     tournament->AddPlayer(p);
+    DD(tournament->GetPlayers().size());
+    //players_table->AddPlayer(p);
+    DD("here");
     tablePlayersModel->SetTournament(tournament);
-    UpdateDisplayPlayersStatus();
-    int size = ui->tablePlayersView->model()->rowCount();
-    for (int i = 0; i < size; i++) {
-        auto cur = ui->tablePlayersView->model()->index(i, 0);
-        if (cur.data() == s.c_str()) {
-            ui->tablePlayersView->setCurrentIndex(cur);
-            ui->tablePlayersView->scrollTo(cur);
-            break;
-        }
-    }
+    DD("there");
+    QItemSelectionModel::SelectionFlags flags =
+            QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows;
+
+    /*  int rowIndex = 0;
+    for(auto i=0; i<tablePlayersModel->rowCount(); i++) {
+        if (tablePlayersModel->data(i,0) == p->GetName().c_str())
+            rowIndex = i:
+    }*/
+    DD(tablePlayersModel->rowCount());
+    QModelIndexList matches =
+            tablePlayersModel->match( tablePlayersModel->index(0,0),
+                                      Qt::DisplayRole,
+                                      p->GetName().c_str());
+    DD(matches.size());
+    int rowIndex = tournament->GetPlayers().size()-1;
+    DD(rowIndex);
+    //QModelIndex index = ui->tablePlayersView->model()->index(rowIndex, 0);
+    ui->tablePlayersView->selectionModel()->select(matches[0], flags);
+    ui->tablePlayersView->selectionModel()->setCurrentIndex(matches[0], flags);
+    //tablePlayersModel->SetFilter("pas de nom");
+    //UpdateDisplayPlayersStatus();
+    DD("fin");
 }
 //----------------------------------------------------------------------------
 
@@ -179,21 +196,12 @@ void MainWindow::on_buttonNewRound_clicked()
         if (p->GetParticipateFlag()) ++n;
     if (n<4) return;
 
-    if (tournament->rounds.size() == 0) {
+    if (tournament->rounds.size() == 0)
         currentRound = tournament->StartNewRound(current_nb_of_points_to_win);
-        QObject::connect(currentRound.get(),
-                         SIGNAL(roundScoreHasChanged()),
-                         this,
-                         SLOT(UpdateButtons()));
-    }
     else {
         auto r = tournament->rounds.back();
         if (r->GetStatus() == btm::Terminated) {
             currentRound = tournament->StartNewRound(current_nb_of_points_to_win);
-            QObject::connect(currentRound.get(),
-                             SIGNAL(roundScoreHasChanged()),
-                             this,
-                             SLOT(UpdateButtons()));
         }
         else return;
     }
@@ -211,7 +219,6 @@ void MainWindow::on_buttonRndScore_clicked()
     std::mt19937 rng(std::time(0));
     if (!tournament) return;
     if (tournament->rounds.size() == 0) return;
-
     btm::Round::pointer round = tournament->rounds.back();
     for(auto & m:round->matches)
         m->GenerateRandomScore(rng);
@@ -222,7 +229,6 @@ void MainWindow::on_buttonRndScore_clicked()
 //----------------------------------------------------------------------------
 void MainWindow::on_buttonRoundBack_clicked()
 {
-    if (tournament->rounds.size() == 0) return;
     if (!currentRound) return;
     auto i = currentRound->round_nb;
     if (i==1) return;
@@ -235,7 +241,6 @@ void MainWindow::on_buttonRoundBack_clicked()
 //----------------------------------------------------------------------------
 void MainWindow::on_buttonRoundForward_clicked()
 {
-    if (tournament->rounds.size() == 0) return;
     if (!currentRound) return;
     auto i = currentRound->round_nb;
     if (i==tournament->rounds.size()) return;
@@ -347,14 +352,6 @@ void MainWindow::on_buttonLoadTournament_clicked()
     if (!fileName.isEmpty() && !fileName.isNull()){
         tournament = btm::Tournament::New();
         tournament->LoadFromFile(fileName.toStdString());
-        DD("load");
-        if (tournament->rounds.size() > 0) {
-            currentRound = tournament->rounds[0];
-        }
-        else {
-            on_buttonNewRound_clicked();
-        }
-        onCurrentRoundChanged();
         StartNewTournament();
     }
 }
@@ -460,14 +457,5 @@ void MainWindow::on_checkBox_stateChanged(int arg1)
             for(auto p:players) p->SetParticipateFlag(true);
         }
     }
-}
-//----------------------------------------------------------------------------
-
-
-//----------------------------------------------------------------------------
-void MainWindow::on_pushButtonClearFilter_clicked()
-{
-    tablePlayersModel->SetFilter("");
-    ui->lineEdit->setText("");
 }
 //----------------------------------------------------------------------------

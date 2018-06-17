@@ -170,6 +170,7 @@ void btm::Tournament::LoadPlayersFromFile(std::string filename)
 //----------------------------------------------------------------------------
 void btm::Tournament::SavePlayers(std::ostream &os)
 {
+    os << players.size() << std::endl;
     for(auto p:players) p->Save(os);
     os << std::endl;
 }
@@ -180,15 +181,17 @@ void btm::Tournament::SavePlayers(std::ostream &os)
 void btm::Tournament::LoadPlayers(std::istream & is)
 {
     players.clear();
-    int i=0;
-    bool cont = true;
-    while (cont) {
+    std::string line;
+    std::getline(is, line);
+    std::istringstream iss(line);
+    int n;
+    iss >> n; // nb of players
+    DD("nb of players");
+    DD(n);
+    for(int i=0; i<n; i++) {
         btm::Player::pointer p = btm::Player::New();
         p->Load(is);
-        p->SetId(i);
-        if (!is or p->GetName() == "") cont = false;
-        else players.push_back(p);
-        ++i;
+        players.push_back(p);
     }
 }
 //----------------------------------------------------------------------------
@@ -199,7 +202,7 @@ void btm::Tournament::SaveToFile(std::string filename)
 {
     std::ofstream os(filename);
     SavePlayers(os);
-    os << rounds.size() << std::endl;
+    os << "Rounds " << rounds.size() << std::endl;
     for(auto r:rounds) r->Save(os);
 }
 //----------------------------------------------------------------------------
@@ -208,10 +211,30 @@ void btm::Tournament::SaveToFile(std::string filename)
 //----------------------------------------------------------------------------
 void btm::Tournament::LoadFromFile(std::string filename)
 {
+    // Players
     std::ifstream is(filename);
     LoadPlayers(is);
+
+    // Nb of round
+    std::string line;
+    std::string s;
+    bool found = false;
     int nb;
-    is >> nb; // nb of rounds
+    while (!found) {
+        std::getline(is, line);
+        std::istringstream iss(line);
+        if (line == "") continue;
+        iss >> s;
+        if (s == "Rounds") {
+            iss >> nb; // nb of rounds
+            DD(nb);
+            found = true;
+        }
+        DD(line);
+        if (!iss) exit(0);
+    }
+
+    // Round
     rounds.clear();
     for(int i=0; i<nb; i++) {
         auto r = btm::Round::New(shared_from_this());
@@ -220,6 +243,8 @@ void btm::Tournament::LoadFromFile(std::string filename)
         QObject::connect(r.get(), SIGNAL(roundScoreHasChanged()),
                          this, SLOT(on_round_score_changed()));
     }
+    if (rounds.size() > 0)
+        emit currentRoundHasChanged(rounds[0]);
     is.close();
 }
 //----------------------------------------------------------------------------
@@ -231,7 +256,7 @@ btm::Player::pointer btm::Tournament::FindPlayerById(int id)
     for(auto & p:players) {
         if (p->id == id) return p;
     }
-    DD("error player id ");
+    DD("FindPlayerById error player id ");
     DD(id);
     exit(0);
 }

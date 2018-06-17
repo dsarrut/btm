@@ -1,0 +1,3 @@
+[0610/172510.515:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\reports: Accès refusé. (0x5)
+[0610/172510.517:ERROR:registration_protocol_win.cc(83)] TransactNamedPipe: Le canal de communication a été fermé. (0x6D)
+[0610/172510.517:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\reports: Accès refusé. (0x5)

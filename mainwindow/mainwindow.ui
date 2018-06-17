@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1069</width>
-    <height>584</height>
+    <height>586</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -94,6 +94,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="buttonLoad">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Charger des joueurs</string>
             </property>
@@ -101,6 +104,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="buttonSave">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Sauvegarder les joueurs</string>
             </property>

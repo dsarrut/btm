@@ -1,6 +1,7 @@
 #include "btmPlayer.h"
 #include "btmMatch.h"
 #include <regex>
+#include <sstream>
 
 // -----------------------------------------------------------------------------
 btm::Player::Player()
@@ -132,7 +133,7 @@ void btm::Player::ResetStatus()
 // -----------------------------------------------------------------------------
 void btm::Player::Save(std::ostream &os)
 {
-    os << name << std::endl;
+    os << "Player " << id << " [ " << name << " ]" << std::endl;
 }
 // -----------------------------------------------------------------------------
 
@@ -140,9 +141,24 @@ void btm::Player::Save(std::ostream &os)
 // -----------------------------------------------------------------------------
 void btm::Player::Load(std::istream &is)
 {
-    std::getline(is, name);
+    std::string line;
+    std::getline(is, line);
+    std::istringstream iss(line);
+    std::string s;
+    iss >> s; // Player
+    iss >> s; // id
+    id = atoi(s.c_str());
+    iss >> s; // [
+    iss >> s;
+    name = "";
+    while (iss && s != "]") {
+        name += s+" ";
+        iss >> s;
+    }
+    DD(id);
+    DD(name);
     // remove spaces
-    name = std::regex_replace(name, std::regex("^ +| +$|( ) +"), "$1");
+    //name = std::regex_replace(name, std::regex("^ +| +$|( ) +"), "$1");
 }
 // -----------------------------------------------------------------------------
 

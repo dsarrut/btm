@@ -30,6 +30,7 @@ QRoundWidget2::~QRoundWidget2()
 //----------------------------------------------------------------------------
 void QRoundWidget2::SetRound(btm::Round::pointer r)
 {
+    if (!r) return;
     round = r;
     auto nb = round->matches.size();
     // remove old widget
