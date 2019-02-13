@@ -254,7 +254,8 @@ void MainWindow::onCurrentRoundChanged()
 {
     ui->roundWidget2->SetRound(currentRound);
     ui->roundWidget2->SetSwapPlayerMode(false);
-    ui->labelRound->setText(QString("Tour n°%1").arg(currentRound->round_nb));
+    ui->labelRound->setText(QString("Tour n°%1 (set en %2 points)")
+                            .arg(currentRound->round_nb).arg(currentRound->GetNumberOfPointsToWin()));
     UpdateButtons();
 }
 //----------------------------------------------------------------------------

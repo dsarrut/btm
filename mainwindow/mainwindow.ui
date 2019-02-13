@@ -443,7 +443,16 @@
     <addaction name="actionAbout"/>
     <addaction name="actionRonde_Suisse"/>
    </widget>
+   <widget class="QMenu" name="menuVersion_4_1">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="title">
+     <string>Version 4.1</string>
+    </property>
+   </widget>
    <addaction name="menuOptions"/>
+   <addaction name="menuVersion_4_1"/>
   </widget>
   <action name="actionRemoteDisplay">
    <property name="icon">
