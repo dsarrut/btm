@@ -155,8 +155,6 @@ void btm::Player::Load(std::istream &is)
         name += s+" ";
         iss >> s;
     }
-    DD(id);
-    DD(name);
     // remove spaces
     //name = std::regex_replace(name, std::regex("^ +| +$|( ) +"), "$1");
 }

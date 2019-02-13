@@ -10,6 +10,7 @@
 btm::Tournament::Tournament()
 {
     std::srand(std::time(0));
+    mPairMode = 0;
 }
 //----------------------------------------------------------------------------
 
@@ -25,8 +26,10 @@ btm::Round::pointer btm::Tournament::StartNewRound(int set_score_max)
         if (p->participate) temp.push_back(p);
     std::random_shuffle(temp.begin(), temp.end());
     ComputeWaitingPlayers(r, temp);
-    PairSwissSystem(r, temp);
-    //PairRandom(r, players);
+    if (mPairMode == 0)
+        PairSwissSystem(r, temp);
+    else
+        PairRandom(r, temp);
     rounds.push_back(r);
     QObject::connect(r.get(), SIGNAL(roundScoreHasChanged()),
                      this, SLOT(on_round_score_changed()));
@@ -63,21 +66,18 @@ void btm::Tournament::ComputeWaitingPlayers(btm::Round::pointer r,
 void btm::Tournament::PairRandom(btm::Round::pointer r,
                                  btm::Player::vector & players)
 {
-    DD("TODO");
-    /*
-    auto temp = players;
+    DD("PairRandom");
+    btm::Player::vector temp = players;
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(temp.begin(), temp.end(), g);
+    int nb=1;
     for(unsigned int i=0; i<temp.size(); i+=4) {
-        auto m = btm::Match::New(r, i);
-        m->SetPlayer(1, temp[i]);
-        m->SetPlayer(2, temp[i+1]);
-        m->SetPlayer(3, temp[i+2]);
-        m->SetPlayer(4, temp[i+3]);
+        auto m = btm::Match::New(r, nb, temp[i], temp[i+2],
+                temp[i+1], temp[i+3]);
         r->matches.push_back(m);
-        QObject::connect(m.get(), SIGNAL(matchStatusHasChanged()),
-                         r.get(), SLOT(on_match_status_changed()));
-        QObject::connect(m.get(), SIGNAL(matchScoreHasChanged()),
-                         r.get(), SLOT(on_match_score_changed()));
-    }*/
+        ++nb;
+    }
 }
 //----------------------------------------------------------------------------
 
@@ -86,6 +86,7 @@ void btm::Tournament::PairRandom(btm::Round::pointer r,
 void btm::Tournament::PairSwissSystem(btm::Round::pointer r,
                                       btm::Player::vector & players)
 {
+    DD("PairSwiss");
     btm::Player::vector temp = players;
     std::sort(temp.begin(), temp.end(),
               [](const btm::Player::pointer & a,

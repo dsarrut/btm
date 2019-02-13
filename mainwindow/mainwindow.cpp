@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    mPairMode = 0;
     tournament = btm::Tournament::New();
 
     // Table with the list of players
@@ -50,13 +51,15 @@ void MainWindow::on_pushButton_rnd_players_clicked()
 {
     if (tournament->GetPlayers().size() != 0) {
         auto reply = QMessageBox::question(this, "Question",
-                                           "Cela va effacer tout le tournoi actuel. Souhaitez vous continuer ?",
+                                           "Cela va effacer tout le tournoi \
+actuel. Souhaitez vous continuer ?",
                                            QMessageBox::Yes|QMessageBox::No);
         if (reply != QMessageBox::Yes) return;
     }
     btm::Player::vector players;
     btm::GenerateRandomPlayers(players, 31);
     tournament = btm::Tournament::New();
+    tournament->SetPairMode(mPairMode);
     tournament->SetPlayers(players);
     StartNewTournament();
 }
@@ -104,6 +107,7 @@ void MainWindow::on_buttonLoad_clicked()
                                                  tr("Charger des joueurs"));
     if(!fileName.isEmpty()&& !fileName.isNull()){
         tournament = btm::Tournament::New();
+        tournament->SetPairMode(mPairMode);
         tournament->LoadPlayersFromFile(fileName.toStdString());
         StartNewTournament();
     }
@@ -346,6 +350,7 @@ void MainWindow::on_buttonLoadTournament_clicked()
                                                  tr("Charger un tournoi"));
     if (!fileName.isEmpty() && !fileName.isNull()){
         tournament = btm::Tournament::New();
+        tournament->SetPairMode(mPairMode);
         tournament->LoadFromFile(fileName.toStdString());
         DD("load");
         if (tournament->rounds.size() > 0) {
@@ -471,3 +476,14 @@ void MainWindow::on_pushButtonClearFilter_clicked()
     ui->lineEdit->setText("");
 }
 //----------------------------------------------------------------------------
+
+void MainWindow::on_actionRonde_Suisse_triggered(bool checked)
+{
+    DD("mode ");
+    DD(checked);
+    if (checked) mPairMode = 0;
+    else mPairMode = 1;
+    if (!tournament) return;
+    if (checked) tournament->SetPairMode(0);
+    else tournament->SetPairMode(1);
+}

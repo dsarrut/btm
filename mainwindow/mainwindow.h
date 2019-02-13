@@ -27,6 +27,7 @@ public:
     btm::Round::pointer currentRound;
     int current_nb_of_points_to_win;
     bool rnd_allowed;
+    int mPairMode;
 
     void InitRemoteDisplayDialog();
 
@@ -54,6 +55,8 @@ private slots:
     void on_lineEdit_textChanged(const QString &arg1);
     void on_checkBox_stateChanged(int arg1);
     void on_pushButtonClearFilter_clicked();
+
+    void on_actionRonde_Suisse_triggered(bool checked);
 
 private:
     Ui::MainWindow *ui;

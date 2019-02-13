@@ -44,12 +44,14 @@ public:
     void SetPlayers(btm::Player::vector p);
 
     btm::Round::vector rounds;
+    void SetPairMode(int mode) { mPairMode = mode; }
 
 public slots:
     void on_round_score_changed();
 
 protected:
     btm::Player::vector players;
+    int mPairMode;
 
 signals:
     void currentRoundHasChanged(btm::Round::pointer);
